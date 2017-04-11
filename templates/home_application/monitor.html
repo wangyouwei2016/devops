@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>熙康自动化运维管理平台</title>
+    <title>申请发布</title>
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="collapse navbar-collapse navbar-responsive-collapse" id="king-horizontal-nav2-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="king-navbar-active"><a href="./">首页</a></li>
+                            <li class="king-navbar-active"><a href="../">首页</a></li>
                             <li><a href="https://10.3.31.203/" target="_blank">批量发布作业</a></li>
                             <li><a href="http://10.32.144.182/" target="_blank">运维监控系统</a></li>
                             <li><a href="http://10.3.53.102/" target="_blank">日志分析系统</a></li>
@@ -79,8 +79,8 @@
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <ul class="sub-menu">
-                                        <li><a href="apply">申请发布<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="applylist">发布申请列表<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="">申请发布<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../applylist">发布申请列表<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">待测试列表<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">回滚记录<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">退回记录<i class="fa fa-chevron-right pull-right"></i></a></li>
@@ -114,7 +114,7 @@
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <ul class="sub-menu" style="display: block;">
-                                        <li><a href="monitor">监控告警展示<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="">监控告警展示<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="数据库监控">服务质量监控<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">数据库性能监控<i class="fa fa-chevron-right pull-right"></i></a></li>
 
@@ -156,188 +156,127 @@
                 <div class="king-layout1-content" style="margin-left: 216px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">发布统计(月度)</h3>
+                            <h3 class="panel-title">申请发布</h3>
                         </div>
-<!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
--->
-<div class="king-panel-container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-success">
-                <div class="king-panel-left">
-                    <i class="fa fa-cube f30"></i>
+<!--HTML-->
+    <div class="king-widget9" style="min-width:900px;">
+        <div class="king-widget9-content">
+            <div class="clearfix">
+                <div class="king-text-wrap">
+                   <h2>376次</h2>
+                   <div class="text-wrap">
+                       <div class="text-wrap-left">
+                           <p>执行中：20</p>
+                           <p>成功：21</p>
+                           <p>失败：1</p>
+                       </div>
+                       <div class="text-wrap-right">
+                       </div>
+                   </div>
                 </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">2000<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">版本交付数</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-info">
-                <div class="king-panel-left">
-                    <i class="fa fa-code-fork f30"></i>
-                </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">542<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">版本分发次数</div>
+                <div class="king-icon-wrap">
+                   <span class="king-widget-warning">
+                       <i class="fa fa-tasks"></i>
+                   </span>
+                   <h5>执行任务</h5>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-primary">
-                <div class="king-panel-left">
-                    <i class="fa fa-clock-o f30"></i>
+        <div class="king-widget9-content">
+            <div class="clearfix">
+                <div class="king-text-wrap">
+                   <h2>123个</h2>
+                   <div class="text-wrap">
+                       <div class="text-wrap-left">
+                           <p>发布：20</p>
+                           <p>开区：21</p>
+                           <p>扩容：1</p>
+                           <p>缩容：3</p>
+                       </div>
+                       <div class="text-wrap-right">
+                           <p>迁移：20</p>
+                           <p>合服：21</p>
+                           <p>故障处理：122</p>
+                           <p>其他：3</p>
+                       </div>
+                   </div>
                 </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">136<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">退回次数</div>
+                <div class="king-icon-wrap">
+                   <span class="king-widget-success">
+                       <i class="fa fa-puzzle-piece"></i>
+                   </span>
+                   <h5>创建模板</h5>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-danger">
-                <div class="king-panel-left">
-                    <i class="fa fa-meh-o f30"></i>
+        <div class="king-widget9-content">
+            <div class="clearfix">
+                <div class="king-text-wrap">
+                   <h2>123个</h2>
+                   <div class="text-wrap">
+                       <div class="text-wrap-left">
+                           <p>发布：20</p>
+                           <p>开区：21</p>
+                           <p>扩容：1</p>
+                           <p>缩容：3</p>
+                       </div>
+                       <div class="text-wrap-right">
+                           <p>迁移：20</p>
+                           <p>合服：21</p>
+                           <p>故障处理：122</p>
+                           <p>其他：3</p>
+                       </div>
+                   </div>
                 </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">0.01<small class="f14">%</small></span>
-                    <div class="king-counter-label mt5">版本分发失败率</div>
+                <div class="king-icon-wrap">
+                   <span class="king-widget-info">
+                       <i class="fa fa-briefcase"></i>
+                   </span>
+                   <h5>轻应用</h5>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
-                    </div>
+
                     <br />
                     <br />
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">资源与应用统计</h3>
+                            <h3 class="panel-title">实时运维监控告警</h3>
                         </div>
-<!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
--->
-<div class="king-widget8 p20">
-<!--    <div class="mb15 widget-header">
-        <span class="f18 dib">服务端储存空间</span>
-        <span class="fr f14 lh200">总容量  <small class="f12 lh200 text-muted">100G</small></span>
-    </div> -->
-    <div class="progress mb15">
-        <div class="progress-bar bg-info" style="width: 25%"></div>
-        <div class="progress-bar bg-success" style="width: 20%"></div>
-        <div class="progress-bar bg-danger" style="width: 15%"></div>
-        <div class="progress-bar bg-primary" style="width: 5%"></div>
-        <div class="progress-bar bg-warning" style="width: 5%"></div>
-        <div class="progress-bar bg-violet" style="width: 5%"></div>
-    </div>
-    <div class="widget-footer row f13">
-        <div class="widget-item col-md-6 col-xs-6 ">
-            <span class="widget-icon bg-info"></span>
-            <strong class="fn">生产环境服务器 432 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-danger"></span>
-            <strong class="fn">生产环境应用 325 个</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-success"></span>
-            <strong class="fn">测试环境服务器 210 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-primary"></span>
-            <strong class="fn">集成环境与其他服务器 248 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-warning"></span>
-            <strong class="fn">物理服务器 46 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-violet"></span>
-            <strong class="fn">网络设备 189 台</strong>
-        </div>
-    </div>
-</div>
-                    </div>
-                    <div class="panel king-panel1 mb0  ">
-                        <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">实时监控告警</h3>
-                        </div>
-                        <div class="panel-body">
-                            <table class="table mb0 pr15 ranger-box ">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 100px;">#</th>
-                                        <th style="width: 20%;">任务</th>
-                                        <th style="width: 20%;">进度</th>
-                                        <th style="width: 20%;">开发者</th>
-                                        <th>结束时间</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 100px;">1</td>
-                                        <td style="width: 20%;">版本更新</td>
-                                        <td style="width: 20%;">完成</td>
-                                        <td style="width: 20%;">管理员</td>
-                                        <td>2015-09-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 100px;">2</td>
-                                        <td style="width: 20%;">数据备份</td>
-                                        <td style="width: 20%;">完成</td>
-                                        <td style="width: 20%;">管理员</td>
-                                        <td>2015-09-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 100px;">3</td>
-                                        <td style="width: 20%;">定时任务</td>
-                                        <td style="width: 20%;">完成</td>
-                                        <td style="width: 20%;">管理员</td>
-                                        <td>2015-09-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 100px;">4</td>
-                                        <td style="width: 20%;">修复bug</td>
-                                        <td style="width: 20%;">完成</td>
-                                        <td style="width: 20%;">管理员</td>
-                                        <td>2015-09-20</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- 设置面板Start -->
-                            <template id="header_tpl_1491037257824">
-                                <tr>
-                                    <th style="width: 100px;">#index#</th>
-                                    <th style="width: 20%;">#task#</th>
-                                    <th style="width: 20%;">#progress#</th>
-                                    <th style="width: 20%;">#host#</th>
-                                    <th>#date#</th>
-                                </tr>
-                            </template>
-                            <template id="tpl_1491037257824">
-                                <tr>
-                                    <td style="width: 100px;">#index#</td>
-                                    <td style="width: 20%;">#columnName1#</td>
-                                    <td style="width: 20%;">#columnName2#</td>
-                                    <td style="width: 20%;">#columnName3#</td>
-                                    <td>#columnName4#</td>
-                                </tr>
-                            </template>
-                            <!-- 设置面板End -->
-                        </div>
-                    </div>
+
+<div class="king-block-content">
+                    <table class="table mb0 pr15 ranger-box ">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">告警发生时间</th>
+                                <th style="width: 10%;">所属组</th>
+                                <th style="width: 25%;">资源名称</th>
+                                <th style="width: 15%;">监测器名称</th>
+                                <th style="width: 15%;">监测器类别</th>
+                                <th style="width: 15%;">监测器告警级别</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in result %}
+                            <tr>
+                                <td style="width: 15%;">{{ s.1 }}</td>
+                                <td style="width: 10%;">{{ s.12 }}</td>
+                                <td style="width: 25%;">{{ s.10 }}</td>
+                                <td style="width: 15%;">{{ s.5 }}</td>
+                                <td style="width: 15%;">{{ s.7 }}</td>
+                                <td style="width: 15%;">{{ s.4 }}</td>
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
-            <!-- content end -->
-        </div>
-    </div>
+
     <script>
         $(function(){
              var li = $('.navi li');

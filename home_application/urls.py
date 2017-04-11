@@ -6,6 +6,7 @@ urlpatterns = patterns('home_application.views',
     (r'^$', 'index'),
     (r'^apply/$', 'apply'),
 (r'^applylist/$', 'applylist'),
+(r'^monitor/$', 'monitor'),
     (r'^dev-guide/$', 'dev_guide'),
     (r'^contactus/$', 'contactus'),
 )
