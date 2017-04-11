@@ -33,3 +33,9 @@ def apply(request):
     新版首页-王有为
     """
     return render_mako_context(request, '/home_application/apply.html')
+
+def applylist(request):
+    """
+    新版首页-王有为
+    """
+    return render_mako_context(request, '/home_application/applylist.html')
