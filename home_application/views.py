@@ -76,6 +76,8 @@ def monitor(request):
     """
     监控大盘展示
     """
+    ss=250 #定义一个变量赋值，然后在界面中展示
+
     result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
     print '1',result
     for s in result:
