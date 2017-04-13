@@ -5,13 +5,7 @@ import MySQLdb
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-def compute(request):
 
-    result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
-    print '1',result
-    for s in result:
-        print s
-    return render_to_response('home_application/monitor.html', locals(), context_instance=RequestContext(request))
 
 def get_table(ip, user, passwd, port):
     try:
