@@ -27,6 +27,37 @@ def get_table(ip, user, passwd, port):
         print e1
     return result
 
+def get_error():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT COUNT(*) FROM monitor_url_status WHERE HttpCode != 200 AND HttpCode !=302 "
+        cur.execute(sql)
+        errorcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return errorcount
+
+def get_urlslow():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT COUNT(*) FROM monitor_url_status WHERE TotalTime > 2000 "
+        cur.execute(sql)
+        urlslow = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return urlslow
 
 
 def home(request):
@@ -74,7 +105,8 @@ def monitor(request):
     """
     监控大盘展示
     """
-    ss=250 #定义一个变量赋值，然后在界面中展示
+    errorcount=get_error()[0] #定义一个变量赋值，然后在界面中展示
+    urlslow=get_urlslow()[0]
 
     result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
     print '1',result
