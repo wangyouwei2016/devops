@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>熙康自动化运维管理平台</title>
+    <title>业务运营指标展示</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
-    <meta http-equiv="refresh" content="120">
+    <meta http-equiv="refresh" content="300">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="collapse navbar-collapse navbar-responsive-collapse" id="king-horizontal-nav2-collapse">
                         <ul class="nav navbar-nav">
-                            <li class="king-navbar-active"><a href="./">首页</a></li>
+                            <li class="king-navbar-active"><a href="../">首页</a></li>
                             <li><a href="https://10.3.31.203/" target="_blank">批量发布作业</a></li>
                             <li><a href="http://10.32.144.182/" target="_blank">运维监控系统</a></li>
                             <li><a href="http://10.3.53.102/" target="_blank">日志分析系统</a></li>
@@ -81,8 +81,8 @@
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <ul class="sub-menu">
-                                        <li><a href="apply">申请发布<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="applylist">发布申请列表<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../apply">申请发布<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../applylist">发布申请列表<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">待测试列表<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">回滚记录<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">退回记录<i class="fa fa-chevron-right pull-right"></i></a></li>
@@ -116,8 +116,8 @@
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <ul class="sub-menu" style="display: block;">
-                                        <li><a href="monitor">监控告警展示<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="数据库监控">服务质量监控<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../monitor">监控告警展示<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../urllist">服务质量监控<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="">数据库性能监控<i class="fa fa-chevron-right pull-right"></i></a></li>
 
                                     </ul>
@@ -128,9 +128,9 @@
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
                                     <ul class="sub-menu" style="display: block;">
-                                        <li><a href="elk">日志监控大盘<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="../elk">日志错误告警信息<i class="fa fa-chevron-right pull-right"></i></a></li>
                                         <li><a href="http://10.3.53.102/" target="_blank">ELK日志分析系统<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="operation">业务运营分析<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                        <li><a href="">业务运营分析<i class="fa fa-chevron-right pull-right"></i></a></li>
                                     </ul>
                                 </li>
                                 <li class="has_submenu current open c-open">
@@ -158,198 +158,12 @@
                 <div class="king-layout1-content" style="margin-left: 216px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">发布统计(月度)</h3>
+                            <h3 class="panel-title">业务运营指标展示  （月度）</h3>
                         </div>
-<!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
--->
-<div class="king-panel-container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-success">
-                <div class="king-panel-left">
-                    <i class="fa fa-cube f30"></i>
-                </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">2000<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">版本交付数</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-info">
-                <div class="king-panel-left">
-                    <i class="fa fa-code-fork f30"></i>
-                </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">542<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">版本分发次数</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-primary">
-                <div class="king-panel-left">
-                    <i class="fa fa-clock-o f30"></i>
-                </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">136<small class="f14">次</small></span>
-                    <div class="king-counter-label mt5">退回次数</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="king-panel-item clearfix king-panel-danger">
-                <div class="king-panel-left">
-                    <i class="fa fa-meh-o f30"></i>
-                </div>
-                <div class="king-panel-right">
-                    <span class="king-counter-number f24">0.01<small class="f14">%</small></span>
-                    <div class="king-counter-label mt5">版本分发失败率</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-                    </div>
-                    <br />
-                    <br />
-                    <div class="panel king-panel1 mb0  ">
-                        <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">资源与应用统计</h3>
-                        </div>
-<!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
--->
-<div class="king-widget8 p20">
-<!--    <div class="mb15 widget-header">
-        <span class="f18 dib">服务端储存空间</span>
-        <span class="fr f14 lh200">总容量  <small class="f12 lh200 text-muted">100G</small></span>
-    </div> -->
-    <div class="progress mb15">
-        <div class="progress-bar bg-info" style="width: 25%"></div>
-        <div class="progress-bar bg-success" style="width: 20%"></div>
-        <div class="progress-bar bg-danger" style="width: 15%"></div>
-        <div class="progress-bar bg-primary" style="width: 5%"></div>
-        <div class="progress-bar bg-warning" style="width: 5%"></div>
-        <div class="progress-bar bg-violet" style="width: 5%"></div>
-    </div>
-    <div class="widget-footer row f13">
-        <div class="widget-item col-md-6 col-xs-6 ">
-            <span class="widget-icon bg-info"></span>
-            <strong class="fn">生产环境服务器 432 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-danger"></span>
-            <strong class="fn">生产环境应用 325 个</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-success"></span>
-            <strong class="fn">测试环境服务器 210 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-primary"></span>
-            <strong class="fn">集成环境与其他服务器 248 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-warning"></span>
-            <strong class="fn">物理服务器 46 台</strong>
-        </div>
-        <div class="widget-item col-md-6 col-xs-6">
-            <span class="widget-icon bg-violet"></span>
-            <strong class="fn">网络设备 189 台</strong>
-        </div>
-    </div>
-</div>
-                    </div>
-                    <div class="panel king-panel1 mb0  ">
-                        <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">实时监控告警</h3>
-                        </div>
-                        <div class="king-block-content">
-                    <table class="table mb0 pr15 ranger-box ">
-                        <thead>
-                            <tr>
-                                <th style="width: 15%;">告警发生时间</th>
-                                <th style="width: 10%;">所属组</th>
-                                <th style="width: 25%;">资源名称</th>
-                                <th style="width: 15%;">监测器名称</th>
-                                <th style="width: 15%;">监测器类别</th>
-                                <th style="width: 15%;">监测器告警级别</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for s in result %}
-                            <tr>
-                                <td style="width: 15%;">{{ s.1 }}</td>
-                                <td style="width: 10%;">{{ s.12 }}</td>
-                                <td style="width: 25%;">{{ s.10 }}</td>
-                                <td style="width: 15%;">{{ s.5 }}</td>
-                                <td style="width: 15%;">{{ s.7 }}</td>
-                                <td style="width: 15%;">{{ s.4 }}</td>
-                            </tr>
-                        {% endfor %}
 
 
-                        </tbody>
-                    </table>
+<iframe src="http://10.3.53.102/app/kibana#/dashboard/%E4%BA%91%E8%8D%AF%E6%88%BF%E8%BF%90%E8%90%A5%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E6%B5%8B%E8%AF%95?embed&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2FM,mode:quick,to:now%2FM))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:11,id:%E4%BA%91%E8%8D%AF%E6%88%BF%E8%AE%A2%E5%8D%95%E6%9C%88%E7%BB%9F%E8%AE%A1-%E6%B5%8B%E8%AF%95,panelIndex:2,row:1,size_x:2,size_y:2,type:visualization),(col:6,id:%E4%BA%91%E8%8D%AF%E6%88%BF%E8%AE%A2%E5%8D%95%E8%B6%8B%E5%8A%BF-%E6%B5%8B%E8%AF%95,panelIndex:3,row:1,size_x:5,size_y:2,type:visualization),(col:1,id:%E4%BA%91%E8%8D%AF%E6%88%BF%E8%AE%A2%E5%8D%95%E7%BB%9F%E8%AE%A1-%E6%B5%8B%E8%AF%95,panelIndex:6,row:1,size_x:5,size_y:2,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'*')),title:%E4%BA%91%E8%8D%AF%E6%88%BF%E8%BF%90%E8%90%A5%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E6%B5%8B%E8%AF%95,uiState:())" height="240" width="1200"></iframe>
 
-                </div>
-            </div>
-    <script>
-        $(function(){
-             var li = $('.navi li');
-             li.each(function(){
-             $(this).click(function(){
-             if( $(this).hasClass('c-open')){
-                $(this).find('ul').slideUp(350);
-                $(this).removeClass('c-open');
-             }else{
-               $(this).find('ul').slideDown(350);
-               $(this).addClass('c-open');
-               }
-              })
-           });
-        })
-    </script>
-    <script>
-        $(function(){
-                function renderTpl(str, cfg) {
-                    var re = /(#(.+?)#)/g;
-
-                    return str.replace(re, function() {
-                        var val = cfg[arguments[2]]+'';
-                        if(typeof val == 'undefined') {
-                            val = '';
-                        }
-                        return val;
-                    });
-                }
-
-                // 异步请求后台数据
-                $.ajax({
-                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
-                    type: 'GET',
-                    success: function(res){
-                        var _html = ' ';
-                        var list = res.items;
-                        var tpl = $('#tpl_1491037257824').html();
-                        var headerTpl =  $('#header_tpl_1491037257824').html();
-                        for (var i=0,len=list.length; i < len; i++){
-                            var item = list[i];
-                            _html += renderTpl(tpl, item)
-                        }
-                        $('#code_1491037257824 tbody').html(_html);
-                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
-                    }
-                });
-            });
-    </script>
 </body>
 
 </html>

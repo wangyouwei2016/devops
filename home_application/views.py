@@ -101,6 +101,23 @@ def applylist(request):
     """
     return render_mako_context(request, '/home_application/applylist.html')
 
+def operation(request):
+    """
+    发布列表
+    """
+    return render_mako_context(request, '/home_application/operation.html')
+
+def urllist(request):
+    """
+    发布列表
+    """
+    return render_mako_context(request, '/home_application/urllist.html')
+
+def elk(request):
+    """
+    发布列表
+    """
+    return render_mako_context(request, '/home_application/elk.html')
 def monitor(request):
     """
     监控大盘展示
