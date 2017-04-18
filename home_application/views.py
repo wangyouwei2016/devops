@@ -27,6 +27,26 @@ def get_table(ip, user, passwd, port):
         print e1
     return result
 
+
+def get_urllist(ip, user, passwd, port):
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+
+        #sql = "SELECT t.Person_PHR_Code, t.Person_Name, t.Birthday, t.Gender_Name, t.Person_Nickname,  t.Name_Spell, t.Change_Time FROM acornhc_healthdata.phr_person_basic_info t limit 10"
+
+        sql = "SELECT * FROM monitor_url_status"
+        cur.execute(sql)
+        urldb = cur.fetchall()
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        print e
+    except Exception, e1:
+        print e1
+    return urldb
+
 def get_error():
     try:
         conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
@@ -111,7 +131,12 @@ def urllist(request):
     """
     发布列表
     """
-    return render_mako_context(request, '/home_application/urllist.html')
+    urldb = get_urllist('10.32.145.112', 'root', 'bk@321', 3306)
+    print '1',urldb
+    for s in urldb:
+        print s
+    return render_to_response('home_application/urllist.html', locals(), context_instance=RequestContext(request))
+
 
 def elk(request):
     """
