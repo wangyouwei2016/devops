@@ -1,12 +1,9 @@
-
 <!DOCTYPE html>
-<html>
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>申请发布列表</title>
+    <title>应用列表</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
@@ -44,7 +41,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="javascript:">
+                        <a class="navbar-brand" href="javascript:;">
                             <img src="https://dn-lntongze.qbox.me/logo.png" alt="" class="logo"> </a>
                     </div>
                     <div class="collapse navbar-collapse navbar-responsive-collapse" id="king-horizontal-nav2-collapse">
@@ -158,17 +155,10 @@
                 <div class="king-layout1-content" style="margin-left: 216px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">发布申请列表</h3>
+                            <h3 class="panel-title">应用列表</h3>
                         </div>
-                       <!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
-<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
--->
-<div class="panel panel-default table7_demo king-table7-demo3">
-
-    <div class="row">
+<!--HTML-->
+<div class="row">
     <!-- 内联布局表单-1 Start -->
     <form class="form-inline">
         <div class="form-group mr10">
@@ -183,37 +173,32 @@
         </div>
 
         <div class="form-group mr5">
-            <label for="exampleInputEmail2">应用：</label>
+            <label for="exampleInputEmail2">应用名称：</label>
             <input type="email" class="form-control" id="exampleInputEmail2" placeholder="请输入应用">
         </div>
 
         <div class="form-group mr10">
-            <label for="exampleInputName2">申请人：</label>
+            <label for="exampleInputName2">负责人：</label>
             <input type="text" class="form-control" id="exampleInputName2" placeholder="请输入申请人">
-        </div>
-
-        <div class="form-group mr5">
-            <label for="exampleInputEmail2">发布状态：</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="请输入发布状态">
         </div>
 
         <button type="submit" class="king-btn king-info">查询</button>
     </form>
     <!-- 内联布局表单-1 End -->
 </div>
-    <div>
-        <!-- 带操作按钮表格-3 Start -->
-        <table class="table table-hover mb0">
-            <thead>
+
+<table id="table2_demo1" class="table table-bordered table-hover">
+    <thead>
         <tr>
             <th>ID</th>
             <th>业务线</th>
-            <th>应用</th>
-            <th>申请人</th>
-            <th>申请日期</th>
-            <th>发布状态</th>
-            <th>申请版本</th>
-            <th>线上版本</th>
+            <th>应用名称</th>
+            <th>负责人</th>
+            <th>当前版本</th>
+            <th>服务器IP</th>
+            <th>集群节点</th>
+            <th>代码仓库</th>
+            <th>配置文件</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -221,19 +206,18 @@
         <tr>
             <td>1</td>
             <td>掌上云医院</td>
-            <td>Hygea</td>
+            <td>hygea</td>
             <td>雷晓晨</td>
-            <td>23/03/2017</td>
+            <td>4.5</td>
+            <td>10.3.31.100;10.3.31.101</td>
+            <td>2</td>
+            <td>hygea/XK/20170418/hygea.war</td>
+            <td>无</td>
             <td>
-                <span class="label label-info">待审核发布</span>
-            </td>
-            <td>2.1</td>
-            <td>2.0</td>
-            <td>
-                <button class="btn btn-xs btn-success" title="通过">
-                    <i class="glyphicon glyphicon-ok"></i>
+                <button class="btn btn-xs btn-warning" title="编辑">
+                    <i class="glyphicon glyphicon-edit"></i>
                 </button>
-                <button class="btn btn-xs btn-danger" title="退回">
+                <button class="btn btn-xs btn-danger" title="删除">
                     <i class="glyphicon glyphicon-remove"></i>
                 </button>
             </td>
@@ -241,19 +225,18 @@
         <tr>
             <td>2</td>
             <td>云his</td>
-            <td>协同门诊</td>
+            <td>audit</td>
             <td>赵佳丽</td>
-            <td>24/03/2017</td>
-            <td>
-                <span class="label label-danger">已退回</span>
-            </td>
-            <td>1.6</td>
             <td>1.5</td>
+            <td>10.3.31.102;10.3.31.103</td>
+            <td>2</td>
+            <td>cloudhisaudit/XK/20170401/audit.war </td>
+            <td>无</td>
             <td>
-                <button class="btn btn-xs btn-inverse" title="通过">
-                    <i class="glyphicon glyphicon-ok"></i>
+                <button class="btn btn-xs btn-warning" title="编辑">
+                    <i class="glyphicon glyphicon-edit"></i>
                 </button>
-                <button class="btn btn-xs btn-inverse" title="退回">
+                <button class="btn btn-xs btn-danger" title="删除">
                     <i class="glyphicon glyphicon-remove"></i>
                 </button>
             </td>
@@ -263,17 +246,16 @@
             <td>HMBOSS</td>
             <td>hmbosspro</td>
             <td>聂成伟</td>
-            <td>03/04/2017</td>
+            <td>2.5</td>
+            <td>10.3.31.105</td>
+            <td>1</td>
+            <td>hmbosspro/XK/20170412/hmbosspro.war</td>
+            <td>/opt/license</td>
             <td>
-                <span class="label label-success">通过</span>
-            </td>
-            <td>2.7</td>
-            <td>2.6</td>
-            <td>
-                <button class="btn btn-xs btn-inverse" title="通过">
-                    <i class="glyphicon glyphicon-ok"></i>
+                <button class="btn btn-xs btn-warning" title="编辑">
+                    <i class="glyphicon glyphicon-edit"></i>
                 </button>
-                <button class="btn btn-xs btn-inverse" title="退回">
+                <button class="btn btn-xs btn-danger" title="删除">
                     <i class="glyphicon glyphicon-remove"></i>
                 </button>
             </td>
@@ -283,17 +265,16 @@
             <td>智能终端</td>
             <td>ikeeper</td>
             <td>罗琦</td>
-            <td>11/04/2017</td>
+            <td>1.2</td>
+            <td>10.3.31.106;10.3.31.107</td>
+            <td>2</td>
+            <td>memory/XK/20170417/memory.war</td>
+            <td>无</td>
             <td>
-                <span class="label label-success">通过</span>
-            </td>
-            <td>1.1</td>
-            <td>1.0</td>
-            <td>
-                <button class="btn btn-xs btn-inverse" title="通过">
-                    <i class="glyphicon glyphicon-ok"></i>
+                <button class="btn btn-xs btn-warning" title="编辑">
+                    <i class="glyphicon glyphicon-edit"></i>
                 </button>
-                <button class="btn btn-xs btn-inverse" title="退回">
+                <button class="btn btn-xs btn-danger" title="删除">
                     <i class="glyphicon glyphicon-remove"></i>
                 </button>
             </td>
@@ -301,25 +282,24 @@
         <tr>
             <td>5</td>
             <td>ISLEEP</td>
-            <td>iSleepEnterpriseCare</td>
+            <td>iSleep</td>
             <td>陈颜宇</td>
-            <td>23/03/2017</td>
-            <td>
-                <span class="label label-info">待审核发布</span>
-            </td>
-            <td>1.6</td>
             <td>1.5</td>
+            <td>10.3.31.108</td>
+            <td>1</td>
+            <td>iSleep/XK/20170414/iSleep.war</td>
+            <td>无</td>
             <td>
-                <button class="btn btn-xs btn-success" title="通过">
-                    <i class="glyphicon glyphicon-ok"></i>
+                <button class="btn btn-xs btn-warning" title="编辑">
+                    <i class="glyphicon glyphicon-edit"></i>
                 </button>
-                <button class="btn btn-xs btn-danger" title="退回">
+                <button class="btn btn-xs btn-danger" title="删除">
                     <i class="glyphicon glyphicon-remove"></i>
                 </button>
             </td>
         </tr>
     </tbody>
-            <tfoot>
+    <tfoot>
                 <tr>
                     <td colspan="5">
                         <div class="pull-right king-page-box">
@@ -347,13 +327,57 @@
                     </td>
                 </tr>
             </tfoot>
-        </table>
-        <!-- 带操作按钮表格-3 End -->
-    </div>
-</div>
-                    <br />
-                    <br />
+</table>
 
+    <script>
+        $(function(){
+             var li = $('.navi li');
+             li.each(function(){
+             $(this).click(function(){
+             if( $(this).hasClass('c-open')){
+                $(this).find('ul').slideUp(350);
+                $(this).removeClass('c-open');
+             }else{
+               $(this).find('ul').slideDown(350);
+               $(this).addClass('c-open');
+               }
+              })
+           });
+        })
+    </script>
+    <script>
+        $(function(){
+                function renderTpl(str, cfg) {
+                    var re = /(#(.+?)#)/g;
+
+                    return str.replace(re, function() {
+                        var val = cfg[arguments[2]]+'';
+                        if(typeof val == 'undefined') {
+                            val = '';
+                        }
+                        return val;
+                    });
+                }
+
+                // 异步请求后台数据
+                $.ajax({
+                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
+                    type: 'GET',
+                    success: function(res){
+                        var _html = ' ';
+                        var list = res.items;
+                        var tpl = $('#tpl_1491037257824').html();
+                        var headerTpl =  $('#header_tpl_1491037257824').html();
+                        for (var i=0,len=list.length; i < len; i++){
+                            var item = list[i];
+                            _html += renderTpl(tpl, item)
+                        }
+                        $('#code_1491037257824 tbody').html(_html);
+                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
+                    }
+                });
+            });
+    </script>
 </body>
 
 </html>

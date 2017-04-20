@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
-<html>
-
+<!-- <iframe   frameborder=0   border=0   width=1500   height=1000   src="../menu"l mce_src="../menu"></iframe> -->
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>申请发布列表</title>
+    <title>待测试列表</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
@@ -44,7 +42,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="javascript:">
+                        <a class="navbar-brand" href="javascript:;">
                             <img src="https://dn-lntongze.qbox.me/logo.png" alt="" class="logo"> </a>
                     </div>
                     <div class="collapse navbar-collapse navbar-responsive-collapse" id="king-horizontal-nav2-collapse">
@@ -158,17 +156,43 @@
                 <div class="king-layout1-content" style="margin-left: 216px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">发布申请列表</h3>
+                            <h3 class="panel-title">待测试</h3>
                         </div>
-                       <!--
-如果没有引用以下文件，请去掉此注释
-<link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
-<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
--->
-<div class="panel panel-default table7_demo king-table7-demo3">
-
-    <div class="row">
+                        <div class="panel-body">
+                            <div class="king-pearls king-pearls king-justified-pearls">
+                                <div class="king-pearl">
+                                    <span class="king-pearl-number ">1</span>
+                                    <span class="king-pearl-title ">提交申请</span>
+                                </div>
+                                <div class="king-pearl done">
+                                    <span class="king-pearl-number ">2</span>
+                                    <span class="king-pearl-title ">xk待测试</span>
+                                </div>
+                                <div class="king-pearl">
+                                    <span class="king-pearl-number ">3</span>
+                                    <span class="king-pearl-title ">线上发布</span>
+                                </div>
+                                <div class="king-pearl">
+                                    <span class="king-pearl-number ">4</span>
+                                    <span class="king-pearl-title ">线上测试</span>
+                                </div>
+                                <div class="king-pearl">
+                                    <span class="king-pearl-number ">5</span>
+                                    <span class="king-pearl-title ">完成发布</span>
+                                </div>
+                            </div>
+                            <!-- 设置面板Start -->
+                            <!-- 设置面板End -->
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="panel king-panel1 mb0  ">
+                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                            <h3 class="panel-title">待测试列表</h3>
+                        </div>
+<!--HTML-->
+<div class="row">
     <!-- 内联布局表单-1 Start -->
     <form class="form-inline">
         <div class="form-group mr10">
@@ -201,10 +225,9 @@
     </form>
     <!-- 内联布局表单-1 End -->
 </div>
-    <div>
-        <!-- 带操作按钮表格-3 Start -->
-        <table class="table table-hover mb0">
-            <thead>
+
+<table id="table2_demo1" class="table table-bordered table-hover">
+    <thead>
         <tr>
             <th>ID</th>
             <th>业务线</th>
@@ -225,7 +248,7 @@
             <td>雷晓晨</td>
             <td>23/03/2017</td>
             <td>
-                <span class="label label-info">待审核发布</span>
+                <span class="label label-info">待xk测试</span>
             </td>
             <td>2.1</td>
             <td>2.0</td>
@@ -305,7 +328,7 @@
             <td>陈颜宇</td>
             <td>23/03/2017</td>
             <td>
-                <span class="label label-info">待审核发布</span>
+                <span class="label label-info">待线上测试</span>
             </td>
             <td>1.6</td>
             <td>1.5</td>
@@ -319,7 +342,7 @@
             </td>
         </tr>
     </tbody>
-            <tfoot>
+    <tfoot>
                 <tr>
                     <td colspan="5">
                         <div class="pull-right king-page-box">
@@ -347,13 +370,57 @@
                     </td>
                 </tr>
             </tfoot>
-        </table>
-        <!-- 带操作按钮表格-3 End -->
-    </div>
-</div>
-                    <br />
-                    <br />
+</table>
 
+    <script>
+        $(function(){
+             var li = $('.navi li');
+             li.each(function(){
+             $(this).click(function(){
+             if( $(this).hasClass('c-open')){
+                $(this).find('ul').slideUp(350);
+                $(this).removeClass('c-open');
+             }else{
+               $(this).find('ul').slideDown(350);
+               $(this).addClass('c-open');
+               }
+              })
+           });
+        })
+    </script>
+    <script>
+        $(function(){
+                function renderTpl(str, cfg) {
+                    var re = /(#(.+?)#)/g;
+
+                    return str.replace(re, function() {
+                        var val = cfg[arguments[2]]+'';
+                        if(typeof val == 'undefined') {
+                            val = '';
+                        }
+                        return val;
+                    });
+                }
+
+                // 异步请求后台数据
+                $.ajax({
+                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
+                    type: 'GET',
+                    success: function(res){
+                        var _html = ' ';
+                        var list = res.items;
+                        var tpl = $('#tpl_1491037257824').html();
+                        var headerTpl =  $('#header_tpl_1491037257824').html();
+                        for (var i=0,len=list.length; i < len; i++){
+                            var item = list[i];
+                            _html += renderTpl(tpl, item)
+                        }
+                        $('#code_1491037257824 tbody').html(_html);
+                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
+                    }
+                });
+            });
+    </script>
 </body>
 
 </html>

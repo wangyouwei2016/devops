@@ -155,3 +155,58 @@ def monitor(request):
     for s in result:
         print s
     return render_to_response('home_application/monitor.html', locals(), context_instance=RequestContext(request))
+
+def menu(request):
+    """
+    菜单列表
+    """
+    return render_mako_context(request, '/home_application/menu.html')
+
+
+def testlist(request):
+    """
+    待测试列表
+    """
+    return render_mako_context(request, '/home_application/testlist.html')
+
+def rollbacklist(request):
+    """
+    回滚列表
+    """
+    return render_mako_context(request, '/home_application/rollbacklist.html')
+
+def returnedlist(request):
+    """
+    退回列表
+    """
+    return render_mako_context(request, '/home_application/returnedlist.html')
+
+def review(request):
+    """
+    审核发布
+    """
+    return render_mako_context(request, '/home_application/review.html')
+
+def package(request):
+    """
+    应用打包
+    """
+    return render_mako_context(request, '/home_application/package.html')
+
+def newapp(request):
+    """
+    新建应用
+    """
+    return render_mako_context(request, '/home_application/newapp.html')
+
+def applist(request):
+    """
+    应用列表
+    """
+    return render_mako_context(request, '/home_application/applist.html')
+
+def appoperation(request):
+    """
+    应用操作
+    """
+    return render_mako_context(request, '/home_application/appoperation.html')
