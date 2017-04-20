@@ -210,3 +210,9 @@ def appoperation(request):
     应用操作
     """
     return render_mako_context(request, '/home_application/appoperation.html')
+
+def header(request):
+    """
+    页面头部
+    """
+    return render_mako_context(request, '/home_application/header.html')

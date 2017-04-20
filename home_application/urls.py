@@ -21,5 +21,6 @@ urlpatterns = patterns('home_application.views',
     (r'^appoperation/$', 'appoperation'),
     (r'^dev-guide/$', 'dev_guide'),
     (r'^contactus/$', 'contactus'),
+    (r'^header/$', 'header'),
 
-)
+            )

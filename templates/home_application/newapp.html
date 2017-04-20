@@ -32,129 +32,13 @@
 </head>
 
 <body class="bg-white" data-bg-color="bg-white">
-    <div class="king-page-box">
-        <div class="king-layout1-header">
-            <nav role="navigation" class="navbar navbar-default king-horizontal-nav2    f14 ">
-                <div class="container " style="width:100%;overflow:hidden;">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed navbar-toggle-sm" data-toggle="collapse" data-target="#king-horizontal-nav2-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="javascript:;">
-                            <img src="https://dn-lntongze.qbox.me/logo.png" alt="" class="logo"> </a>
-                    </div>
-                    <div class="collapse navbar-collapse navbar-responsive-collapse" id="king-horizontal-nav2-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="king-navbar-active"><a href="../">首页</a></li>
-                            <li><a href="https://10.3.31.203/" target="_blank">批量发布作业</a></li>
-                            <li><a href="http://10.32.144.182/" target="_blank">运维监控系统</a></li>
-                            <li><a href="http://10.3.53.102/" target="_blank">日志分析系统</a></li>
-                            <li><a href="http://10.32.144.93/itdb/" target="_blank">ITDB应用查询</a></li>
-                            <li><a href="http://10.32.144.22/" target="_blank">数据库CMDB</a></li>
-                            <li><a href="http://10.3.32.111/mt/" target="_blank">应用依赖关联查询</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="javascript:;">
-                                    <span>退出登录</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <div class="king-layout1-main clearfix">
-            <!-- sidebar start -->
-            <div class="king-layout1-sidebar" style="width:216px;">
-                <nav style="height:100%;" class="   f14">
-                    <div class="king-vertical-nav4">
-                        <div class="sidebar-inner">
-                            <ul class="navi">
-                                <li class="has_submenu current open c-open active">
-                                    <a href="javascript:void(0);"> <i class="fa fa-newspaper-o ">                        </i>
-                                        <span>发布管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="../apply">申请发布<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../applylist">发布申请列表<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../testlist">待测试列表<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../rollbacklist">回滚记录<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../returnedlist">退回记录<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../review">审核发布<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../package">应用打包<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-star-half-full ">                        </i>
-                                        <span>业务系统管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="../newapp">新建应用<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../applist">应用列表<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="../appoperation">应用操作<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
-                                        <span>版本管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="javascript:void(0);">版本列表<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="has_submenu current open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-laptop ">                        </i>
-                                        <span>监控管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu" style="display: block;">
-                                        <li><a href="../monitor">监控告警展示<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="数据库监控">服务质量监控<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="">数据库性能监控<i class="fa fa-chevron-right pull-right"></i></a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-tasks ">                        </i>
-                                        <span>日志管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu" style="display: block;">
-                                        <li><a href="ELK日志分析系统">日志错误告警信息<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="">ELK日志分析系统<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                        <li><a href="ee">业务运营分析<i class="fa fa-chevron-right pull-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-sitemap ">                        </i>
-                                        <span>配置管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu"> </ul>
-                                </li>
-                                <li class="has_submenu current open c-open">
-                                    <a href="javascript:void(0);"> <i class="fa fa-institution ">                        </i>
-                                        <span>用户管理</span>
-                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                                    </a>
-                                    <ul class="sub-menu"> </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            <!-- sidebar end -->
+  <!--   <div class="king-page-box">
+        <div class="king-layout1-main clearfix"> -->
+            <iframe   id="headerFrame"  name="headerFrame" frameborder=0   border=0   width=100%   height=75   src="../header" ></iframe>
             <!-- content start -->
             <div class="king-content-wrap">
-                <div class="king-layout1-content" style="margin-left: 216px;">
+                <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe>
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1040px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">新建应用</h3>
