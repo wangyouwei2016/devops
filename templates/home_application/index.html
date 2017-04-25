@@ -59,7 +59,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="javascript:;">
+                                <a href="javascript:void(0);"onclick=window.top.location="http://paas.xkops.com/login/logout/">
                                     <span>退出登录</span>
                                 </a>
                             </li>
@@ -147,7 +147,9 @@
                                         <span>用户管理</span>
                                         <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     </a>
-                                    <ul class="sub-menu"> </ul>
+                                    <ul class="sub-menu" style="display: block;">
+                                        <li><a href="javascript:void(0);" onclick=window.open("http://paas.xkops.com/login/accounts/")>用户管理<i class="fa fa-chevron-right pull-right"></i></a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
