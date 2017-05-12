@@ -143,6 +143,12 @@ def elk(request):
     发布列表
     """
     return render_mako_context(request, '/home_application/elk.html')
+
+def logstatus(request):
+    """
+    发布列表
+    """
+    return render_mako_context(request, '/home_application/logstash.html')
 def monitor(request):
     """
     监控大盘展示
