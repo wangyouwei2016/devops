@@ -23,9 +23,9 @@ from django.conf.global_settings import *
 # ==============================================================================
 # 在蓝鲸智云开发者中心 -> 点击应用ID -> 基本信息 中获取 APP_ID 和 APP_TOKEN 的值
 APP_ID = 'devops'
-APP_TOKEN = '3add5b98-4a83-46a5-9743-7fdfb8cb1ab8'
+APP_TOKEN = 'b5abef59-f3e8-42cd-bf81-607e074c3768'
 # 蓝鲸智云开发者中心的域名，形如：http://paas.bking.com
-BK_PAAS_HOST = 'http://paas.xkops.com'
+BK_PAAS_HOST = 'http://paas.xikang.com'
 
 # 是否启用celery任务
 IS_USE_CELERY = True
