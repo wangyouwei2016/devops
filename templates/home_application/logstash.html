@@ -15,14 +15,16 @@
     <!-- font-awesome -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
     <!--蓝鲸提供的公用样式库 -->
-    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css" rel="stylesheet">
     <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
     <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
     <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
     <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
     <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
     <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
     <script src="https://magicbox.bkclouds.cc/static_api/v3/bk/js/bk.js"></script>
     <!-- 数据埋点统计 -->
     <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
@@ -35,183 +37,871 @@
         <div class="king-container clearfix">
             <div class="panel king-panel1 mb0  ">
                 <div class="panel-heading king-panel-head1 king-panel-top2">
-                    <h3 class="panel-title">大连整体访问统计</h3>
+                    <h3 class="panel-title">业务看板</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="container-fluid mb0 ">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!--HTML-->
-<div id="charts_line_demo" style="height:500px;padding:10px;"></div>
-
-                            </div>
-                            <div class="col-md-6">
-
-<div id="charts_line_demo1" style="height:500px;padding:10px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <div class="panel king-panel1 mb0  ">
-                <div class="panel-heading king-panel-head1 king-panel-top4">
-                    <h3 class="panel-title">按应用业务统计</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="container-fluid mb0 ">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!--HTML-->
-<div id="charts_line_demo2" style="height:500px;padding:10px;"></div>
-
-                            </div>
-                            <div class="col-md-6">
-
-<div id="charts_line_demo3" style="height:500px;padding:10px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-                    <div class="panel panel-default mb0">
-                <div class="panel-heading"> 按应用负载点统计 </div>
-                <div class="panel-body">
-                    <div class="container-fluid mb0 ">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="king-widget2  m0">
-                                    <div class="king-widget2-content p30">
-                                        <div class="row no-space">
-                                            <div class="col-sm-6">
-                                                <div class="king-counter king-counter-lg">
-                                                    <span class="king-counter-number">282</span>
-                                                    <div class="king-counter-label text-uppercase">访问量</div>
+                    <div class="king-tab tab-box ">
+                        <ul id="myTab2" class="nav nav-tabs king-nav-tabs1 king-tab-info">
+                            <li class="active"> <a data-toggle="tab" href="#demo1" aria-expanded="true">首页</a> </li>
+                            <li class=""> <a data-toggle="tab" href="#demo2" aria-expanded="false">掌上云医院</a> </li>
+                            <li class=""> <a data-toggle="tab" href="#demo3" aria-expanded="false">云his</a> </li>
+                            <li class=""> <a data-toggle="tab" href="#demo4" aria-expanded="false">远程医疗</a> </li>
+                            <li class=""> <a data-toggle="tab" href="#demo5" aria-expanded="false">健管中心</a> </li>
+                            <li class=""> <a data-toggle="tab" href="#demo6" aria-expanded="false">城市云医院</a> </li>
+                        </ul>
+                        <div class="tab-content ">
+                            <div class="tab-pane fade active in" id="demo1">
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 总体访问统计 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">大连IDC</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">当月pv</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">当月IP</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497342284346" class="king-chart-box chart-area "
+                                                    _echarts_instance_="1497340639424"></div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="king-counter king-counter-lg">
-                                                    <span class="king-counter-number">216</span>
-                                                    <div class="king-counter-label text-uppercase">并发量</div>
+                                                <div class="col-md-4">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">宁波IDC</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497342292030" class="king-chart-box chart-area "
+                                                    _echarts_instance_="1497340639425"></div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">远程医疗-aws</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497343356326" class="king-chart-box chart-area "
+                                                    _echarts_instance_="1497340639431"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- 设置面板Start -->
-                                <!-- 设置面板End -->
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 各环境容量统计 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">硬件与虚拟机统计</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">33</p>
+                                                                            <p>大连IDC物理服务器</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">16</p>
+                                                                            <p>大连IDC网络设备</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">3</p>
+                                                                            <p>大连IDC存储设备3</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">总内存100000G</p>
+                                                                            <p>总磁盘100000G</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">555G</p>
+                                                                            <p>大连剩余内存</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">666G</p>
+                                                                            <p>大连剩余磁盘</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">679</p>
+                                                                            <p>粉丝</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">575</p>
+                                                                            <p>微博</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">23</p>
+                                                                            <p>关注</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">679</p>
+                                                                            <p>粉丝</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">575</p>
+                                                                            <p>微博</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">23</p>
+                                                                            <p>关注</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">应用统计</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <table class="table mb0 pr15 ranger-box ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width: 100px;">#</th>
+                                                                        <th style="width: 20%;">任务</th>
+                                                                        <th style="width: 20%;">进度</th>
+                                                                        <th style="width: 20%;">开发者</th>
+                                                                        <th>结束时间</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 100px;">1</td>
+                                                                        <td style="width: 20%;">版本更新</td>
+                                                                        <td style="width: 20%;">完成</td>
+                                                                        <td style="width: 20%;">管理员</td>
+                                                                        <td>2015-09-20</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px;">2</td>
+                                                                        <td style="width: 20%;">数据备份</td>
+                                                                        <td style="width: 20%;">完成</td>
+                                                                        <td style="width: 20%;">管理员</td>
+                                                                        <td>2015-09-20</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px;">3</td>
+                                                                        <td style="width: 20%;">定时任务</td>
+                                                                        <td style="width: 20%;">完成</td>
+                                                                        <td style="width: 20%;">管理员</td>
+                                                                        <td>2015-09-20</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 100px;">4</td>
+                                                                        <td style="width: 20%;">修复bug</td>
+                                                                        <td style="width: 20%;">完成</td>
+                                                                        <td style="width: 20%;">管理员</td>
+                                                                        <td>2015-09-20</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <!-- 设置面板Start -->
+                                                            <template id="header_tpl_1497341583081">
+                                                                <tr>
+                                                                    <th style="width: 100px;">#index#</th>
+                                                                    <th style="width: 20%;">#task#</th>
+                                                                    <th style="width: 20%;">#progress#</th>
+                                                                    <th style="width: 20%;">#host#</th>
+                                                                    <th>#date#</th>
+                                                                </tr>
+                                                            </template>
+                                                            <template id="tpl_1497341583081">
+                                                                <tr>
+                                                                    <td style="width: 100px;">#index#</td>
+                                                                    <td style="width: 20%;">#columnName1#</td>
+                                                                    <td style="width: 20%;">#columnName2#</td>
+                                                                    <td style="width: 20%;">#columnName3#</td>
+                                                                    <td>#columnName4#</td>
+                                                                </tr>
+                                                            </template>
+                                                            <!-- 设置面板End -->
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">321个</p>
+                                                                            <p>生产环境应用</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">222个</p>
+                                                                            <p>xk环境应用</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">32个</p>
+                                                                            <p>其他环境</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">数据库统计</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">40</p>
+                                                                            <p>生产环境mysql</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">3</p>
+                                                                            <p>生产环境mongodb</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">40</p>
+                                                                            <p>生产环境oracle</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">78</p>
+                                                                            <p>其他环境数据库</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">133个</p>
+                                                                            <p>总计</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"></div>
+                            <div class="tab-pane fade" id="demo2">
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 总体统计 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">业务应用与资源</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">34</p>
+                                                                            <p>应用数量</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">15</p>
+                                                                            <p>服务器数量</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">总计内存58G</p>
+                                                                            <p>总计磁盘200G</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">关键运营指标</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">679</p>
+                                                                            <p>粉丝</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">575</p>
+                                                                            <p>微博</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">23</p>
+                                                                            <p>关注</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">访问量</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497342796383" class="king-chart-box chart-area "
+                                                    _echarts_instance_="1497340639427"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 主要应用负载 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="king-panel8 m5">
+                                                        <div class="king-panel8-header">
+                                                            <h3 class="king-panel8-title king-info">前端1-内存</h3>
+                                                        </div>
+                                                        <div class="king-panel8-content pt25">
+                                                            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497343745077" class="king-chart-box chart-funnel "
+                                                            _echarts_instance_="1497340639432"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="king-panel8 m5">
+                                                        <div class="king-panel8-header">
+                                                            <h3 class="king-panel8-title king-info">前端1-磁盘</h3>
+                                                        </div>
+                                                        <div class="king-panel8-content pt25">
+                                                            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497343753379" class="king-chart-box chart-funnel "
+                                                            _echarts_instance_="1497340639433"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="king-panel8 m5">
+                                                        <div class="king-panel8-header">
+                                                            <h3 class="king-panel8-title king-info">前端2-内存</h3>
+                                                        </div>
+                                                        <div class="king-panel8-content pt25">
+                                                            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497343810851" class="king-chart-box chart-funnel "
+                                                            _echarts_instance_="1497340639434"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="demo3">
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 总体统计 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">业务应用与资源</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">679</p>
+                                                                            <p>粉丝</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">575</p>
+                                                                            <p>微博</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">23</p>
+                                                                            <p>关注</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">关键运营指标</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">679</p>
+                                                                            <p>粉丝</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">575</p>
+                                                                            <p>微博</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">23</p>
+                                                                            <p>关注</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="panel king-panel1 mb0  ">
+                                                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                                                            <h3 class="panel-title">访问量</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1497344377451" class="king-chart-box chart-area "
+                                                            _echarts_instance_="1497340639435"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default mb0">
+                                    <div class="panel-heading"> 主要应用负载 </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="king-panel8 m15">
+                                                        <div class="king-panel8-header">
+                                                            <h3 class="king-panel8-title king-info">前端-32.76</h3>
+                                                        </div>
+                                                        <div class="king-panel8-content pt25">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">并发连接</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">1G</span>
+                                                                                <div class="king-counter-label text-uppercase">内存使用</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid mb0 ">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="king-panel8 m15">
+                                                        <div class="king-panel8-header">
+                                                            <h3 class="king-panel8-title king-info">面板标题</h3>
+                                                        </div>
+                                                        <div class="king-panel8-content pt25">
+                                                            <div class="king-widget2  m0">
+                                                                <div class="king-widget2-content p30">
+                                                                    <div class="row no-space">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="king-counter king-counter-lg">
+                                                                                <span class="king-counter-number">286</span>
+                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="demo4"> </div>
+                            <div class="tab-pane fade" id="demo5"> </div>
+                            <div class="tab-pane fade" id="demo6"> </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-
-</body>
-<!--JS-->
-<!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
-<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
-<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
-<script src="https://magicbox.bkclouds.cc/static_api/v3/bk/js/bk.js"></script>
-
-<script type="text/javascript">
-//charts_line_demo_js_start
-$(function(){
-    // 创建图表
-    function createChart(conf){
-        $(conf.selector).kendoChart({
-            transitions: false,
-            legend: {
-               position: "top"
-            },
-            theme : 'bootstrap',
-            seriesDefaults: {
-                type: conf.type,
-                style: "smooth"
-            },
-            series: conf.data.series,
-            categoryAxis: {
-                majorGridLines : {
-                    visible: false
-                },
-                categories: conf.data.categories,
-                labels: {
-                    rotation: "auto"
-                }
-            },
-            tooltip: {
-                visible: true,
-                template: "#= category # #= value #"
+    <script>
+        function createEStandLineChart(conf){
+            var myChart = echarts.init(document.getElementById(conf.selector));
+            var legendData = []
+            for(var i=0; i < conf.data.series.length;i++){
+                legendData.push(conf.data.series[i].name)
             }
+            myChart.setOption({
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    y: 'bottom',
+                    data:legendData
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['bar','line']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : conf.data.xAxis
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        splitArea : {show : true}
+                    }
+                ],
+                series : conf.data.series
+            });
+         }
+        function initEStandLineChart(conf){
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        createEStandLineChart({
+                            selector: conf.containerId, // 图表容器
+                            data: res.data, // 图表数据
+                        });
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
+        $(function(){
+            initEStandLineChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497342284346'
+            });
         });
-        //重新绘制
-        $(window).on('resize',function(){
-            var chart = $(conf.selector).data("kendoChart");
-            chart.redraw();
+    </script>
+    <script>
+        $(function(){
+            initEStandLineChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497342292030'
+            });
         });
-    }
+    </script>
+    <script>
+        $(function(){
+            initEStandLineChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497343356326'
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+                function renderTpl(str, cfg) {
+                    var re = /(#(.+?)#)/g;
 
-     // 异步请求后台数据
-    $.ajax({
-        url: 'http://10.3.53.101/dlall.json',
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'dlallcallback',
-        success: function(res){
-            createChart({
-                selector: "#charts_line_demo", // 图表窗器
-                type: "line", // 图表类型
-                data: res // 图表数据
-            });
-        }
-    });
+                    return str.replace(re, function() {
+                        var val = cfg[arguments[2]]+'';
+                        if(typeof val == 'undefined') {
+                            val = '';
+                        }
+                        return val;
+                    });
+                }
 
-         // 异步请求后台数据
-    $.ajax({
-        url: 'http://10.3.53.101/dlip.json',
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'dlipcallback',
-        success: function(res){
-            createChart({
-                selector: "#charts_line_demo1", // 图表窗器
-                type: "line", // 图表类型
-                data: res // 图表数据
+                // 异步请求后台数据
+                $.ajax({
+                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
+                    type: 'GET',
+                    success: function(res){
+                        var _html = ' ';
+                        var list = res.items;
+                        var tpl = $('#tpl_1497341583081').html();
+                        var headerTpl =  $('#header_tpl_1497341583081').html();
+                        for (var i=0,len=list.length; i < len; i++){
+                            var item = list[i];
+                            _html += renderTpl(tpl, item)
+                        }
+                        $('#code_1497341583081 tbody').html(_html);
+                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
+                    }
+                });
+            });
+    </script>
+    <script>
+        $(function(){
+            initEStandLineChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497342796383'
+            });
+        });
+    </script>
+    <script>
+        function createEInstrumentChart(conf){
+            //--- 仪表盘 ---
+            var myChart = echarts.init(document.getElementById(conf.selector));
+            myChart.setOption({
+                tooltip : {
+                    formatter: "{a} {b} : {c}%"
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                series : conf.data.series
             });
         }
-    });
-             // 异步请求后台数据
-    $.ajax({
-        url: 'http://10.3.53.101/hgall.json',
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'hgallcallback',
-        success: function(res){
-            createChart({
-                selector: "#charts_line_demo2", // 图表窗器
-                type: "line", // 图表类型
-                data: res // 图表数据
-            });
+
+        function initEInstrumentChart(conf){
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var data = res.data;
+                        createEInstrumentChart({
+                            selector: conf.containerId, // 图表容器
+                            data: data, // 图表数据
+                        });
+                    }
+                }
+            })
         }
-    });
-             // 异步请求后台数据
-    $.ajax({
-        url: 'http://10.3.53.101/hgip.json',
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'hgipcallback',
-        success: function(res){
-            createChart({
-                selector: "#charts_line_demo3", // 图表窗器
-                type: "line", // 图表类型
-                data: res // 图表数据
+    </script>
+    <script>
+        $(function(){
+            initEInstrumentChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart25/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497343745077'
             });
-        }
-    });
-});
-//charts_line_demo_js_end
-</script>
+        });
+    </script>
+    <script>
+        $(function(){
+            initEInstrumentChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart25/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497343753379'
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+            initEInstrumentChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart25/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497343810851'
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+            initEStandLineChart({
+                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1497344377451'
+            });
+        });
+    </script>
+</body>
+
 </html>
