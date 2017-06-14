@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>新建应用</title>
+    <title>修改应用信息</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
@@ -51,7 +51,7 @@
                 <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1020px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">新建应用</h3>
+                            <h3 class="panel-title">修改应用信息</h3>
                         </div>
 <!--
 如果没有引用以下文件，请去掉此注释
@@ -61,7 +61,7 @@
 
     <div class="king-block-content">
         <!-- 水平布局表单-1 Start -->
-        <form class="form-horizontal" method="POST">
+        <form id="downForm" class="form-horizontal" method="POST">
             {% if emg %}
                 <div class="alert alert-danger text-center">{{ emg }}</div>
             {% endif %}
@@ -71,9 +71,12 @@
             <div class="form-group">
                 <label for="business_select" class="col-sm-3 control-label">业务线：</label>
                 <div class="col-sm-7">
+                    {% for app in app_select %}
+                        <span style="display:none;"><input id="business_line" type="text" value="{{app.business_id}}"></span>
+                    {% endfor %}
                     <select id="business_select" name= "business_select" class="col-sm-8" style="width:300px; height: 30px">
-                            {% for business_name in business_list %}
-                             <option value="{{ business_name.id }}">{{ business_name.name }}</option>
+                            {% for business in business_list %}
+                             <option value="{{ business.id }}">{{ business.name }}</option>
                              {% endfor %}
                      </select>
                 </div>
@@ -82,50 +85,65 @@
             <div class="form-group">
                 <label for="name" class="col-sm-3 control-label">应用名称：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="请输入应用名称，如:hygea">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="name" name="name"  value="{{ app.name }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="war_path" class="col-sm-3 control-label">war包仓库路径：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="war_path" name="war_path" placeholder="war包仓库路径">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="war_path" name="war_path" value="{{ app.war_path }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="target_server_ip" class="col-sm-3 control-label">目标服务器：</label>
                 <div class="col-sm-7">
-                    <input id="target_server_ip" name="target_server_ip" type="text" class="form-control"  placeholder="请输入目标服务器">
+                    {% for app in app_select %}
+                    <input id="target_server_ip" name="target_server_ip" type="text" class="form-control"  value="{{ app.target_server_ip }}">
+                    {% endfor %}
                 </div>
             </div>
             <div class="form-group">
                 <label for="deploy_path" class="col-sm-3 control-label">部署目录：</label>
                 <div class="col-sm-7">
-                    <input id="deploy_path" name="deploy_path" type="text" class="form-control"  placeholder="请输入部署目录">
+                    {% for app in app_select %}
+                    <input id="deploy_path" name="deploy_path" type="text" class="form-control"  value="{{ app.deploy_path }}">
+                    {% endfor %}
                 </div>
             </div>
             <div class="form-group">
                 <label for="config_path" class="col-sm-3 control-label">配置文件路径：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="config_path" name="config_path" placeholder="请输入配置文件路径">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="config_path" name="config_path"  value="{{ app.config_path }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="type" class="col-sm-3 control-label">部署要求：</label>
                 <div class="col-sm-7">
+                    {% for app in app_select %}
+                    <span style="display:none;"><input id="app_type_check" type="text" value="{{app.type}}"></span>
                     <select name="type" id="type" class="form-control">
                         <option value="1">tomcat6+jdk1.6</option>
-                        <option value="2" selected="true">tomcat7+jdk1.7</option>
+                        <option value="2">tomcat7+jdk1.7</option>
                         <option value="3">tomcat8+jdk1.7</option>
                         <option value="4">其他</option>
                     </select>
+                    {% endfor %}
                 </div>
             </div>
             <div class="form-group">
                 <label for="cluster_num" class="col-sm-3 control-label">集群数量：</label>
                 <div class="col-sm-7">
+                    {% for app in app_select %}
+                    <span style="display:none;"><input id="cluster_num_check" type="text" value="{{app.cluster_num}}"></span>
                     <select name="cluster_num" id="cluster_num" class="form-control">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -134,32 +152,41 @@
                         <option value="5">5</option>
                         <option value="6">6</option>
                     </select>
+                    {% endfor %}
                 </div>
             </div>
             <div class="form-group has-feedback">
                 <label class="control-label col-sm-3" for="svn_path">SVN路径：</label>
                 <div class="col-sm-7">
-                    <textarea class="form-control" rows="3" id="svn_path" name="svn_path" placeholder="请输入SVN路径"></textarea>
+                    {% for app in app_select %}
+                    <textarea class="form-control" rows="3" id="svn_path" name="svn_path">{{ app.svn_path }}</textarea>
+                    {% endfor %}
                 </div>
             </div>
             <div class="form-group">
                 <label for="master" class="col-sm-3 control-label">产品master：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="master" name="master" placeholder="请输入产品master">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="master" name="master"  value="{{ app.master }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="owner" class="col-sm-3 control-label">应用负责人：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="owner" name="owner" placeholder="请输入应用负责人">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="owner" name="owner" value="{{ app.owner }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="operator" class="col-sm-3 control-label">运维负责人：</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="operator" name="operator" placeholder="请输入运维负责人">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="operator" name="operator" value="{{ app.operator }}">
+                    {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
             </div>
@@ -170,7 +197,7 @@
                       </button>
                       <button class="king-btn king-success mr10" onclick="check()">
                        提交
-                       </button>
+                      </button>
                 </div>
             </div>
         </form>
@@ -180,70 +207,51 @@
                     </div>
                 </div>
             </div>
-    <script>
-        $(function(){
-             var li = $('.navi li');
-             li.each(function(){
-             $(this).click(function(){
-             if( $(this).hasClass('c-open')){
-                $(this).find('ul').slideUp(350);
-                $(this).removeClass('c-open');
-             }else{
-               $(this).find('ul').slideDown(350);
-               $(this).addClass('c-open');
-               }
-              })
-           });
-        })
-    </script>
-    <script>
-        $(function(){
-                function renderTpl(str, cfg) {
-                    var re = /(#(.+?)#)/g;
 
-                    return str.replace(re, function() {
-                        var val = cfg[arguments[2]]+'';
-                        if(typeof val == 'undefined') {
-                            val = '';
-                        }
-                        return val;
-                    });
-                }
-
-                // 异步请求后台数据
-                $.ajax({
-                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
-                    type: 'GET',
-                    success: function(res){
-                        var _html = ' ';
-                        var list = res.items;
-                        var tpl = $('#tpl_1491037257824').html();
-                        var headerTpl =  $('#header_tpl_1491037257824').html();
-                        for (var i=0,len=list.length; i < len; i++){
-                            var item = list[i];
-                            _html += renderTpl(tpl, item)
-                        }
-                        $('#code_1491037257824 tbody').html(_html);
-                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
-                    }
-                });
-            });
-    </script>
 <script type="text/javascript">
 
 function check(){
     var name = document.getElementById("name").value;
-
     if(name != ""){
-        alert("提交成功");
+        // alert("提交成功");
         // alert(document.getElementById('pre_release_time').value);
-        document.getElementById('form-horizontal').submit(); //验证成功进行表单提交
+        document.getElementById('downForm').submit(); //验证成功进行表单提交
     }else{
         alert("应用名不能为空！");
         return false;
         // window.location.href="/apply/"; 可以将其连接到指定的位置
     }
 }
+</script>
+
+<script type="text/javascript">
+   	var select_type = $("#app_type_check").attr("value")
+   	var options = $("#type option")
+	for(var i = 0; i<options.length;i++) {
+		if(options.eq(i).val() === select_type) {
+			options.eq(i).attr("selected", true)
+		}
+	}
+</script>
+
+<script type="text/javascript">
+   	var select_type = $("#cluster_num_check").attr("value")
+   	var options = $("#cluster_num option")
+	for(var i = 0; i<options.length;i++) {
+		if(options.eq(i).val() === select_type) {
+			options.eq(i).attr("selected", true)
+		}
+	}
+</script>
+
+<script type="text/javascript">
+   	var select_business = $("#business_line").attr("value")
+   	var options = $("#business_select option")
+	for(var i = 0; i<options.length;i++) {
+		if(options.eq(i).val() === select_business) {
+			options.eq(i).attr("selected", true)
+		}
+	}
 </script>
 </body>
 </html>

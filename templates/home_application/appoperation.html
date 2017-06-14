@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>应用列表</title>
+    <title>应用操作</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
@@ -31,165 +31,78 @@
 
 <body class="bg-white" data-bg-color="bg-white">
   <!--   <div class="king-page-box">
-        <div class="king-layout1-main clearfix"> -->
-            <iframe   id="headerFrame"  name="headerFrame" frameborder=0   border=0   width=100%   height=75   src="../header" ></iframe>
+        <div class="king-layout1-main clearfix">
+            <iframe   id="headerFrame"  name="headerFrame" frameborder=0   border=0   width=100%   height=75   src="../header" ></iframe> -->
+  <div id="wrapper">
+        {% include 'home_application/header.html' %}
+        {% block header %}{% endblock %}
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                {% block content %}{% endblock %}
+                {% include 'home_application/menu.html' %}
+            </div>
+        </div>
+  </div>
             <!-- content start -->
             <div class="king-content-wrap">
-                <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe>
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1020px;">
+                <!-- <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">应用列表</h3>
+                            <h3 class="panel-title">应用操作</h3>
                         </div>
+
 <!--HTML-->
-<div class="row">
-    <!-- 内联布局表单-1 Start -->
-    <form class="form-inline">
-        <div class="form-group mr10">
-            <label for="exampleInputNameTest">    </label>
-        </div>
-         <div class="form-group mr10">
-            <label for="exampleInputNameTest">    </label>
-        </div>
-        <div class="form-group mr10">
-            <label for="exampleInputName2">业务线：</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="请输入业务线">
-        </div>
-
-        <div class="form-group mr5">
-            <label for="exampleInputEmail2">应用名称：</label>
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="请输入应用">
-        </div>
-
-        <div class="form-group mr10">
-            <label for="exampleInputName2">负责人：</label>
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="请输入申请人">
-        </div>
-
-        <button type="submit" class="king-btn king-info">查询</button>
-    </form>
-    <!-- 内联布局表单-1 End -->
+<div class="form-inline" style="float: right">
+            <form id="search_form" method="get" action="" class="pull-right mail-search">
+                <div class="input-group">
+                    <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                        </div>
+                 </div>
+             </form>
 </div>
 
 <table id="table2_demo1" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>业务线</th>
-            <th>应用名称</th>
-            <th>负责人</th>
-            <th>当前版本</th>
-            <th>服务器IP</th>
-            <th>操作</th>
+            <th class="text-center">ID</th>
+            <th class="text-center">业务线</th>
+            <th class="text-center">应用名称</th>
+            <th class="text-center">负责人</th>
+            <th class="text-center">当前版本</th>
+            <th class="text-center">服务器IP</th>
+            <th class="text-center">操作</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>掌上云医院</td>
-            <td>hygea</td>
-            <td>雷晓晨</td>
-            <td>4.5</td>
-            <td>10.3.31.100;10.3.31.101</td>
+    {% for post in contacts.object_list %}
+        <tr class="gradeX">
+            <td class="text-center"><a href="{% url 'home_application.views.app_edit' %}?id={{ post.id }}">{{ post.id }}</a></td>
+            <td class="text-center">{{ post.business_name }}</td>
+            <td class="text-center">{{ post.name }}</td>
+            <td class="text-center">{{ post.owner }}</td>
+            <td class="text-center">{{ post.version_id }}</td>
+            <td class="text-center">{{ post.target_server_ip }}</td>
             <td>
-                <button class="king-btn-demo king-btn king-round king-warning" title="重启">
+                <button class="king-btn-demo king-btn king-round king-warning" title="重启" data-toggle="confirmation" data-placement="top" data-original-title="" >
                     <i class="fa fa-cog btn-icon"></i>重启
                 </button>
                 <button class="king-btn-demo king-btn king-round king-success" title="启动">启动</button>
                 <button class="king-btn-demo king-btn king-round king-danger" title="停止">停止</button>
             </td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>云his</td>
-            <td>audit</td>
-            <td>赵佳丽</td>
-            <td>1.5</td>
-            <td>10.3.31.102;10.3.31.103</td>
-            <td>
-                <button class="king-btn-demo king-btn king-round king-warning" title="重启">
-                    <i class="fa fa-cog btn-icon"></i>重启
-                </button>
-                <button class="king-btn-demo king-btn king-round king-success" title="启动">启动</button>
-                <button class="king-btn-demo king-btn king-round king-danger" title="停止">停止</button>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>HMBOSS</td>
-            <td>hmbosspro</td>
-            <td>聂成伟</td>
-            <td>2.5</td>
-            <td>10.3.31.105</td>
-            <td>
-                <button class="king-btn-demo king-btn king-round king-warning" title="重启">
-                    <i class="fa fa-cog btn-icon"></i>重启
-                </button>
-                <button class="king-btn-demo king-btn king-round king-success" title="启动">启动</button>
-                <button class="king-btn-demo king-btn king-round king-danger" title="停止">停止</button>
-            </td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>智能终端</td>
-            <td>ikeeper</td>
-            <td>罗琦</td>
-            <td>1.2</td>
-            <td>10.3.31.106;10.3.31.107</td>
-            <td>
-                <button class="king-btn-demo king-btn king-round king-warning" title="重启">
-                    <i class="fa fa-cog btn-icon"></i>重启
-                </button>
-                <button class="king-btn-demo king-btn king-round king-success" title="启动">启动</button>
-                <button class="king-btn-demo king-btn king-round king-danger" title="停止">停止</button>
-            </td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>ISLEEP</td>
-            <td>iSleep</td>
-            <td>陈颜宇</td>
-            <td>1.5</td>
-            <td>10.3.31.108</td>
-            <td>
-                <button class="king-btn-demo king-btn king-round king-warning" title="重启">
-                    <i class="fa fa-cog btn-icon"></i>重启
-                </button>
-                <button class="king-btn-demo king-btn king-round king-success" title="启动">启动</button>
-                <button class="king-btn-demo king-btn king-round king-danger" title="停止">停止</button>
-            </td>
-        </tr>
+    {% endfor %}
     </tbody>
-    <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <div class="pull-right king-page-box">
-                            <p class="pull-left mt15 mr15">
-                                共<span id="total">25</span>条记录，当前第<span id="cur_page">1</span>/<span id="total_page">5</span>页
-                            </p>
-                            <ul class="pagination pagination-sm pull-left mt10">
-                                <li class="disabled">
-                                    <a href="javascript:;" aria-label="Previous">
-                                        <span aria-hidden="true">«</span>
-                                    </a>
-                                </li>
-                                <li class="active"><a href="javascript:;">1</a></li>
-                                <li><a href="javascript:;">2</a></li>
-                                <li><a href="javascript:;">3</a></li>
-                                <li><a href="javascript:;">4</a></li>
-                                <li><a href="javascript:;">5</a></li>
-                                <li>
-                                    <a href="javascript:;" aria-label="Next">
-                                        <span aria-hidden="true">»</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
 </table>
-
+              <div class="row">
+                   <div class="col-sm-6"></div>
+                   {% include 'paginator.html' %}
+              </div>
+        </div>
+    </div>
+</div>
     <script>
         $(function(){
              var li = $('.navi li');
@@ -239,6 +152,36 @@
                 });
             });
     </script>
+    <script>
+        //table4_demo4_js_start
+        // 创建多选下拉菜单元素
+        var s_fuzeren = $("#s_fuzeren").data();
+        var s_yewuxian = $("#s_yewuxian").data();
+        var s_yingyongmingcheng = $("#s_yingyongmingcheng").data();
+
+        $("#get").click(function() {
+            alert("Attendees:\n\ns_fuzeren: " + s_fuzeren.value() + "\ns_yewuxian: " + s_yewuxian.value() + "\ns_yingyongmingcheng: " + s_yingyongmingcheng.value());
+        });
+        // 创建数据表
+        $("#grid").kendoGrid({
+            dataSource: {
+                pageSize: 10
+            },
+            sortable: true,
+            scrollable: false,
+            pageable: {
+                pageSizes: true,
+                buttonCount: 5
+            }
+        });
+        var grid3 = $('#table2_demo1').data('kendoGrid');
+        $('#table2_demo1').on('click','.add-user',function(){
+            grid3.addRow(); //插件编辑行
+            return false;
+        });
+        //table4_demo4_js_end
+    </script>
+
 </body>
 
 </html>
