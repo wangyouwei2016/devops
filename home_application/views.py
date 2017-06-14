@@ -120,10 +120,10 @@ def index(request):
     """
     新版首页
     """
-    # result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
-    # print '1',result
-    # for s in result:
-    #     print s
+    result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
+    print '1',result
+    for s in result:
+        print s
     return render_to_response('home_application/index.html', locals(), context_instance=RequestContext(request))
 
 def header(request):
