@@ -19,9 +19,9 @@ from django.template.context_processors import csrf
 def compute(request):
 
     result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
-    print '1', result
-    for s in result:
-        print s
+    # print '1', result
+    # for s in result:
+    #     print s
     return render_to_response('home_application/monitor.html', locals(), context_instance=RequestContext(request))
 
 def get_table(ip, user, passwd, port):
@@ -72,6 +72,7 @@ def get_error():
         sql = "SELECT COUNT(*) FROM monitor_url_status WHERE HttpCode != 200 AND HttpCode !=302 "
         cur.execute(sql)
         errorcount = cur.fetchall()[0]
+        print errorcount
         cur.close()
         conn.close()
     except MySQLdb.Error, e:
@@ -79,6 +80,7 @@ def get_error():
     except Exception, e1:
         print e1
     return errorcount
+
 
 def get_urlslow():
     try:
@@ -541,31 +543,91 @@ def monitor(request):
     """
     ss=250 #定义一个变量赋值，然后在界面中展示
 
+    errorcount=get_error()[0] #定义一个变量赋值，然后在界面中展示
+    urlslow=get_urlslow()[0]
+
     result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
-    print '1', result
-    for s in result:
-        print s
+    # print '1', result
+    # for s in result:
+    #     print s
     return render_to_response('home_application/monitor.html', locals(), context_instance=RequestContext(request))
 
 def urllist(request):
     """
-    发布列表
+    url检测速度
     """
     urldb = get_urllist('10.32.145.112', 'root', 'bk@321', 3306)
-    print '1',urldb
-    for s in urldb:
-        print s
+    # print '1', urldb
+    # for s in urldb:
+    #     print s
     return render_to_response('home_application/urllist.html', locals(), context_instance=RequestContext(request))
 
 
 def elk(request):
     """
-    发布列表
+    日志系统
     """
     return render_mako_context(request, '/home_application/elk.html')
 
+def get_all():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM apache_count WHERE note= 'ALL' ORDER BY time DESC LIMIT 1 "
+        cur.execute(sql)
+        allcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return allcount
+def get_nb():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM apache_count WHERE note= 'nb' ORDER BY time DESC LIMIT 1 "
+        cur.execute(sql)
+        nbcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return nbcount
+
 def logstatus(request):
-    """
-    发布列表
-    """
-    return render_mako_context(request, '/home_application/logstash.html')
+    ss = 250  # 定义一个变量赋值，然后在界面中展示
+    allcount=get_all()[0] #定义一个变量赋值，然后在界面中展示
+    ipcount=get_all()[1]
+    nbcount=get_nb()[0] #从get_nb函数中获取宁波的访问量数据
+    nbipcount=get_nb()[1]
+    result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
+    return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
+
+# def get_json(request):
+#     json_data = {
+#     "code":0,
+#     "result": true,
+#     "messge":"success",
+#     "data":{
+#         "xAxis":["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+#         "series" : [
+#             {
+#                 "name":"请求响应数(万次)",
+#                 "type":"line",
+#                 "data":[6100, 6160, 9130, 11090, 8100]
+#             },
+#             {
+#                 "name":"独立IP(万个)",
+#                 "type":"line",
+#                 "data":[0, 0, 0, 0, 11]
+#             }
+#         ]
+#     }
+#     }
+#     return render_json(json_data)

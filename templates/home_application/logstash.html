@@ -67,14 +67,14 @@
                                                                     <div class="row no-space">
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
-                                                                                <div class="king-counter-label text-uppercase">当月pv</div>
+                                                                                <span class="king-counter-number">{{ allcount }}</span>
+                                                                                <div class="king-counter-label text-uppercase">当日pv</div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
-                                                                                <div class="king-counter-label text-uppercase">当月IP</div>
+                                                                                <span class="king-counter-number">{{ ipcount }}</span>
+                                                                                <div class="king-counter-label text-uppercase">当日IP</div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -98,14 +98,14 @@
                                                                     <div class="row no-space">
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
-                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                                <span class="king-counter-number">{{ nbcount }}</span>
+                                                                                <div class="king-counter-label text-uppercase">当日pv</div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
-                                                                                <div class="king-counter-label text-uppercase">Online Players</div>
+                                                                                <span class="king-counter-number">{{ nbipcount }}</span>
+                                                                                <div class="king-counter-label text-uppercase">当日IP</div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -129,13 +129,13 @@
                                                                     <div class="row no-space">
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
+                                                                                <span class="king-counter-number">1</span>
                                                                                 <div class="king-counter-label text-uppercase">Online Players</div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
                                                                             <div class="king-counter king-counter-lg">
-                                                                                <span class="king-counter-number">286</span>
+                                                                                <span class="king-counter-number">1</span>
                                                                                 <div class="king-counter-label text-uppercase">Online Players</div>
                                                                             </div>
                                                                         </div>
@@ -209,15 +209,15 @@
                                                                     <ul class="list-justified text-center">
                                                                         <li>
                                                                             <p class="f24">679</p>
-                                                                            <p>粉丝</p>
+                                                                            <p>生产环境虚拟机</p>
                                                                         </li>
                                                                         <li>
                                                                             <p class="f24">575</p>
-                                                                            <p>微博</p>
+                                                                            <p>xk环境虚拟机</p>
                                                                         </li>
                                                                         <li>
                                                                             <p class="f24">23</p>
-                                                                            <p>关注</p>
+                                                                            <p>集成与其他环境虚拟机</p>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -229,15 +229,15 @@
                                                                     <ul class="list-justified text-center">
                                                                         <li>
                                                                             <p class="f24">679</p>
-                                                                            <p>粉丝</p>
+                                                                            <p>aws环境ec2数量</p>
                                                                         </li>
                                                                         <li>
                                                                             <p class="f24">575</p>
-                                                                            <p>微博</p>
+                                                                            <p>灾备环境虚拟机数量</p>
                                                                         </li>
                                                                         <li>
                                                                             <p class="f24">23</p>
-                                                                            <p>关注</p>
+                                                                            <p>总计</p>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -762,7 +762,7 @@
     <script>
         $(function(){
             initEStandLineChart({
-                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                url: 'https://dn-lntongze.qbox.me/dl_all.json',
                 dataType: 'json',
                 containerId: 'chart_1497342284346'
             });
@@ -771,7 +771,7 @@
     <script>
         $(function(){
             initEStandLineChart({
-                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                url: 'https://dn-lntongze.qbox.me/nb_all.json',
                 dataType: 'json',
                 containerId: 'chart_1497342292030'
             });
