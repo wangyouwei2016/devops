@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>业务看板</title>
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
     <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -188,36 +188,16 @@
                                                                 <div class="list-justified-container">
                                                                     <ul class="list-justified text-center">
                                                                         <li>
-                                                                            <p class="f24">总内存100000G</p>
-                                                                            <p>总磁盘100000G</p>
+                                                                            <p class="f24">总内存2495G</p>
+                                                                            <p>剩余589G</p>
                                                                         </li>
                                                                         <li>
-                                                                            <p class="f24">555G</p>
-                                                                            <p>大连剩余内存</p>
+                                                                            <p class="f24">总存储48586G</p>
+                                                                            <p>剩余9777G</p>
                                                                         </li>
                                                                         <li>
-                                                                            <p class="f24">666G</p>
-                                                                            <p>大连剩余磁盘</p>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <!-- 设置面板Start -->
-                                                            <!-- 设置面板End -->
-                                                            <div class="panel mb0 panel-box  ">
-                                                                <div class="list-justified-container">
-                                                                    <ul class="list-justified text-center">
-                                                                        <li>
-                                                                            <p class="f24">679</p>
-                                                                            <p>生产环境虚拟机</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p class="f24">575</p>
-                                                                            <p>xk环境虚拟机</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p class="f24">23</p>
-                                                                            <p>集成与其他环境虚拟机</p>
+                                                                            <p class="f24">电信100M</p>
+                                                                            <p>联通10M</p>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -228,15 +208,35 @@
                                                                 <div class="list-justified-container">
                                                                     <ul class="list-justified text-center">
                                                                         <li>
-                                                                            <p class="f24">679</p>
+                                                                            <p class="f24">{{ procount }}</p>
+                                                                            <p>生产环境主机</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">{{ xkcount }}</p>
+                                                                            <p>xk环境主机</p>
+                                                                        </li>
+                                                                        <li>
+                                                                            <p class="f24">{{ jccount }}</p>
+                                                                            <p>集成与其他环境主机</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <!-- 设置面板Start -->
+                                                            <!-- 设置面板End -->
+                                                            <div class="panel mb0 panel-box  ">
+                                                                <div class="list-justified-container">
+                                                                    <ul class="list-justified text-center">
+                                                                        <li>
+                                                                            <p class="f24">5</p>
                                                                             <p>aws环境ec2数量</p>
                                                                         </li>
                                                                         <li>
-                                                                            <p class="f24">575</p>
-                                                                            <p>灾备环境虚拟机数量</p>
+                                                                            <p class="f24">{{ zbcount }}</p>
+                                                                            <p>灾备环境主机数量</p>
                                                                         </li>
                                                                         <li>
-                                                                            <p class="f24">23</p>
+                                                                            <p class="f24">{{ allcount }}</p>
                                                                             <p>总计</p>
                                                                         </li>
                                                                     </ul>
@@ -357,13 +357,10 @@
                                                                             <p>生产环境oracle</p>
                                                                         </li>
                                                                         <li>
-                                                                            <p class="f24">78</p>
-                                                                            <p>其他环境数据库</p>
+                                                                            <p class="f24">14</p>
+                                                                            <p>xk环境数据库</p>
                                                                         </li>
-                                                                        <li>
-                                                                            <p class="f24">133个</p>
-                                                                            <p>总计</p>
-                                                                        </li>
+
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -780,7 +777,7 @@
     <script>
         $(function(){
             initEStandLineChart({
-                url: 'https://magicbox.bkclouds.cc/static_api/v3/components/chart3/demo.json',
+                url: 'https://dn-lntongze.qbox.me/ycyl.json',
                 dataType: 'json',
                 containerId: 'chart_1497343356326'
             });

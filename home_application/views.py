@@ -600,13 +600,80 @@ def get_nb():
         print e1
     return nbcount
 
+def get_procount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' "
+        cur.execute(sql)
+        procount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return procount
+def get_xkcount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '5' "
+        cur.execute(sql)
+        xkcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return xkcount
+
+def get_jccount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '4' "
+        cur.execute(sql)
+        jccount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return jccount
+
+def get_zbcount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '7' "
+        cur.execute(sql)
+        zbcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return zbcount
 def logstatus(request):
     ss = 250  # 定义一个变量赋值，然后在界面中展示
     allcount=get_all()[0] #定义一个变量赋值，然后在界面中展示
     ipcount=get_all()[1]
     nbcount=get_nb()[0] #从get_nb函数中获取宁波的访问量数据
     nbipcount=get_nb()[1]
-    result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
+    procount=get_procount()[0]
+    xkcount=get_xkcount()[0]
+    jccount=get_jccount()[0]
+    zbcount=get_zbcount()[0]
+    allcount=xkcount+jccount+procount+zbcount+5
+
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
 # def get_json(request):
