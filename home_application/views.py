@@ -662,6 +662,38 @@ def get_zbcount():
     except Exception, e1:
         print e1
     return zbcount
+
+def get_proappcount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(*) FROM cc_ModuleBase WHERE ApplicationID = '6' AND SetID != 38"
+        cur.execute(sql)
+        proappcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return proappcount
+
+def get_xkappcount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(*) FROM cc_ModuleBase WHERE ApplicationID = '5' AND SetID != 24"
+        cur.execute(sql)
+        xkappcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return xkappcount
 def logstatus(request):
     ss = 250  # 定义一个变量赋值，然后在界面中展示
     allcount=get_all()[0] #定义一个变量赋值，然后在界面中展示
@@ -672,8 +704,10 @@ def logstatus(request):
     xkcount=get_xkcount()[0]
     jccount=get_jccount()[0]
     zbcount=get_zbcount()[0]
-    allcount=xkcount+jccount+procount+zbcount+5
-
+    proappcount=get_proappcount()[0]
+    xkappcount = get_xkappcount()[0]
+    allcount1=xkcount+jccount+procount+zbcount+5
+    print allcount
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
 # def get_json(request):
