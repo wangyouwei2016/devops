@@ -720,12 +720,19 @@ def get_zcptczj():
         cur.execute(sql)
         zcptczj = cur.fetchall()[0]
         cur.close()
+
+        cur1 = conn.cursor()
+        sql1 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' "
+        cur1.execute(sql1)
+        zsyyy = cur1.fetchall()[0]
+        cur.close()
+
         conn.close()
     except MySQLdb.Error, e:
         pass
     except Exception, e1:
         print e1
-    return zcptczj
+    return zcptczj,zsyyy
 
 def logstatus(request):
     ss = 250  # 定义一个变量赋值，然后在界面中展示
@@ -741,7 +748,8 @@ def logstatus(request):
     xkappcount = get_xkappcount()[0]
     allcount1=xkcount+jccount+procount+zbcount+5
     zcptccount=get_zcptccount()[0]
-    zcptczj=get_zcptczj()[0]
-    print allcount
+    zcptczj=get_zcptczj()[0][0]
+    zsyyy=get_zcptczj()[1][0]
+    print zsyyy
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
