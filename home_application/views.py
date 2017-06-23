@@ -694,6 +694,39 @@ def get_xkappcount():
     except Exception, e1:
         print e1
     return xkappcount
+def get_zcptccount():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(*) FROM cc_ModuleBase WHERE ApplicationID = '6' AND SetID != 37"
+        sqlzcptc = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '7' "
+        cur.execute(sql)
+        zcptccount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return zcptccount
+
+def get_zcptczj():
+    try:
+        conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 37"
+        cur.execute(sql)
+        zcptczj = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return zcptczj
+
 def logstatus(request):
     ss = 250  # 定义一个变量赋值，然后在界面中展示
     allcount=get_all()[0] #定义一个变量赋值，然后在界面中展示
@@ -707,28 +740,8 @@ def logstatus(request):
     proappcount=get_proappcount()[0]
     xkappcount = get_xkappcount()[0]
     allcount1=xkcount+jccount+procount+zbcount+5
+    zcptccount=get_zcptccount()[0]
+    zcptczj=get_zcptczj()[0]
     print allcount
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
-# def get_json(request):
-#     json_data = {
-#     "code":0,
-#     "result": true,
-#     "messge":"success",
-#     "data":{
-#         "xAxis":["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-#         "series" : [
-#             {
-#                 "name":"请求响应数(万次)",
-#                 "type":"line",
-#                 "data":[6100, 6160, 9130, 11090, 8100]
-#             },
-#             {
-#                 "name":"独立IP(万个)",
-#                 "type":"line",
-#                 "data":[0, 0, 0, 0, 11]
-#             }
-#         ]
-#     }
-#     }
-#     return render_json(json_data)
