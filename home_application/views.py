@@ -699,8 +699,7 @@ def get_zcptccount():
         conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
                                connect_timeout=10, port=int(3306), charset='utf8')
         cur = conn.cursor()
-        sql = "SELECT count(*) FROM cc_ModuleBase WHERE ApplicationID = '6' AND SetID != 37"
-        sqlzcptc = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '7' "
+        sql = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 37"
         cur.execute(sql)
         zcptccount = cur.fetchall()[0]
         cur.close()
@@ -710,6 +709,7 @@ def get_zcptccount():
     except Exception, e1:
         print e1
     return zcptccount
+
 
 def get_zcptczj():
     try:
@@ -722,17 +722,143 @@ def get_zcptczj():
         cur.close()
 
         cur1 = conn.cursor()
-        sql1 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' "
+        sql1 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 39"
         cur1.execute(sql1)
         zsyyy = cur1.fetchall()[0]
-        cur.close()
+        cur1.close()
+
+        cur2 = conn.cursor()
+        sql2 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 39"
+        cur2.execute(sql2)
+        zsyyyzj = cur2.fetchall()[0]
+        cur2.close()
+
+        cur3 = conn.cursor()
+        sql3 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 40"
+        cur3.execute(sql3)
+        clhis = cur3.fetchall()[0]
+        cur3.close()
+
+        cur4 = conn.cursor()
+        sql4 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 40"
+        cur4.execute(sql4)
+        clhiszj = cur4.fetchall()[0]
+        cur4.close()
+
+        cur5 = conn.cursor()
+        sql5 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 41"
+        cur5.execute(sql5)
+        csyyy = cur5.fetchall()[0]
+        cur5.close()
+
+        cur6 = conn.cursor()
+        sql6 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 41"
+        cur6.execute(sql6)
+        csyyyzj = cur6.fetchall()[0]
+        cur6.close()
+
+        cur7 = conn.cursor()
+        sql7 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 42"
+        cur7.execute(sql7)
+        jgzx = cur7.fetchall()[0]
+        cur7.close()
+
+        cur8 = conn.cursor()
+        sql8 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 42"
+        cur8.execute(sql8)
+        jgzxzj = cur8.fetchall()[0]
+        cur8.close()
+
+        cur9 = conn.cursor()
+        sql9 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 44"
+        cur9.execute(sql9)
+        ylhl = cur9.fetchall()[0]
+        cur9.close()
+
+        cur10 = conn.cursor()
+        sql10 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 44"
+        cur10.execute(sql10)
+        ylhlzj = cur10.fetchall()[0]
+        cur10.close()
+
+        cur11 = conn.cursor()
+        sql11 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 45"
+        cur11.execute(sql11)
+        ycxd = cur11.fetchall()[0]
+        cur11.close()
+
+        cur12 = conn.cursor()
+        sql12 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 45"
+        cur12.execute(sql12)
+        ycxdzj = cur12.fetchall()[0]
+        cur12.close()
+
+        cur13 = conn.cursor()
+        sql13 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 46"
+        cur13.execute(sql13)
+        jkcs = cur13.fetchall()[0]
+        cur13.close()
+
+        cur14 = conn.cursor()
+        sql14 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 46"
+        cur14.execute(sql14)
+        jkcszj = cur14.fetchall()[0]
+        cur14.close()
+
+        cur15 = conn.cursor()
+        sql15 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 47"
+        cur15.execute(sql15)
+        ikeep = cur15.fetchall()[0]
+        cur15.close()
+
+        cur16 = conn.cursor()
+        sql16 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 47"
+        cur16.execute(sql16)
+        ikeepzj = cur16.fetchall()[0]
+        cur16.close()
+
+        cur17 = conn.cursor()
+        sql17 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 48"
+        cur17.execute(sql17)
+        isleep = cur17.fetchall()[0]
+        cur17.close()
+
+        cur18 = conn.cursor()
+        sql18 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 48"
+        cur18.execute(sql18)
+        isleepzj = cur18.fetchall()[0]
+        cur18.close()
+
+        cur19 = conn.cursor()
+        sql19 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 49"
+        cur19.execute(sql19)
+        xkw = cur19.fetchall()[0]
+        cur19.close()
+
+        cur20 = conn.cursor()
+        sql20 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 49"
+        cur20.execute(sql20)
+        xkwzj = cur20.fetchall()[0]
+        cur20.close()
+
+        cur21 = conn.cursor()
+        sql21 = "SELECT count(*) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 50"
+        cur21.execute(sql21)
+        qita = cur21.fetchall()[0]
+        cur21.close()
+
+        cur22 = conn.cursor()
+        sql22 = "SELECT count(DISTINCT HostID) FROM cc_ModuleHostConfig WHERE ApplicationID = '6' AND SetID = 50"
+        cur22.execute(sql22)
+        qitazj = cur22.fetchall()[0]
+        cur22.close()
 
         conn.close()
     except MySQLdb.Error, e:
         pass
     except Exception, e1:
         print e1
-    return zcptczj,zsyyy
+    return zcptczj,zsyyy,zsyyyzj,clhis,clhiszj,csyyy,csyyyzj,jgzx,jgzxzj,ylhl,ylhlzj,ycxd,ycxdzj,jkcs,jkcszj,ikeep,ikeepzj,isleep,isleepzj,xkw,xkwzj,qita,qitazj
 
 def logstatus(request):
     ss = 250  # 定义一个变量赋值，然后在界面中展示
@@ -750,6 +876,26 @@ def logstatus(request):
     zcptccount=get_zcptccount()[0]
     zcptczj=get_zcptczj()[0][0]
     zsyyy=get_zcptczj()[1][0]
-    print zsyyy
+    zsyyyzj=get_zcptczj()[2][0]
+    clhis=get_zcptczj()[3][0]
+    clhiszj=get_zcptczj()[4][0]
+    csyyy=get_zcptczj()[5][0]
+    csyyyzj=get_zcptczj()[6][0]
+    jgzx=get_zcptczj()[7][0]
+    jgzxzj=get_zcptczj()[8][0]
+    ylhl=get_zcptczj()[9][0]
+    ylhlzj=get_zcptczj()[10][0]
+    ycxd=get_zcptczj()[11][0]
+    ycxdzj=get_zcptczj()[12][0]
+    jkcs=get_zcptczj()[13][0]
+    jkcszj=get_zcptczj()[14][0]
+    ikeep=get_zcptczj()[15][0]
+    ikeepzj=get_zcptczj()[16][0]
+    isleep=get_zcptczj()[17][0]
+    isleepzj=get_zcptczj()[18][0]
+    xkw=get_zcptczj()[19][0]
+    xkwzj=get_zcptczj()[20][0]
+    qita=get_zcptczj()[21][0]
+    qitazj=get_zcptczj()[22][0]
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
