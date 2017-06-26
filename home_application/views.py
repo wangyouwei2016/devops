@@ -127,6 +127,11 @@ def index(request):
     for s in result:
         print s
     return render_to_response('home_application/index.html', locals(), context_instance=RequestContext(request))
+def operation(request):
+    """
+    发布列表
+    """
+    return render_mako_context(request, '/home_application/operation.html')
 
 def header(request):
     """
