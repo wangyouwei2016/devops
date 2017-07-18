@@ -130,3 +130,11 @@ class status_info(models.Model):
     def __unicode__(self):
         return self.name
 
+# class load_status(models.Model):
+#     app_name = models.CharField(u"应用名", max_length=20)
+#     ipaddr = models.CharField(u"ip地址", max_length=20)
+#     memoryb = models.CharField(u"内存使用率", max_length=20)
+#     qps = models.CharField(u"并发", max_length=20)
+#     other = models.CharField(u"其他", max_length=40)
+
+

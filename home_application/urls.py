@@ -31,4 +31,5 @@ urlpatterns = patterns('home_application.views',
     (r'^elk/$', 'elk'),
     (r'^logstatus/$', 'logstatus'),
     (r'^operation/$', 'operation'),
+
 )

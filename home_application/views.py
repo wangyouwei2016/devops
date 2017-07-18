@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from common.mymako import render_mako_context, render_mako
+from common.mymako import render_mako_context, render_mako,render_json
 import MySQLdb
 from account.models import BkUser
 from django.shortcuts import render_to_response
@@ -72,7 +72,6 @@ def get_error():
         sql = "SELECT COUNT(*) FROM monitor_url_status WHERE HttpCode != 200 AND HttpCode !=302 "
         cur.execute(sql)
         errorcount = cur.fetchall()[0]
-        print errorcount
         cur.close()
         conn.close()
     except MySQLdb.Error, e:
@@ -123,9 +122,44 @@ def index(request):
     新版首页
     """
     result = get_table('10.32.144.182', 'root', 'tongze@2011', 3306)
-    print '1',result
-    for s in result:
-        print s
+    # print '1',result
+    # for s in result:
+    #     print s
+    procount = get_procount()[0]
+    xkcount = get_xkcount()[0]
+    jccount = get_jccount()[0]
+    zbcount = get_zbcount()[0]
+    proappcount = get_proappcount()[0]
+    xkappcount = get_xkappcount()[0]
+    allcount1 = xkcount + jccount + procount + zbcount + 5
+    zcptccount = get_zcptccount()[0]
+    zcptczj = get_zcptczj()[0][0]
+    zsyyy = get_zcptczj()[1][0]
+    zsyyyzj = get_zcptczj()[2][0]
+    clhis = get_zcptczj()[3][0]
+    clhiszj = get_zcptczj()[4][0]
+    csyyy = get_zcptczj()[5][0]
+    csyyyzj = get_zcptczj()[6][0]
+    jgzx = get_zcptczj()[7][0]
+    jgzxzj = get_zcptczj()[8][0]
+    ylhl = get_zcptczj()[9][0]
+    ylhlzj = get_zcptczj()[10][0]
+    ycxd = get_zcptczj()[11][0]
+    ycxdzj = get_zcptczj()[12][0]
+    jkcs = get_zcptczj()[13][0]
+    jkcszj = get_zcptczj()[14][0]
+    ikeep = get_zcptczj()[15][0]
+    ikeepzj = get_zcptczj()[16][0]
+    isleep = get_zcptczj()[17][0]
+    isleepzj = get_zcptczj()[18][0]
+    xkw = get_zcptczj()[19][0]
+    xkwzj = get_zcptczj()[20][0]
+    qita = get_zcptczj()[21][0]
+    qitazj = get_zcptczj()[22][0]
+    hygeaipall = get_hygeaipall()
+    apphybrid = get_apphybridipall()
+    loadstatus = get_loadstatus()
+    print loadstatus
     return render_to_response('home_application/index.html', locals(), context_instance=RequestContext(request))
 def operation(request):
     """
@@ -902,5 +936,144 @@ def logstatus(request):
     xkwzj=get_zcptczj()[20][0]
     qita=get_zcptczj()[21][0]
     qitazj=get_zcptczj()[22][0]
+    hygeaipall=get_hygeaipall()
+    apphybrid=get_apphybridipall()
+    loadstatus=get_loadstatus()
+    loadstatushis=get_loadstatushis()
+    loadstatushmboss=get_loadstatushmboss()
+    loadstatusycyl = get_loadstatusycyl()
+    ycylipall = get_ycylipall()
+
+    print loadstatus
+
+    #hygeadate=[]
+    # for i in hygeaipall1:
+    #     hygeaipall.append(int(str(i[2])))
+    # for u in hygeaipall1:
+    #     hygeadate.append(str(u[0]))
+
     return render_to_response('home_application/logstash.html', locals(), context_instance=RequestContext(request))
 
+
+def get_hygeaipall():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+
+        #sql = "SELECT t.Person_PHR_Code, t.Person_Name, t.Birthday, t.Gender_Name, t.Person_Nickname,  t.Name_Spell, t.Change_Time FROM acornhc_healthdata.phr_person_basic_info t limit 10"
+
+        sql = "select DATE_FORMAT(time,'%y-%m-%d') as stat_date,note,max(ip) as cnt,pv from apache_count where note='hygea' group by DATE_FORMAT(time,'%y-%m-%d'),note ORDER BY stat_date DESC LIMIT 7 "
+        cur.execute(sql)
+        hygeaipall = cur.fetchall()
+
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        print e
+    except Exception, e1:
+        print e1
+    return hygeaipall
+
+def get_apphybridipall():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+
+        #sql = "SELECT t.Person_PHR_Code, t.Person_Name, t.Birthday, t.Gender_Name, t.Person_Nickname,  t.Name_Spell, t.Change_Time FROM acornhc_healthdata.phr_person_basic_info t limit 10"
+
+        sql = "select DATE_FORMAT(time,'%y-%m-%d') as stat_date,note,max(ip) as cnt,pv from apache_count where note='apphybrid' group by DATE_FORMAT(time,'%y-%m-%d'),note ORDER BY stat_date DESC LIMIT 7 "
+        cur.execute(sql)
+        apphybrid = cur.fetchall()
+
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        print e
+    except Exception, e1:
+        print e1
+    return apphybrid
+
+def get_loadstatus():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM load_status WHERE other='zsyyy' ORDER BY time DESC LIMIT 5 "
+        cur.execute(sql)
+        loadstatus = cur.fetchall()
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return loadstatus
+
+def get_loadstatushis():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM load_status WHERE other= 'his' ORDER BY time DESC LIMIT 2 "
+        cur.execute(sql)
+        loadstatushis = cur.fetchall()
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return loadstatushis
+
+def get_loadstatushmboss():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM load_status WHERE other= 'hmboss' ORDER BY time DESC LIMIT 2 "
+        cur.execute(sql)
+        loadstatushmboss = cur.fetchall()
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return loadstatushmboss
+
+def get_ycylipall():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+
+        #sql = "SELECT t.Person_PHR_Code, t.Person_Name, t.Birthday, t.Gender_Name, t.Person_Nickname,  t.Name_Spell, t.Change_Time FROM acornhc_healthdata.phr_person_basic_info t limit 10"
+
+        sql = "select DATE_FORMAT(time,'%y-%m-%d') as stat_date,note,max(ip) as cnt,pv from apache_count where note='ycyl' group by DATE_FORMAT(time,'%y-%m-%d'),note ORDER BY stat_date DESC LIMIT 7 "
+        cur.execute(sql)
+        ycylipall = cur.fetchall()
+
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        print e
+    except Exception, e1:
+        print e1
+    return ycylipall
+def get_loadstatusycyl():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM load_status WHERE other= 'ycylweb' ORDER BY time DESC LIMIT 5 "
+        cur.execute(sql)
+        loadstatusycyl = cur.fetchall()
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return loadstatusycyl
