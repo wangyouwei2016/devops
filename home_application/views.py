@@ -159,7 +159,7 @@ def index(request):
     hygeaipall = get_hygeaipall()
     apphybrid = get_apphybridipall()
     loadstatus = get_loadstatus()
-    print loadstatus
+    #print loadstatus
     return render_to_response('home_application/index.html', locals(), context_instance=RequestContext(request))
 def operation(request):
     """
@@ -639,6 +639,22 @@ def get_nb():
         print e1
     return nbcount
 
+def get_ycyl():
+    try:
+        conn = MySQLdb.connect(host='10.32.145.112', user='root', passwd='bk@321', db="devops",
+                               connect_timeout=10, port=int(3306), charset='utf8')
+        cur = conn.cursor()
+        sql = "SELECT * FROM apache_count WHERE note= 'ycyl' ORDER BY time DESC LIMIT 1 "
+        cur.execute(sql)
+        ycylcount = cur.fetchall()[0]
+        cur.close()
+        conn.close()
+    except MySQLdb.Error, e:
+        pass
+    except Exception, e1:
+        print e1
+    return ycylcount
+
 def get_procount():
     try:
         conn = MySQLdb.connect(host='10.3.54.189', user='root', passwd='bk@321', db="cmdb",
@@ -905,6 +921,8 @@ def logstatus(request):
     ipcount=get_all()[1]
     nbcount=get_nb()[0] #从get_nb函数中获取宁波的访问量数据
     nbipcount=get_nb()[1]
+    ycylcount=get_ycyl()[0] #从get_nb函数中获取宁波的访问量数据
+    ycylipcount=get_ycyl()[1]
     procount=get_procount()[0]
     xkcount=get_xkcount()[0]
     jccount=get_jccount()[0]
@@ -944,7 +962,7 @@ def logstatus(request):
     loadstatusycyl = get_loadstatusycyl()
     ycylipall = get_ycylipall()
 
-    print loadstatus
+    #print loadstatus
 
     #hygeadate=[]
     # for i in hygeaipall1:
@@ -1051,7 +1069,7 @@ def get_ycylipall():
 
         #sql = "SELECT t.Person_PHR_Code, t.Person_Name, t.Birthday, t.Gender_Name, t.Person_Nickname,  t.Name_Spell, t.Change_Time FROM acornhc_healthdata.phr_person_basic_info t limit 10"
 
-        sql = "select DATE_FORMAT(time,'%y-%m-%d') as stat_date,note,max(ip) as cnt,pv from apache_count where note='ycyl' group by DATE_FORMAT(time,'%y-%m-%d'),note ORDER BY stat_date DESC LIMIT 7 "
+        sql = "select DATE_FORMAT(time,'%y-%m-%d') as stat_date,note,max(ip) as cnt,max(pv) from apache_count where note='ycyl' group by DATE_FORMAT(time,'%y-%m-%d'),note ORDER BY stat_date DESC LIMIT 7 "
         cur.execute(sql)
         ycylipall = cur.fetchall()
 
