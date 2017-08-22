@@ -47,7 +47,7 @@
             <!-- content start -->
             <div class="king-content-wrap">
                <!-- <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">审核发布</h3>
@@ -80,13 +80,13 @@
                         </div>
                     </div>
                     <br />
-                    <br />
-                    <div class="panel king-panel1 mb0  ">
+<!--HTML-->
+<div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">审核发布</h3>
                         </div>
-<!--HTML-->
-
+<div class="tab-content">
+    <div class="row">
         <div class="form-inline" style="float: right">
             <form id="search_form" method="get" action="" class="pull-right mail-search">
                 <div class="input-group">
@@ -97,6 +97,7 @@
                  </div>
              </form>
          </div>
+    </div>
 
 <table id="table2_demo1" class="table table-bordered table-hover">
     <thead>
@@ -114,23 +115,35 @@
     </thead>
     <tbody>
        {% for post in contacts.object_list %}
-                                <tr class="gradeX">
-                                    <td class="text-center"> {{ post.id }} </td>
-                                    <td class="text-center"> {{ post.business_name }} </td>
-                                    <td class="text-center"> {{ post.applications_name }} </td>
-                                    <td class="text-center"> {{ post.applicant }} </td>
-                                    <td class="text-center"> {{ post.date_added |date:'Y-m-d H:i:s' }} </td>
-                                    <td class="text-center"> <span class="label label-success">{{ post.status }}</span> </td>
-                                    <td class="text-center"> {{ post.release_version}} </td>
-                                    <td class="text-center"> {{ post.latest_version}} </td>
-                                    <td class="text-center" data-editable='false'>
-                                        <a value="{% url 'home_application.views.review_pass' %}?id={{ post.id }}" class="btn btn-xs btn-info review_pass">通过</a>
-                                        <a value="{% url 'home_application.views.review_back' %}?id={{ post.id }}" class="btn btn-xs btn-danger review_back">退回</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+           <tr class="gradeX">
+               <td class="text-center"> <a href="{% url 'home_application.views.apply_info' %}?id={{ post.id }}">{{ post.id }}</a> </td>
+               <td class="text-center"> {{ post.business_name }} </td>
+               <td class="text-center"> {{ post.applications_name }} </td>
+               <td class="text-center"> {{ post.applicant }} </td>
+               <td class="text-center"> {{ post.date_added |date:'Y-m-d H:i:s' }} </td>
+               <td class="text-center">
+                   {% if post.status == "生产发布中" %}
+                       <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                    {% endif %}
+                   {% if post.status == "线上待发布" %}
+                   <span class="label label-warning">{{ post.status }}</span>
+                   {% endif %}
+                   {% if post.status == "生产测试退回" %}
+                   <span class="label label-danger">{{ post.status }}</span>
+                   {% endif %}
+               </td>
+               <td class="text-center"> {{ post.release_version}} </td>
+               <td class="text-center"> {{ post.latest_version}} </td>
+               <td class="text-center" data-editable='false'>
+                   <a value="{% url 'home_application.views.review_pass' %}?id={{ post.id }}" class="btn btn-xs btn-info review_pass">上线</a>
+                   <a value="{% url 'home_application.views.review_back' %}?id={{ post.id }}" class="btn btn-xs btn-warning review_back">退回</a>
+                   <a value="{% url 'home_application.views.review_rollback' %}?id={{ post.id }}" class="btn btn-xs btn-danger review_rollback">回滚</a>
+               </td>
+           </tr>
+       {% endfor %}
     </tbody>
 </table>
+</div>
                     <div class="row">
                             <div class="col-sm-6">
                             </div>
@@ -144,14 +157,14 @@
     $(document).ready(function(){
         $('.review_pass').click(function(){
             var row = $(this).closest('tr');
-            if (confirm('确认审核发布？')) {
+            if (confirm('确认上线发布？')) {
                 $.get(
                         $(this).attr('value'),
                         {},
                         function (data) {
-                            row.submit()
-                            window.location.href=""
-                            alert("发布已提交！");
+                            row.submit();
+                            window.location.href="";
+                            alert("发布已提交，请等待邮件通知！！");
                        }
                 )
             }
@@ -168,9 +181,28 @@
                         $(this).attr('value'),
                         {},
                         function (data) {
-                            row.submit()
-                            window.location.href=""
+                            row.submit();
+                            window.location.href="";
                             alert("已审核退回！");
+                       }
+                )
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.review_rollback').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm('确认回滚版本？该操作不可逆！')) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.submit();
+                            window.location.href="";
+                            alert("已提交回滚请求，请等待邮件通知！");
                        }
                 )
             }

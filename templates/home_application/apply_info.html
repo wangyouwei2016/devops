@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
-            修改申请信息
+            查看申请信息
         </title>
         <link href="/static/favicon.ico" rel="Shortcut Icon">
         <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
@@ -36,6 +36,8 @@
             <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/respond.min.js">
             </script>
         <![endif]-->
+        <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/switchery-master/dist/switchery.css" rel="stylesheet">
+        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/switchery-master/dist/switchery.js"></script>
     </head>
 
     <body class="bg-white" data-bg-color="bg-white">
@@ -114,7 +116,7 @@
                 <div class="panel king-panel1 mb0  ">
                     <div class="panel-heading king-panel-head1 king-panel-top2">
                         <h3 class="panel-title">
-                            修改申请信息
+                            查看申请信息
                         </h3>
                     </div>
                     <br />
@@ -124,19 +126,52 @@
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-content">
                                         <form id="downForm" class="form-horizontal" method="post">
-                                            {% if emg %}
-                                                <div class="alert alert-danger text-center">{{ emg }}</div>
-                                            {% endif %}
-                                            {% if smg %}
-                                                <div class="alert alert-success text-center">{{ smg }}</div>
-                                            {% endif %}
                                             <div class="form-group">
-                                                <label for="name" class="col-sm-2 control-label">
+                                                <label for="apply_id" class="col-sm-2 control-label">
                                                     ID：
                                                 </label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-8" id="apply_id" style="margin-left: -20px">
                                                     {% for apply in apply_select %}
                                                         <span class="col-sm-1 control-label">{{ apply.id }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="apply_status" class="col-sm-2 control-label">
+                                                    状态：
+                                                </label>
+                                                <div class="col-sm-8" id="apply_status" style="margin-top: 5px" >
+                                                    {% for apply in apply_select %}
+                                                        {% if apply.status == "发布失败" %}
+                                                            <span class="label label-danger" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "提交申请" %}
+                                                            <span class="label label-info">{{ apply.status }}</span>&nbsp;<img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif">
+                                                        {% endif %}
+                                                        {% if apply.status == "XK待测试" %}
+                                                            <span class="label label-info" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "生产待测试" %}
+                                                            <span class="label label-primary">{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "线上待发布" %}
+                                                            <span class="label label-warning" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "XK测试退回" %}
+                                                            <span class="label label-danger" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "生产测试退回" %}
+                                                            <span class="label label-danger" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "审核退回" %}
+                                                            <span class="label label-danger" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "已回滚" %}
+                                                            <span class="label label-default" >{{ apply.status }}</span>
+                                                        {% endif %}
+                                                        {% if apply.status == "完成发布" %}
+                                                            <span class="label label-success" >{{ apply.status }}</span>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </div>
                                             </div>
@@ -149,7 +184,7 @@
                                                     {% for apply in apply_select %}
                                                         <span style="display:none;"><input id="business_line" type="text" value="{{apply.business_id}}"></span>
                                                     {% endfor %}
-                                                    <select id="business_select" name= "business_select" class="col-sm-8" style="width:300px; height: 30px">
+                                                    <select id="business_select" name= "business_select" class="col-sm-8" style="width:300px; height: 30px; background-color: #EEEEEE;" disabled="disabled">
                                                         {% for business in business_list %}
                                                             <option value="{{ business.id }}">{{ business.name }}</option>
                                                         {% endfor %}
@@ -165,14 +200,62 @@
                                                 <label for="name" class="col-sm-2 control-label">
                                                     应用名称：
                                                 </label>
-                                                <div class="col-sm-8">
-                                                    {% for apply in apply_select %}
-                                                    <input id="name" name="name" value="{{ apply.applications_name }}" type="text" class="form-control keywork-input">
+                                                <div class="col-sm-8" id="plugin3_demo2" style="display:inline-block;">
+                                                {% for apply in apply_select %}
+                                                        <span style="display:none;">
+                                                            <input id="app_select_id" type="text" value="{{apply.applications_id}}">
+                                                        </span>
                                                     {% endfor %}
-                                                </div>
+                                                    <select id="app_select" name= "app_select" class="col-sm-8" style="width:300px; height: 30px; background-color: #EEEEEE;" disabled="disabled">
+                                                        {% for app in applications_list %}
+                                                            <option value="{{ app.id }}">{{ app.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 <span class="text-danger mt5 fl">
-                                                    *
+                                                    &nbsp;&nbsp;&nbsp; *
                                                 </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status" class="col-sm-2 control-label">
+                                                    发布类型：
+                                                </label>
+                                                <div class="col-sm-8" id="sumoselect_demo1">
+                                                    {% for apply in apply_select %}
+                                                     <span style="display:none;"><input id="app_type_num" type="text" value="{{apply.type}}"></span>
+                                                     <select id="app_type" name="app_type" class="col-sm-8" style="width:300px; height: 30px; background-color: #EEEEEE;" disabled="disabled">
+                                                        <option value="1" selected="true">
+                                                            全版
+                                                        </option>
+                                                        <option value="2" >
+                                                            补丁
+                                                        </option>
+                                                        <option value="3" >
+                                                            其他
+                                                        </option>
+                                                     </select>
+                                                    {% endfor %}
+                                                    <span class="text-danger mt5 fl">
+                                                     &nbsp;&nbsp;&nbsp; *
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name" class="col-sm-2 control-label">
+                                                    Jenkins打版：
+                                                </label>
+                                                <div class="col-sm-8" style="margin-top: 5px">
+                                                    <div class="switchery_box" id="switchery_demo5">
+                                                        {% for apply in apply_select %}
+                                                            {% if apply.jenkins_select == '200' %}
+                                                            <input type="checkbox" id="jenkins_select" name="jenkins_select" class="js-switch-small" checked="checked" readonly="readonly" >
+                                                            {% endif %}
+                                                            {% if apply.jenkins_select != '200' %}
+                                                            <input type="checkbox" id="jenkins_select" name="jenkins_select" class="js-switch-small"  readonly="readonly">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="war_path" class="col-sm-2 control-label">
@@ -180,7 +263,20 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     {% for apply in apply_select %}
-                                                    <input id="war_path" name="war_path" value="{{ apply.war_path }}" type="text" class="form-control">
+                                                        <input id="war_path" name="war_path" value="{{ apply.war_path }}" type="text" readonly="readonly" class="form-control">
+                                                    {% endfor %}
+                                                </div>
+                                                <span class="text-danger mt5 fl">
+                                                    *
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="version_id" class="col-sm-2 control-label">
+                                                    应用版本：
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    {% for apply in apply_select %}
+                                                        <input id="version_id" name="version_id" value="{{ apply.release_version }}" type="text" readonly="readonly" class="form-control">
                                                     {% endfor %}
                                                 </div>
                                                 <span class="text-danger mt5 fl">
@@ -193,7 +289,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     {% for apply in apply_select %}
-                                                    <input id="version_id" name="version_id" value="{{ apply.release_version }}" type="text" class="form-control">
+                                                        <input id="deploy_version_id" name="deploy_version_id" value="{{ apply.deploy_version }}" type="text" readonly="readonly" class="form-control">
                                                     {% endfor %}
                                                 </div>
                                                 <span class="text-danger mt5 fl">
@@ -206,7 +302,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     {% for apply in apply_select %}
-                                                    <textarea id="release_reason" name="release_reason" class="form-control"  rows="3">{{ apply.release_reason }}</textarea>
+                                                    <textarea id="release_reason" name="release_reason" class="form-control"  readonly="readonly" rows="3">{{ apply.release_reason }}</textarea>
                                                     {% endfor %}
                                                 </div>
                                                 <span class="text-danger mt5 fl">
@@ -214,22 +310,12 @@
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="pre_release_time" class="col-sm-2 control-label">
-                                                    预发布时间：
-                                                </label>
-                                                <div class="col-sm-8" >
-                                                    {% for apply in apply_select %}
-                                                    <input id="pre_release_time" name="pre_release_time" value="{{ apply.pre_release_time|date:'Y-m-d H:i:s' }}" class="form-control" type="text" >
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="svn_path" class="col-sm-2 control-label">
                                                     SVN地址：
                                                 </label>
                                                 <div class="col-sm-8">
                                                     {% for apply in apply_select %}
-                                                    <textarea class="form-control" id="svn_path" name="svn_path" rows="3">{{ apply.svn_path }}</textarea>
+                                                    <textarea class="form-control" id="svn_path" name="svn_path" readonly="readonly" rows="3">{{ apply.svn_path }}</textarea>
                                                     {% endfor %}
                                                 </div>
                                                 <span class="text-danger mt5 fl">
@@ -242,49 +328,40 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     {% for apply in apply_select %}
-                                                     <input id="email_address_post" name="email_address_post" value="{{ apply.email_address }}" type="text" class="form-control">
+                                                        <input id="email_address_post" name="email_address_post" value="{{ apply.email_address }}" type="text" readonly="readonly" class="form-control">
                                                     {% endfor %}
                                                 </div>
                                                 <span class="text-danger mt5 fl">
                                                     *
                                                 </span>
                                             </div>
-                                            <div class="hr-line-dashed">
-                                            </div>
                                             <div class="form-group">
-                                                <label for="status" class="col-sm-2 control-label">
-                                                    发布类型：
+                                                <label for="email_address_post" class="col-sm-2 control-label">
+                                                    申请人：
                                                 </label>
-                                                 <div class="col-sm-8"  style="width:300px; height: 30px">
-                                                     {% for apply in apply_select %}
-                                                     <span style="display:none;"><input id="app_type_num" type="text" value="{{apply.type}}"></span>
-                                                     <select id="app_type" name="app_type">
-                                                         <option value="1">
-                                                            WEB
-                                                         </option>
-                                                         <option value="2">
-                                                            APP
-                                                         </option>
-                                                         <option value="3">
-                                                            接口
-                                                         </option>
-                                                     </select>
-                                                     {% endfor %}
-                                                    <small>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; PS: 请根据实际情况选择。
-                                                    </small>
+                                                <div class="col-sm-8">
+                                                    {% for apply in apply_select %}
+                                                        <input class="form-control" value="{{ apply.applicant }}" type="text" readonly="readonly">
+                                                    {% endfor %}
                                                 </div>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label for="email_address_post" class="col-sm-2 control-label">
+                                                    提交时间：
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    {% for apply in apply_select %}
+                                                        <input class="form-control" value="{{ apply.date_added |date:'Y-m-d H:i:s' }}" type="text" readonly="readonly">
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="col-sm-4 col-sm-offset-2">
-                                                    <button class="king-btn king-default" type="reset">
-                                                        取消
-                                                    </button>
-                                                    <button class="king-btn king-success mr10" onclick="check()">
-                                                        提交
-                                                    </button>
+                                                    </br>
+                                                    <a href="{% url 'home_application.views.applylist' %}" class="king-btn king-success mr10">返回列表</a>
                                                 </div>
+                                            </div>
+                                            <div class="hr-line-dashed">
                                             </div>
                                         </form>
                                     </div>
@@ -300,24 +377,6 @@
         // select2 基础
         $("#plugin3_demo1 .select2_box").select2();
 </script>
-
-
-<script type="text/javascript">
-
-function check(){
-    var name = document.getElementById("name").value;
-    if(name != ""){
-        // alert("提交成功");
-        // alert(document.getElementById('pre_release_time').value);
-        document.getElementById('downForm').submit(); //验证成功进行表单提交
-    }else{
-        alert("应用名不能为空！");
-        return false;
-        // window.location.href="/apply/"; 可以将其连接到指定的位置
-    }
-}
-</script>
-
 <script type="text/javascript">
     //日期选择
     var select_pre_release_time = $("#pre_release_time").attr("value")
@@ -332,6 +391,16 @@ function check(){
         value: select_pre_release_time,
         format : "yyyy-MM-dd HH:mm"
     });
+</script>
+
+<script type="text/javascript">
+   	var select_type = $("#app_select_id").attr("value")
+   	var options = $("#app_select option")
+	for(var i = 0; i<options.length;i++) {
+		if(options.eq(i).val() === select_type) {
+			options.eq(i).attr("selected", true)
+		}
+	}
 </script>
 
 <script type="text/javascript">
@@ -353,5 +422,11 @@ function check(){
 		}
 	}
 </script>
+
+<script type="text/javascript">
+    var small = document.querySelector('.js-switch-small');
+      var switchery = new Switchery(small, { size: 'small' });
+</script>
+
 </body>
 </html>

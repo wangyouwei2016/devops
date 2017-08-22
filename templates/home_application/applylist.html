@@ -70,7 +70,7 @@
         <div class="king-content-wrap">
             <!-- <iframe id="menuFrame" name="menuFrame" frameborder=0 border=0 width=216
             onload="this.height=menuFrame.document.body.scrollHeight" src="../menu"></iframe> -->
-            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
+            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
                 <div class="panel king-panel1 mb0  ">
                     <div class="panel-heading king-panel-head1 king-panel-top2">
                         <h3 class="panel-title">
@@ -133,22 +133,21 @@
                         </h3>
                     </div>
                     <!--HTML-->
-                    <div class="row">
-                        <div class="form-inline" style="float: right">
-                            <form id="search_form" method="get" action="" class="pull-right mail-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control input-sm" id="keyword" name="keyword"
-                                    value="{{ keyword }}" placeholder="Search">
-                                    <div class="input-group-btn">
-                                        <button id='search_btn' type="submit" class="btn btn-sm btn-primary">
-                                            搜索
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
+<div class="tab-content ">
+    <div class="row">
+    <!-- 内联布局表单-1 Start -->
+    <div class="form-inline" style="float: right">
+                <form id="search_form" method="get" action="" class="pull-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                            </div>
+                     </div>
+                 </form>
+    </div>
+    <!-- 内联布局表单-1 End -->
+</div>
                     <!-- 带操作按钮表格-3 Start -->
                     <table id="table2_demo1" class="table table-bordered table-hover">
                         <thead>
@@ -172,6 +171,9 @@
                                     线上版本
                                 </th>
                                 <th class="text-center">
+                                    应用版本
+                                </th>
+                                <th class="text-center">
                                     状态
                                 </th>
                                 <th class="text-center">
@@ -186,7 +188,7 @@
                             {% for post in contacts.object_list %}
                             <tr class="gradeX">
                                 <td class="text-center">
-                                    <a href="{% url 'home_application.views.apply_edit' %}?id={{ post.id }}">{{ post.id }}</a>
+                                    <a href="{% url 'home_application.views.apply_info' %}?id={{ post.id }}">{{ post.id }}</a>
                                 </td>
                                 <td class="text-center">
                                     {{ post.business_name }}
@@ -198,20 +200,57 @@
                                     {{ post.applicant }}
                                 </td>
                                 <td class="text-center">
-                                    {{ post.release_version}}
+                                    {{ post.deploy_version}}
                                 </td>
                                 <td class="text-center">
                                     {{ post.latest_version}}
                                 </td>
                                 <td class="text-center">
-                                     <span class="label label-success">{{ post.status }}</span>
+                                    {{ post.release_version}}
+                                </td>
+                                <td class="text-center">
+                                    {% if post.status == "发布失败" %}
+                                     <span class="label label-danger" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "提交申请" %}
+                                     <span class="label label-danger" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "XK发布中" %}
+                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                                    {% endif %}
+                                    {% if post.status == "生产发布中" %}
+                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                                    {% endif %}
+                                    {% if post.status == "XK待测试" %}
+                                     <span class="label label-info" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "生产待测试" %}
+                                     <span class="label label-primary">{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "线上待发布" %}
+                                     <span class="label label-warning" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "XK测试退回" %}
+                                     <span class="label label-danger" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "生产测试退回" %}
+                                     <span class="label label-danger" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "审核退回" %}
+                                     <span class="label label-danger" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "已回滚" %}
+                                     <span class="label label-default" >{{ post.status }}</span>
+                                    {% endif %}
+                                    {% if post.status == "完成发布" %}
+                                     <span class="label label-success" >{{ post.status }}</span>
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
                                     {{ post.date_added |date:'Y-m-d H:i:s'}}
                                 </td>
                                 <td class="text-center" data-editable='false'>
-                                        <a href="{% url 'home_application.views.apply_edit' %}?id={{ post.id }}" class="btn btn-xs btn-info">编辑</a>
-                                        <a value="{% url 'home_application.views.apply_del' %}?id={{ post.id }}" class="btn btn-xs btn-danger apply_del">删除</a>
+                                        <a href="{% url 'home_application.views.apply_info' %}?id={{ post.id }}" class="btn btn-xs btn-info">查看详情</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -223,6 +262,7 @@
                         {% include 'paginator.html' %}
                     </div>
                     <!-- 带操作按钮表格-3 End -->
+                </div>
                 </div>
             </div>
         </div>
@@ -244,5 +284,19 @@
         });
     });
 </script>
+
+<script>
+        function change_info(){
+        var args = $("#apply_form").serialize();
+        window.location = "{% url 'home_application.views.applylist' %}?" + args
+    }
+
+    $("#search_input").keydown(function(e){
+        if(e.keyCode==13){
+            change_info()
+            }
+    });
+</script>
+
 </body>
 </html>

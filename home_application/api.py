@@ -6,6 +6,10 @@ from django.shortcuts import render_to_response
 from home_application.models import applications
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+import os
+import datetime
+import subprocess
+from home_application.models import deploy_history
 
 def page_list_return(total, current=1):
     """
@@ -85,3 +89,38 @@ def db_add_applications(**kwargs):
         a_d = applications(**kwargs)
         a_d.save()
 
+def ssh_xk_deploy(task_id, war_path, appname):
+    try:
+        a = os.system("ssh root@10.10.18.240 'sh /root/hubot_scripts/hubot_deploy_xk.sh %s %s'" % (war_path, appname))
+        if not a:
+            deploy_history.objects.filter(id=task_id).update(status="XK待测试")
+            return True
+        else:
+            deploy_history.objects.filter(id=task_id).update(status="发布失败")
+            return False
+    except:
+        deploy_history.objects.filter(id=task_id).update(status="发布失败")
+        return False
+
+def ssh_sc_deploy(task_id, war_path, appname):
+    try:
+        if war_path:
+            deploy_date = war_path.split('/')[2]
+            Formal_war_path = war_path.replace('XK', 'Formal')
+            os.system("ssh root@10.10.18.240 'mkdir -p /warehouse/to_deploy/%s/Formal/%s'" % (appname, deploy_date))
+            os.system("ssh root@10.10.18.240 'cp /warehouse/to_deploy/%s /warehouse/to_deploy/%s'" % (war_path, Formal_war_path))
+            a = os.system("ssh root@10.10.18.240 'sh /root/hubot_scripts/hubot_deploy_sc.sh %s %s'" % (Formal_war_path, appname))
+            if not a:
+                deploy_history.objects.filter(id=task_id).update(status="生产待测试")
+                print u"生产发布成功！" + Formal_war_path
+                return True
+            else:
+                deploy_history.objects.filter(id=task_id).update(status="发布失败")
+                print u"生产发布失败！" + Formal_war_path
+                return False
+        else:
+            deploy_history.objects.filter(id=task_id).update(status="生产待测试")
+            print u"这是通过Jenkins打版的。"
+            return True
+    except:
+        return False

@@ -20,23 +20,12 @@
         <!--蓝鲸提供的公用样式库 -->
         <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
         <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
-        <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+        <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/switchery-master/dist/switchery.css" rel="stylesheet">
+        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/switchery-master/dist/switchery.js"></script>
+        <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/css/ui-dialog.css" rel="stylesheet">
         <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
-        <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
-        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
-        <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
-        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
-        <script src="https://magicbox.bkclouds.cc/static_api/v3/bk/js/bk.js"></script>
-        <!-- 数据埋点统计 -->
-        <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
-        <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
-        <!--[if lt IE 9]>
-            <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/html5shiv.min.js">
-            </script>
-            <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/respond.min.js">
-            </script>
-        <![endif]-->
-        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/validate-1.14.0/js/jquery.validate.js"></script>
+        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/dist/dialog-min.js"></script>
+
     </head>
 
     <body class="bg-white" data-bg-color="bg-white">
@@ -57,7 +46,7 @@
         <div class="king-content-wrap">
             <!-- <iframe id="menuFrame" name="menuFrame" frameborder=0 border=0 width=216
             onload="this.height=menuFrame.document.body.scrollHeight" src="../menu"></iframe>-->
-            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
+            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1110px;">
                 <div class="panel king-panel1 mb0  ">
                     <div class="panel-heading king-panel-head1 king-panel-top2">
                         <h3 class="panel-title">
@@ -124,47 +113,70 @@
                             <div class="col-sm-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-content">
+                                        <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/validate-1.14.0/js/jquery.validate.js"></script>
                                         <form id="downForm" class="form-horizontal" method="post">
                                             {% if emg %}
                                                 <div class="alert alert-danger text-center">{{ emg }}</div>
                                             {% endif %}
                                             {% if smg %}
-                                                 <div class="alert alert-success text-center">{{ smg }}</div>
+                                                 <div class="alert alert-success text-center">{{ smg }}<br><a href="/applylist/">返回申请列表查看</a></div>
+
                                             {% endif %}
-                                            <div class="form-group">
+
+                                          <div class="form-group">
                                                 <label for="business_select" class="col-sm-2 control-label">
-                                                    业务线：
+                                                    选择业务线和应用：
                                                 </label>
-                                                <div class="col-sm-8" id="plugin3_demo1" style="display:inline-block;">
-                                                    <!-- select2 静态 start -->
-                                                    <select id="business_select" name= "business_select" class="col-sm-8" style="width:300px; height: 30px">
-                                                        {% for business_name in business_list %}
-                                                             <option value="{{ business_name.id }}">{{ business_name.name }}</option>
-                                                        {% endfor %}
+                                              <div class="col-sm-8" id="cnMap" style="display:inline-block;">
+                                                <select id="business_select1" name="business_select1" class="province other" style="height: 30px" data-first-title="选择业务线">
+                                                  <option value="">请选择</option>
+                                                </select>
+                                                <select id="app_select1" name= "app_select1" class="city" style="height: 30px" data-first-title="选择应用">
+                                                  <option value="">请选择</option>
+                                                </select>
+                                                  <font color="#FF6699">&nbsp;*</font>
+                                                  <small>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp; PS: 新应用请先联系管理员添加。
+                                                  </small>
+                                              </div>
+                                          </div>
+                                            <div class="form-group">
+                                                <label for="status" class="col-sm-2 control-label">
+                                                    发布类型：
+                                                </label>
+                                                <div class="col-sm-8" id="sumoselect_demo1">
+                                                    <select id="app_type" name="app_type" class="col-sm-8" style="width:90px; height: 30px">
+                                                        <option value="1" selected="true">
+                                                            全版
+                                                        </option>
+                                                        <option value="2" >
+                                                            补丁
+                                                        </option>
+                                                        <option value="3" >
+                                                            其他
+                                                        </option>
                                                     </select>
-                                                    <!-- select2 静态 end -->
-                                                     <span class="text-danger mt5 fl">
-                                                        &nbsp;&nbsp;&nbsp; *
-                                                     </span>
+                                                    <span class="text-danger mt5 fl">
+                                                     &nbsp;&nbsp;&nbsp; *
+                                                </span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="name" class="col-sm-2 control-label">
-                                                    应用名称：
+                                                    Jenkins打版：
                                                 </label>
-                                                <div class="col-sm-8">
-                                                    <input id="name" name="name" placeholder="请输入应用名称" type="text" class="form-control keywork-input">
+                                                <div class="col-sm-8" style="margin-top: 5px">
+                                                    <div class="switchery_box" id="switchery_demo5">
+                                                        <input type="checkbox" id="jenkins_select" name="jenkins_select" class="js-switch-small" checked="checked" value="200">
+                                                    </div>
                                                 </div>
-                                                <span class="text-danger mt5 fl">
-                                                    *
-                                                </span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="war_path" class="col-sm-2 control-label">
                                                     程序包位置：
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input id="war_path" name="war_path" placeholder="如：hygea/XK/20170201/hygea.war" type="text" class="form-control">
+                                                    <input id="war_path" name="war_path" placeholder="格式：hygea/XK/20170201/hygea.war，如使用本系统打包，此处可留空！" type="text" class="form-control">
                                                 </div>
                                                 <span class="text-danger mt5 fl">
                                                     *
@@ -172,17 +184,19 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="version_id" class="col-sm-2 control-label">
-                                                    发布版本：
+                                                    应用版本：
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input id="version_id" name="version_id" placeholder="请输入发布版本" type="text" class="form-control">
+                                                    <input id="version_id" name="version_id" placeholder="请输入应用版本号，如：V1.3.1" type="text" data-validation-length="min1" class="form-control">
                                                 </div>
                                                 <span class="text-danger mt5 fl">
                                                     *
                                                 </span>
                                             </div>
+                                            <div id="version_idTip"></div>
+                                            <div class="hr-line-dashed"></div>
                                             <div class="form-group">
-                                                <label for="version_name" class="col-sm-2 control-label">
+                                                <label for="release_reason" class="col-sm-2 control-label">
                                                     发布理由：
                                                 </label>
                                                 <div class="col-sm-8">
@@ -192,14 +206,15 @@
                                                     *
                                                 </span>
                                             </div>
+                                            <!--
                                             <div class="form-group">
                                                 <label for="pre_release_time" class="col-sm-2 control-label">
-                                                    预发布时间：
+                                                    预计发布时间：
                                                 </label>
                                                 <div class="col-sm-8" >
                                                     <input id="pre_release_time" name="pre_release_time" class="form-control" placeholder="选择日期时间..." type="text" >
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="form-group">
                                                 <label for="svn_path" class="col-sm-2 control-label">
                                                     SVN地址：
@@ -213,6 +228,16 @@
                                             </div>
                                             <div class="hr-line-dashed">
                                             </div>
+                                            <!--
+                                            <div class="form-group">
+                                                <label for="svn_path" class="col-sm-2 control-label">
+                                                    SQL脚本：
+                                                </label>
+                                                <div class="col-sm-8" id="kendo_upload_demo3">
+                                                   <label>文件上传：</label>
+                                                   <input name="files" class="file_input" type="file">
+                                                </div>
+                                            </div>-->
                                             <div class="form-group">
                                                 <label for="email_address_post" class="col-sm-2 control-label">
                                                     关系人邮件：
@@ -226,33 +251,13 @@
                                             </div>
                                             <div class="hr-line-dashed">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="status" class="col-sm-2 control-label">
-                                                    发布类型：
-                                                </label>
-                                                <div class="col-sm-8"  style="width:300px; height: 30px">
-                                                    <select id="app_type" name="app_type">
-                                                        <option value="1" selected="true">
-                                                            WEB
-                                                        </option>
-                                                        <option value="2" >
-                                                            APP
-                                                        </option>
-                                                        <option value="3">
-                                                            接口
-                                                        </option>
-                                                    </select>
-                                                    <small>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp; PS: 请根据实际情况选择。
-                                                    </small>
-                                                </div>
-                                            </div>
+
                                             <div class="form-group">
                                                 <div class="col-sm-4 col-sm-offset-2">
                                                     <button class="king-btn king-default" type="reset">
                                                         取消
                                                     </button>
-                                                    <button class="king-btn king-success mr10" onclick="check()">
+                                                    <button class="king-btn king-success mr10" id="plugin4_demo10" onclick="check()">
                                                         提交
                                                     </button>
                                                 </div>
@@ -268,37 +273,113 @@
         </div>
 
 <script type="text/javascript">
-        // select2 基础
-        $("#plugin3_demo1 .select2_box").select2();
+    /*添加手机号验证方法*/
+    $.validator.addMethod("phone",function(value, element, param){
+        if(/^1\d{10}$/.test(value)){
+             return true;
+        }
+    });
+     /* 表单验证 */
+    $('#downForm').validate({
+        errorElement: 'span',
+        errorClass: 'text-danger',
+        rules: {
+           // war_path: {
+           //     required: true,
+           //    minlength: 1
+           // },
+             version_id: {
+                required: true,
+                minlength: 1
+            },
+            release_reason: {
+                required: true,
+                minlength: 1
+            },
+            email_address_post: {
+                required: false,
+                // email: true
+            },
+            validation_password_confirm: {
+                required: true,
+                minlength: 6,
+                equalTo: '#validation_password'
+            },
+            validation_date: {
+                dateISO: true,
+                required: true
+            },
+            business_select1: {
+                required: true
+            },
+            app_select1: {
+                required: true
+            }
+        },
+        messages: {
+            // war_path: "请输入正确的程序包位置，如：hygea/XK/20170101/hygea.war",
+            version_id : "请输入应用版本号",
+            release_reason: "请输入发布理由",
+            email_address_post: "请输入正确的邮箱地址",
+            validation_password_confirm: "两次密码不一致",
+            validation_date: "日期格式：2000-01-01",
+            business_select1:"必须选择业务线",
+            app_select1:"必须选择应用"
+        }
+    });
 </script>
 
-
-
 <script type="text/javascript">
-    //日期选择
-    $('#plugin16_demo1_1').kendoDatePicker({
-        value : new Date(),
-        format : "yyyy-MM-dd"
-    });
-    //时间选择
-    $("#plugin16_demo1_2").kendoTimePicker();
-    //时间日期选择
-    $("#pre_release_time").kendoDateTimePicker({
-        value:new Date(),
-        format : "yyyy-MM-dd HH:mm"
-    });
+    var small = document.querySelector('.js-switch-small');
+      var switchery = new Switchery(small, { size: 'small' });
+      $('.js-switch-small').on('change', function(){
+          a = small.checked;
+          if(a){
+              alert("将使用本系统进行打包！");
+          }else{
+              alert("不使用本系统打包，请填写程序包位置！");
+          }
+      });
+
+</script>
+
+<script src="../../static/js/jquery-1.10.2.min.js"></script>
+<script src="../../static/js/jquery.cxselect.js"></script>
+<script>
+$('#cnMap').cxSelect({
+    url: '../../static/js/cityData.json',
+    //url: 'js/cityData.min.json',
+    selects: ['province', 'city', 'region'],
+    nodata: 'none'
+});
 </script>
 
 <script type="text/javascript">
 
 function check(){
-    var name = document.getElementById("name").value;
-    if(name != ""){
-        // alert("提交成功");
-        // alert(document.getElementById('pre_release_time').value);
-        document.getElementById('downForm').submit(); //验证成功进行表单提交
+    var business_select1 = document.getElementById("business_select1").value;
+    var app_select1 = document.getElementById("app_select1").value;
+    var version_id = document.getElementById("version_id").value;
+    var release_reason = document.getElementById("release_reason").value;
+    var jenkins_select = document.getElementById("jenkins_select").value;
+    if(app_select1 != "" && version_id!="" && release_reason!="" && jenkins_select=="200"){
+        var d = dialog({
+    				width: 440,
+    				title: "提示",
+    				content: '<div class="king-notice3 king-notice-success">'+
+        						'<span class="king-notice-img"></span>'+
+        						'<div class="king-notice-text">'+
+                                '<p class="f24">提交成功</p>'+
+        							'<p class="f12"><span class="king-notice3-color">3秒</span>后跳转至申请页面</p>'+
+        						'</div>'+
+        					'</div>',
+    			});
+        //alert(app_select1);
+        // alert("申请已提交！");
+        d.show();
+        //document.getElementById('downForm').submit(); //验证成功进行表单提交
     }else {
-        alert("应用名不能为空！");
+        //alert("请填写完整信息！");
         return false;
         // window.location.href="/apply/"; 可以将其连接到指定的位置
     }

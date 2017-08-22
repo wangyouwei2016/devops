@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from common.mymako import render_mako_context, render_mako,render_json
+from common.mymako import render_mako_context, render_mako
 import MySQLdb
 from account.models import BkUser
 from django.shortcuts import render_to_response
@@ -9,12 +9,20 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from home_application.models import applications, business_info, deploy_history, status_info, business_applications, applications_config, applications_config_item
-from home_application.api import pages, my_render, ServerError, get_object,db_add_applications
+from home_application.models import applications, business_info, deploy_history, deploy_status_history, jenkins_task_record, business_applications, applications_config, applications_config_item
+from home_application.api import pages, my_render, ServerError, get_object, db_add_applications
 from django.shortcuts import render
+from common.log import logger
 import datetime
 import time
+import os
+import deploy_statuscode
+from json_template import json_template_base_business, json_template_base_month
 from django.template.context_processors import csrf
+# from ansible_playbook_api import ansible_play
+from home_application.mysql2json_api import TableToJson
+from jenkins_lib.corelib2 import get_jenkins_jobs_output, get_jenkins_job_lastbuild_number
+from home_application.celery_tasks import build_task, xk_deploy, sc_deploy
 
 def compute(request):
 
@@ -160,6 +168,63 @@ def index(request):
     apphybrid = get_apphybridipall()
     loadstatus = get_loadstatus()
     #print loadstatus
+
+    # print '1', result
+    # for s in result:
+    #     print s
+    # 统计当月发版总数：
+    cur = datetime.datetime.now()
+    this_month = cur.month
+    all_counts = deploy_history.objects.filter(date_added__month=this_month).count()
+
+    # 统计版本分发次数（发版成功次数）：
+    success_counts = deploy_history.objects.filter(date_added__month=this_month).filter(
+        status=deploy_statuscode.DEPLOY_FIFTH_STATUS).count()
+
+    # 统计退回次数：
+    return_counts = deploy_history.objects.filter(date_added__month=this_month).filter(
+        Q(status=deploy_statuscode.TEST_SC_RETURN_STATUS) | Q(status=deploy_statuscode.TEST_XK_RETURN_STATUS) | Q(
+            status=deploy_statuscode.REVIEW_BACK_STATUS)).count()
+
+    # 版本分发失败率：
+    fail_counts = deploy_history.objects.filter(date_added__month=this_month).filter(
+        Q(status=deploy_statuscode.DEPLOY_FAILED_STATUS) | Q(status=deploy_statuscode.ROLLBACK_STATUS)).count()
+    fail_percent = '%.2f' % (float(fail_counts) / float(all_counts))
+
+    # 按业务线统计：
+    business_counts1 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=1).count()
+    business_counts2 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=2).count()
+    business_counts3 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=3).count()
+    business_counts4 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=4).count()
+    business_counts5 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=5).count()
+    business_counts6 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=6).count()
+    business_counts7 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=7).count()
+    business_counts8 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=8).count()
+    business_counts9 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=9).count()
+    business_counts10 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=10).count()
+    business_counts11 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=11).count()
+    business_counts12 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=12).count()
+    json_template_base_business(business_counts1, business_counts2, business_counts3, business_counts4,
+                                business_counts5,
+                                business_counts6, business_counts7, business_counts8, business_counts9,
+                                business_counts10,
+                                business_counts11, business_counts12)
+
+    # 按月份统计：
+    all_month_counts = []
+    success_month_counts = []
+    for i in range(1, 13):
+        month_count = [deploy_history.objects.filter(date_added__month=i).count()]
+        print month_count
+        all_month_counts = all_month_counts + month_count
+        print all_month_counts
+    for j in range(1, 13):
+        success_month_count = [deploy_history.objects.filter(date_added__month=j).filter(
+            status=deploy_statuscode.DEPLOY_FIFTH_STATUS).count()]
+        print success_month_count
+        success_month_counts = success_month_counts + success_month_count
+    json_template_base_month(all_month_counts, success_month_counts)
+
     return render_to_response('home_application/index.html', locals(), context_instance=RequestContext(request))
 def operation(request):
     """
@@ -179,6 +244,12 @@ def menu(request):
     """
     return my_render('home_application/menu.html', locals(), request)
 
+def Return_Apps_Data(request):
+    business_id = request.GET['business_select']
+    print business_id
+    app_list = applications.objects.filter(business_id=business_id)
+    return HttpResponse(app_list)
+
 def apply(request):
     """
     发布申请
@@ -187,54 +258,161 @@ def apply(request):
     user_email = BkUser.objects.get(username=username).email
     remote_ip = request.META.get('REMOTE_ADDR')
     date_added = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    business_list = business_info.objects.all()
-    business_select = request.GET.get('business_select', '')
-    applications_list = applications.objects.filter(business_id=business_select)
+    business_list = business_info.objects.all().order_by("name")
+    business_select = request.GET.get('business_select1', '')
+    applications_list = applications.objects.all().order_by("name")
 
     if request.method == 'POST':
-        business_id = request.POST.get('business_select', '')
-        business_name = business_info.objects.get(id=business_id).name
-        applications_name = request.POST.get('name', '')
+        business_name = request.POST.get('business_select1', '')
+        applications_name = request.POST.get('app_select1', '')
         war_path = request.POST.get('war_path', '')
         war_name = war_path.split('/')[-1]
         release_version = request.POST.get('version_id')
         release_reason = request.POST.get('release_reason', '')
-        pre_release_time_str = request.POST.get('pre_release_time')
-        pre_release_time = pre_release_time_str.replace('&nbsp;', ' ')
-        svn_path = request.POST.get('svn_path', '')
         email_address_post = request.POST.get('email_address_post', '')
         email_address = user_email + ',' + email_address_post
-        status = "XK待测试"
         app_type = request.POST.get('app_type', '')
+        jenkins_select = request.POST.get('jenkins_select','300')
 
         try:
-            app_exist = applications.objects.filter(name=applications_name).count()
-            if app_exist:
-                applications_id = applications.objects.get(name=applications_name).id
-                operator = applications.objects.get(name=applications_name).operator
-                latest_version = applications.objects.get(id=applications_id).version_id
-                p = deploy_history(business_id=business_id, business_name=business_name,
-                                   applications_id=applications_id, applications_name=applications_name,
-                                   release_version=release_version, release_reason=release_reason,
-                                   latest_version=latest_version, applicant=username,
-                                   operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
-                                   status=status, email_address=email_address,
-                                   type=app_type, war_name=war_name, date_added=date_added,
-                                   pre_release_time=pre_release_time)
-                p.save()
-                # applications.objects.filter(id=applications_id).update(version_id=release_version)
-                smg = u"应用 %s 发布申请提交成功！" % applications_name
-                # return HttpResponse(smg)
+            if business_name == "":
+                emg = u'业务线不能为空！'
             else:
+                business_id = business_info.objects.get(name=business_name).id
                 if applications_name == "":
                     emg = u'应用名称不能为空！'
                 else:
-                    emg = u'应用%s不存在,请先新建应用！' % applications_name
-                    # return HttpResponse(emg)
+                    applications_id = applications.objects.get(name=applications_name).id
+                    svn_path = applications.objects.get(id=applications_id).svn_path
+                    deploy_version = str(datetime.datetime.now().strftime("%Y%m%d%H%M%S")).lstrip("20")
+                    operator = applications.objects.get(id=applications_id).operator
+                    latest_version = applications.objects.get(id=applications_id).version_id
+                    if jenkins_select == '200':
+                        p = deploy_history(business_id=business_id, business_name=business_name,
+                                           applications_id=applications_id, applications_name=applications_name,
+                                           release_version=release_version, release_reason=release_reason,
+                                           latest_version=latest_version, applicant=username, deploy_version=deploy_version,
+                                           operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
+                                           status=deploy_statuscode.DEPLOYING_XK_STATUS, email_address=email_address, jenkins_select=jenkins_select,
+                                           type=app_type, war_name=war_name, date_added=date_added)
+                        p.save()
+                        time.sleep(2)
+                        task_id = deploy_history.objects.get(deploy_version=deploy_version).id
+                        deploy_status_history.objects.create(task_id=task_id, app_name=applications_name,
+                                                             pre_status=deploy_statuscode.DEPLOY_FIRST_STATUS,
+                                                             new_status=deploy_statuscode.DEPLOYING_XK_STATUS,
+                                                             operator=username)
+                        print "################starting building##################"
+                        build_task.delay(applications_name, task_id, svn_path)
+                        smg = u"应用 %s 已提交到jenkins打版，将自动发布到XK环境。" % applications_name
+                        # return HttpResponse(smg)
+                    else:
+                        if war_path == "":
+                            emg = u'不需要在线打包时，程序包位置不能为空！'
+                        else:
+                            p = deploy_history(business_id=business_id, business_name=business_name,
+                                               applications_id=applications_id, applications_name=applications_name,
+                                               release_version=release_version, release_reason=release_reason,
+                                               latest_version=latest_version, applicant=username, deploy_version=deploy_version,
+                                               operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
+                                               status=deploy_statuscode.DEPLOYING_XK_STATUS, email_address=email_address, jenkins_select=jenkins_select,
+                                               type=app_type, war_name=war_name, date_added=date_added)
+                            p.save()
+                            time.sleep(2)
+                            print "################start deploying##################"
+                            task_id = deploy_history.objects.get(deploy_version=deploy_version).id
+                            deploy_status_history.objects.create(task_id=task_id, app_name=applications_name,
+                                                                 pre_status=deploy_statuscode.DEPLOY_FIRST_STATUS,
+                                                                 new_status=deploy_statuscode.DEPLOYING_XK_STATUS,
+                                                                 operator=username)
+                            if xk_deploy.delay(task_id, war_path, applications_name):
+                                smg = u'应用 %s 发布成功！' % applications_name
+                            else:
+                                deploy_history.objects.filter(id=task_id).update(status="发布失败")
+                                emg = u'应用 %s 发布失败，请联系管理员！' % applications_name
+                            smg = u'应用 %s 发布申请已提交！将自动发布至XK环境！' % applications_name
         except ServerError:
             pass
 
     return my_render('home_application/apply.html', locals(), request)
+
+def apply_bak(request):
+    """
+    发布申请
+    """
+    username = request.user.username
+    user_email = BkUser.objects.get(username=username).email
+    remote_ip = request.META.get('REMOTE_ADDR')
+    date_added = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    business_list = business_info.objects.all().order_by("name")
+    business_select = request.GET.get('business_select', '')
+    applications_list = applications.objects.all().order_by("name")
+
+    if request.method == 'POST':
+        business_id = request.POST.get('business_select', '')
+        applications_id = request.POST.get('app_select', '')
+        war_path = request.POST.get('war_path', '')
+        war_name = war_path.split('/')[-1]
+        release_version = request.POST.get('version_id')
+        release_reason = request.POST.get('release_reason', '')
+        email_address_post = request.POST.get('email_address_post', '')
+        email_address = user_email + ',' + email_address_post
+        status = "提交申请"
+        app_type = request.POST.get('app_type', '')
+        jenkins_select = request.POST.get('jenkins_select', '300')
+
+        try:
+            if business_id == "":
+                emg = u'业务线不能为空！'
+            else:
+                business_name = business_info.objects.get(id=business_id).name
+                if applications_id == "":
+                    emg = u'应用名称不能为空！'
+                else:
+                    applications_name = applications.objects.get(id=applications_id).name
+                    svn_path = applications.objects.get(id=applications_id).svn_path
+                    deploy_version = int(str(datetime.datetime.now().strftime("%Y%m%d%H%M%S")).lstrip("20"))
+                    operator = applications.objects.get(id=applications_id).operator
+                    latest_version = applications.objects.get(id=applications_id).version_id
+                    if jenkins_select == '200':
+                        p = deploy_history(business_id=business_id, business_name=business_name,
+                                           applications_id=applications_id, applications_name=applications_name,
+                                           release_version=release_version, release_reason=release_reason,
+                                           latest_version=latest_version, applicant=username, deploy_version=deploy_version,
+                                           operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
+                                           status=status, email_address=email_address, jenkins_select=jenkins_select,
+                                           type=app_type, war_name=war_name, date_added=date_added)
+                        p.save()
+                        time.sleep(10)
+                        # jenkins_job
+                        deploy_history.objects.filter(deploy_version=deploy_version).update(status="XK待测试")
+                        smg = u"应用 %s 发布申请提交成功！已开始打版并自动发布到XK环境。。。" % applications_name
+                        # return HttpResponse(smg)
+                    else:
+                        if war_path == "":
+                            emg = u'不需要在线打包时，程序包位置不能为空！'
+                        else:
+                            p = deploy_history(business_id=business_id, business_name=business_name,
+                                               applications_id=applications_id, applications_name=applications_name,
+                                               release_version=release_version, release_reason=release_reason,
+                                               latest_version=latest_version, applicant=username, deploy_version=deploy_version,
+                                               operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
+                                               status=status, email_address=email_address, jenkins_select=jenkins_select,
+                                               type=app_type, war_name=war_name, date_added=date_added)
+                            p.save()
+                            # ansible_play(war_path)
+                            # time.sleep(10)
+                            deploy_history.objects.filter(deploy_version=deploy_version).update(status="XK待测试")
+                            smg = u'应用 %s 发布申请提交成功！将自动发布至XK环境！' % applications_name
+        except ServerError:
+            pass
+
+    return my_render('home_application/apply.html', locals(), request)
+
+def business_get_apps(request):
+    """
+    根据business_id获取下面的应用列表
+    """
 
 def applylist(request):
     """
@@ -244,6 +422,7 @@ def applylist(request):
     admin_user = ['admin']
     posts = deploy_history.objects.all().order_by('-id')
     keyword = request.GET.get('keyword', '')
+    business_list = business_info.objects.all()
     if keyword:
         posts = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(date_added__contains=keyword))
     else:
@@ -270,8 +449,8 @@ def apply_edit(request):
         war_name = war_path.split('/')[-1]
         release_version = request.POST.get('version_id')
         release_reason = request.POST.get('release_reason', '')
-        pre_release_time_str = request.POST.get('pre_release_time')
-        pre_release_time = pre_release_time_str.replace('&nbsp;', ' ')
+        # pre_release_time_str = request.POST.get('pre_release_time')
+        # pre_release_time = pre_release_time_str.replace('&nbsp;', ' ')
         svn_path = request.POST.get('svn_path', '')
         email_address = request.POST.get('email_address_post', '')
         status = "XK待测试"
@@ -283,7 +462,7 @@ def apply_edit(request):
                 latest_version = applications.objects.get(id=applications_id).version_id
                 deploy_history.objects.filter(id=apply_id).update(business_id=business_id, business_name=business_name, applications_id=applications_id, applications_name=applications_name,
                                                                   release_version=release_version, release_reason=release_reason, svn_path=svn_path, war_path=war_path, status=status,
-                                                                  email_address=email_address, type=app_type, war_name=war_name, pre_release_time=pre_release_time)
+                                                                  email_address=email_address, type=app_type, war_name=war_name)
                 smg = u'应用 %s 申请修改成功！' % applications_name
                 # return HttpResponse(smg)
             else:
@@ -300,6 +479,42 @@ def apply_edit(request):
 
     return my_render('home_application/apply_edit.html', locals(), request)
 
+def apply_info(request):
+    """
+    查看申请
+    """
+    apply_id = request.GET.get('id', '')
+    business_list = business_info.objects.all()
+    applications_list = applications.objects.all()
+    apply_select = deploy_history.objects.filter(id=apply_id)
+    # return HttpResponseRedirect(reverse('home_application.views.apply_edit')+'?id=%s' % apply_id)
+
+    return my_render('home_application/apply_info.html', locals(), request)
+
+def deploy_info(request):
+    """
+    查看发布日志
+    """
+    apply_id = request.GET.get('id', '')
+    apply_select = deploy_history.objects.filter(id=apply_id)
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    jenkins_select = deploy_history.objects.get(id=apply_id).jenkins_select
+    task_buildnum = get_jenkins_job_lastbuild_number(applications_name)  # jenkins_task_record.objects.get(task_id=apply_id).task_buildnum
+    if jenkins_select == '200':
+        smg = get_jenkins_jobs_output(applications_name, task_buildnum)
+        # print smg
+        return render_to_response('home_application/deploy_info.html', locals(), context_instance=RequestContext(request))
+        # return HttpResponse(smg)
+    else:
+        os.system("scp root@10.10.18.240:/tmp/deploy_logs/XK_%s.log /var/log/devops/XK_%s.log" % (applications_name, applications_name))
+        f = open(r'/var/logs/devop/XK_%s.log' % applications_name, 'r')
+        try:
+            resp = f.read()
+        finally:
+            f.close()
+        return render_to_response('home_application/deploy_info.html', locals(), context_instance=RequestContext(request))
+   # return my_render('home_application/apply_info.html', locals(), request)
+
 def apply_del(request):
     """
     删除申请
@@ -310,54 +525,110 @@ def apply_del(request):
         smg = u'删除成功！'
     return HttpResponse(smg)
 
-def testlist(request):
+def testlist_xk(request):
     """
-    待测试列表
+    XK待测试列表
     """
     username = request.user.username
     posts = deploy_history.objects.all().order_by('-id')
     keyword = request.GET.get('keyword', '')
-    test_keyword_xk = "XK待测试"
-    test_keyword_sc = "生产待测试"
+    test_keyword = "XK待测试"
     if keyword:
-        posts1 = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(applicant__contains=keyword)).filter(status__contains=test_keyword_xk).order_by('-id')
-        posts2 = deploy_history.objects.filter(
-            Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(
-                applicant__contains=keyword)).filter(status__contains=test_keyword_sc).order_by('-id')
+        posts = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(applicant__contains=keyword)).filter(status__contains=test_keyword).order_by('-id')
     else:
-        posts1 = deploy_history.objects.filter(status__contains=test_keyword_xk).order_by('-id')
-        posts2 = deploy_history.objects.filter(status__contains=test_keyword_sc).order_by('-id')
-    contact_list, p, contacts1, page_range, current_page, show_first, show_end = pages(posts1, request)
-    contact_list, p, contacts2, page_range, current_page, show_first, show_end = pages(posts2, request)
-    return my_render('home_application/testlist.html', locals(), request)
+        posts = deploy_history.objects.filter(status__contains=test_keyword).order_by('-id')
+    contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
+    return my_render('home_application/testlist_xk.html', locals(), request)
 
-def test_pass(request):
+def testlist_sc(request):
     """
-    测试通过
+    生产待测试列表
+    """
+    username = request.user.username
+    posts = deploy_history.objects.all().order_by('-id')
+    keyword = request.GET.get('keyword', '')
+    test_keyword = "生产待测试"
+    if keyword:
+        posts = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(applicant__contains=keyword)).filter(status__contains=test_keyword).order_by('-id')
+    else:
+        posts = deploy_history.objects.filter(status__contains=test_keyword).order_by('-id')
+    contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
+    return my_render('home_application/testlist_sc.html', locals(), request)
+
+def test_pass_xk(request):
+    """
+    XK测试通过
     """
     username = request.user.username
     date_tested = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     apply_id = request.GET.get('id', '')
-    status = "测试通过"
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    # test_opinion = request.GET.get('test_opinion', '')
+    status = "线上待发布"
 
     if apply_id:
-        deploy_history.objects.filter(id=apply_id).update(status=status, tester=username, date_tested=date_tested)
+        deploy_history.objects.filter(id=apply_id).update(status=status, tester=username, date_tested=date_tested )
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=deploy_statuscode.DEPLOY_SECOND_STATUS,
+                                             new_status=deploy_statuscode.DEPLOY_THIRD_STATUS,
+                                             operator=username)
+    return HttpResponse(u'线上待发布')
 
-    return HttpResponse(u'测试通过')
-
-def test_back(request):
+def test_pass_sc(request):
     """
-    测试退回
+    线上测试通过
     """
     username = request.user.username
     date_tested = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     apply_id = request.GET.get('id', '')
-    status = "测试退回"
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    # test_opinion = request.POST.get('test_opinion', '')
+    status = "完成发布"
 
     if apply_id:
         deploy_history.objects.filter(id=apply_id).update(status=status, tester=username, date_tested=date_tested)
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=deploy_statuscode.DEPLOY_FOURTH_STATUS,
+                                             new_status=deploy_statuscode.DEPLOY_FIFTH_STATUS,
+                                             operator=username)
+    return HttpResponse(u'完成发布')
 
-    return HttpResponse(u'测试退回')
+def test_back_xk(request):
+    """
+    XK测试退回
+    """
+    username = request.user.username
+    date_tested = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    apply_id = request.GET.get('id', '')
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    status = "XK测试退回"
+
+    if apply_id:
+        deploy_history.objects.filter(id=apply_id).update(status=status, tester=username, date_tested=date_tested)
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=deploy_statuscode.DEPLOY_SECOND_STATUS,
+                                             new_status=deploy_statuscode.TEST_XK_RETURN_STATUS,
+                                             operator=username)
+
+    return HttpResponse(u'XK测试退回')
+
+def test_back_sc(request):
+    """
+    线上测试退回
+    """
+    username = request.user.username
+    date_tested = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    apply_id = request.GET.get('id', '')
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    status = "生产测试退回"
+
+    if apply_id:
+        deploy_history.objects.filter(id=apply_id).update(status=status, tester=username, date_tested=date_tested)
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=deploy_statuscode.DEPLOY_FOURTH_STATUS,
+                                             new_status=deploy_statuscode.TEST_SC_RETURN_STATUS,
+                                             operator=username)
+    return HttpResponse(u'生产测试退回')
 
 def rollbacklist(request):
     """
@@ -366,13 +637,13 @@ def rollbacklist(request):
     username = request.user.username
     posts = deploy_history.objects.all().order_by('-id')
     keyword = request.GET.get('keyword', '')
-    test_keyword = "回滚"
+    rollback_keyword = "回滚"
     if keyword:
         posts = deploy_history.objects.filter(
             Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(
-                applicant__contains=keyword)).filter(status__contains=test_keyword).order_by('-id')
+                applicant__contains=keyword)).filter(status__contains=rollback_keyword).order_by('-id')
     else:
-        posts = deploy_history.objects.filter(status__contains=test_keyword).order_by('-id')
+        posts = deploy_history.objects.filter(status__contains=rollback_keyword).order_by('-id')
     contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
     return my_render('home_application/rollbacklist.html', locals(), request)
 
@@ -383,7 +654,24 @@ def returnedlist(request):
     username = request.user.username
     posts = deploy_history.objects.all().order_by('-id')
     keyword = request.GET.get('keyword', '')
-    test_keyword = "退回"
+    return_keyword = "退回"
+    if keyword:
+        posts = deploy_history.objects.filter(
+            Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(
+                applicant__contains=keyword)).filter(status__contains=return_keyword).order_by('-id')
+    else:
+        posts = deploy_history.objects.filter(status__contains=return_keyword).order_by('-id')
+    contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
+    return my_render('home_application/returnedlist.html', locals(), request)
+
+def successlist(request):
+    """
+    退回列表
+    """
+    username = request.user.username
+    posts = deploy_history.objects.all().order_by('-id')
+    keyword = request.GET.get('keyword', '')
+    test_keyword = "完成发布"
     if keyword:
         posts = deploy_history.objects.filter(
             Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(
@@ -391,7 +679,7 @@ def returnedlist(request):
     else:
         posts = deploy_history.objects.filter(status__contains=test_keyword).order_by('-id')
     contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
-    return my_render('home_application/returnedlist.html', locals(), request)
+    return my_render('home_application/successlist.html', locals(), request)
 
 def review(request):
     """
@@ -400,11 +688,13 @@ def review(request):
     username = request.user.username
     posts = deploy_history.objects.all().order_by('-id')
     keyword = request.GET.get('keyword', '')
-    review_keyword = "测试通过"
+    review_keyword1 = "线上待发布"
+    review_keyword2 = "生产发布中"
+    review_keyword3 = "生产测试退回"
     if keyword:
-        posts = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(applicant__contains=keyword)).filter(status__contains=review_keyword).order_by('-id')
+        posts = deploy_history.objects.filter(Q(applications_name__contains=keyword) | Q(business_name__contains=keyword) | Q(applicant__contains=keyword) | Q(status__contains=review_keyword1)| Q(status__contains=review_keyword2)| Q(status__contains=review_keyword3)).order_by('-id')
     else:
-        posts = deploy_history.objects.filter(status__contains=review_keyword).order_by('-id')
+        posts = deploy_history.objects.filter(Q(status__contains=review_keyword1)| Q(status__contains=review_keyword2)| Q(status__contains=review_keyword3)).order_by('-id')
     contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
     return my_render('home_application/review.html', locals(), request)
 
@@ -415,15 +705,29 @@ def review_pass(request):
     username = request.user.username
     date_reviewed = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     apply_id = request.GET.get('id', '')
-    applications_id = deploy_history.objects.get(id=apply_id).applications_id
-    release_version = deploy_history.objects.get(id=apply_id).release_version
-    status = "生产待测试"
+    app_id = deploy_history.objects.get(id=apply_id).applications_id
+    deploy_version_id = deploy_history.objects.get(id=apply_id).deploy_version
 
     if apply_id:
-        deploy_history.objects.filter(id=apply_id).update(status=status, reviewer=username, date_reviewed=date_reviewed)
-        applications.objects.filter(id=applications_id).update(version_id=release_version)
+        war_path = deploy_history.objects.get(id=apply_id).war_path
+        applications_name = deploy_history.objects.get(id=apply_id).applications_name
+        deploy_history.objects.filter(id=apply_id).update(status=deploy_statuscode.DEPLOYING_SC_STATUS,
+                                                          reviewer=username, date_reviewed=date_reviewed)
+        if sc_deploy.delay(apply_id, war_path, applications_name):
+            applications.objects.filter(id=app_id).update(version_id=deploy_version_id)
+            deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                                 pre_status=deploy_statuscode.DEPLOY_THIRD_STATUS,
+                                                 new_status=deploy_statuscode.DEPLOY_FOURTH_STATUS,
+                                                 operator=username)
+            logger.debug(u'应用' + applications_name + u'已发布至生产环境！')
+        else:
+            deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                                 pre_status=deploy_statuscode.DEPLOY_THIRD_STATUS,
+                                                 new_status=deploy_statuscode.DEPLOY_FAILED_STATUS,
+                                                 operator=username)
+            logger.error(u'应用' + applications_name + u'发布生产失败！')
 
-    return HttpResponse(u'审核通过')
+    return HttpResponse(u'生产待测试')
 
 def review_back(request):
     """
@@ -432,12 +736,37 @@ def review_back(request):
     username = request.user.username
     date_reviewed = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     apply_id = request.GET.get('id', '')
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    pre_status = deploy_history.objects.get(id=apply_id).status
     status = "审核退回"
 
     if apply_id:
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=pre_status,
+                                             new_status=deploy_statuscode.REVIEW_BACK_STATUS,
+                                             operator=username)
         deploy_history.objects.filter(id=apply_id).update(status=status, reviewer=username, date_reviewed=date_reviewed)
 
     return HttpResponse(u'审核退回')
+
+def review_rollback(request):
+    """
+    回滚操作
+    """
+    username = request.user.username
+    date_reviewed = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    apply_id = request.GET.get('id', '')
+    applications_name = deploy_history.objects.get(id=apply_id).applications_name
+    pre_status = deploy_history.objects.get(id=apply_id).status
+    status = "已回滚"
+
+    if apply_id:
+        deploy_status_history.objects.create(task_id=apply_id, app_name=applications_name,
+                                             pre_status=pre_status,
+                                             new_status=deploy_statuscode.ROLLBACK_STATUS,
+                                             operator=username)
+        deploy_history.objects.filter(id=apply_id).update(status=status, reviewer=username, date_reviewed=date_reviewed)
+    return HttpResponse(u'已回滚')
 
 def package(request):
     """
@@ -457,15 +786,16 @@ def newapp(request):
         business_name = business_info.objects.get(id=business_id).name
         config_path = request.POST.get('config_path', '')
         name = request.POST.get('name')
+        alias = request.POST.get('alias', '')
         war_path = request.POST.get('war_path', '')
         war_name = war_path.split('/')[-1]
-        target_server_ip = request.POST.get('target_server_ip', '')
-        deploy_path = request.POST.get('deploy_path', '')
         svn_path = request.POST.get('svn_path', '')
         cluster_num = request.POST.get('cluster_num', '')
         master = request.POST.get('master', '')
         owner = request.POST.get('owner', '')
         operator = request.POST.get('operator', '')
+        deploy_info_xk = request.POST.get('deploy_info_xk', '')
+        deploy_info_sc = request.POST.get('deploy_info_sc', '')
         status = "新建"
         version_id = "0"
         version_name = request.POST.get('version_name', '')
@@ -479,11 +809,32 @@ def newapp(request):
                 if name == "":
                     emg = u'应用名称不能为空！'
                 else:
-                    p = applications(business_id=business_id, business_name=business_name, name=name, config_path=config_path, master=master, owner=owner,
-                                     version_id=version_id, version_name=version_name, target_server_ip=target_server_ip, cluster_num=cluster_num,
-                                     deploy_path=deploy_path, svn_path=svn_path, war_path=war_path, war_name=war_name, status=status, operator=operator,
-                                     type=type, date_added=date_added)
+                    xk_infos = deploy_info_xk.strip().split('\r\n')
+                    sc_infos = deploy_info_xk.strip().split('\r\n')
+                    a = ""
+                    b = ""
+                    for xk_info in xk_infos:
+                        xk_ip = xk_info.split(':')[0]
+                        a = a + ',' + xk_ip
+                    for sc_info in sc_infos:
+                        sc_ip = sc_info.split(':')[0]
+                        b = b + ',' + sc_ip
+                    target_ip_xk = a.lstrip(",")
+                    target_ip_sc = b.lstrip(",")
+                    p = applications(business_id=business_id, business_name=business_name, name=name, alias=alias, config_path=config_path,
+                                     master=master, owner=owner, version_id=version_id, version_name=version_name, deploy_info_xk=deploy_info_xk,
+                                     deploy_info_sc=deploy_info_sc, target_ip_xk=target_ip_xk, target_ip_sc=target_ip_sc,
+                                     cluster_num=cluster_num,svn_path=svn_path, war_path=war_path, war_name=war_name,
+                                     status=status, operator=operator, type=type, date_added=date_added)
                     p.save()
+                    jsonData = TableToJson()
+                    print (u'转换为json格式的数据：', jsonData)
+                    # 以读写方式w+打开文件，路径前加r，防止字符转义
+                    f = open(r'static/js/cityData.json', 'w+')
+                    # 写数据
+                    f.write(jsonData)
+                    # 关闭文件
+                    f.close()
                     smg = u"应用 %s 添加成功！" % name
         except ServerError:
             pass
@@ -513,16 +864,18 @@ def app_edit(request):
     business_list = business_info.objects.all()
     app_select = applications.objects.filter(id=app_id)
     app_name = applications.objects.get(id=app_id).name
+    svn_url = applications.objects.get(id=app_id).svn_path
 
     if request.method == 'POST':
         business_id = request.POST.get('business_select', '')
         business_name = business_info.objects.get(id=business_id).name
         config_path = request.POST.get('config_path', '')
         name = request.POST.get('name')
+        alias = request.POST.get('alias', '')
         war_path = request.POST.get('war_path', '')
         war_name = war_path.split('/')[-1]
-        target_server_ip = request.POST.get('target_server_ip', '')
-        deploy_path = request.POST.get('deploy_path', '')
+        deploy_info_xk = request.POST.get('deploy_info_xk', '')
+        deploy_info_sc = request.POST.get('deploy_info_sc', '')
         svn_path = request.POST.get('svn_path', '')
         cluster_num = request.POST.get('cluster_num', '')
         type = request.POST.get('type', '')
@@ -539,11 +892,31 @@ def app_edit(request):
                 if name == "":
                     emg = u'应用名称不能为空！'
                 else:
-                    applications.objects.filter(id=app_id).update(business_id=business_id, business_name=business_name, name=name, config_path=config_path,
-                                                                  master=master, owner=owner, target_server_ip=target_server_ip, cluster_num=cluster_num,
-                                                                  deploy_path=deploy_path, svn_path=svn_path, war_path=war_path, war_name=war_name,
+                    xk_infos = deploy_info_xk.strip().split('\r\n')
+                    sc_infos = deploy_info_xk.strip().split('\r\n')
+                    a = ""
+                    b = ""
+                    for xk_info in xk_infos:
+                        xk_ip = xk_info.split(':')[0]
+                        a = a + ',' + xk_ip
+                    for sc_info in sc_infos:
+                        sc_ip = sc_info.split(':')[0]
+                        b = b + ',' + sc_ip
+                    target_ip_xk = a.lstrip(",")
+                    target_ip_sc = b.lstrip(",")
+                    applications.objects.filter(id=app_id).update(business_id=business_id, business_name=business_name, name=name, alias=alias, config_path=config_path,
+                                                                  master=master, owner=owner, deploy_info_xk=deploy_info_xk, target_ip_xk=target_ip_xk, deploy_info_sc=deploy_info_sc,
+                                                                  target_ip_sc=target_ip_sc, cluster_num=cluster_num, svn_path=svn_path, war_path=war_path, war_name=war_name,
                                                                   operator=operator, type=type)
                     smg = u'应用 %s 修改成功！' % name
+                    jsonData = TableToJson()
+                    print (u'转换为json格式的数据：', jsonData)
+                    # 以读写方式w+打开文件，路径前加r，防止字符转义
+                    f = open(r'static/js/cityData.json', 'w+')
+                    # 写数据
+                    f.write(jsonData)
+                    # 关闭文件
+                    f.close()
         except ServerError as e:
             error = e.message
             emg = u'应用 %s 修改失败！' % name

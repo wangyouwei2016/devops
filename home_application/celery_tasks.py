@@ -12,7 +12,8 @@ from celery.schedules import crontab
 from celery.task import periodic_task
 
 from common.log import logger
-
+from jenkins_lib import corelib2
+from home_application.api import ssh_xk_deploy, ssh_sc_deploy
 
 @task()
 def async_task(x, y):
@@ -51,3 +52,19 @@ def get_time():
     execute_task()
     now = datetime.datetime.now()
     logger.error(u"celery 周期任务调用成功，当前时间：{}".format(now))
+
+@task()
+def build_task(job_name, job_task_id, svn_url):
+    # logger.error(u"build_job_celery")
+    print "starting building %s" % job_name
+    return corelib2.build_job_celery(job_name, job_task_id, svn_url)
+
+@task()
+def xk_deploy(task_id, war_path, appname):
+    print "task_id: %s ,start deploying to XK_ENV: %s" % (task_id, war_path)
+    return ssh_xk_deploy(task_id, war_path, appname)
+
+@task()
+def sc_deploy(task_id, war_path, appname):
+    print "task_id: %s ,start deploying to Formal_ENV: %s" % (task_id, war_path)
+    return ssh_sc_deploy(task_id, war_path, appname)

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!-- <iframe   frameborder=0   border=0   width=1500   height=1000   src="../menu"l mce_src="../menu"></iframe> -->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>待测试列表</title>
+    <link href="/static/favicon.ico" rel="Shortcut Icon">
+    <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
+    <!-- Bootstrap css -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- kendo ui css -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.default.min.css" rel="stylesheet">
+    <!-- font-awesome -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <!--蓝鲸提供的公用样式库 -->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css?v=1.0.1" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
+    <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/bk/js/bk.js"></script>
+    <!-- 数据埋点统计 -->
+    <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
+    <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+    <!--[if lt IE 9]><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/respond.min.js"></script><![endif]-->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/css/ui-dialog.css" rel="stylesheet">
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/dist/dialog-min.js"></script>
+</head>
+
+<body class="bg-white" data-bg-color="bg-white">
+  <!--   <div class="king-page-box">
+        <div class="king-layout1-main clearfix">
+            <iframe   id="headerFrame"  name="headerFrame" frameborder=0   border=0   width=100%   height=75   src="../header" ></iframe> -->
+    <div id="wrapper">
+        {% include 'home_application/header.html' %}
+        {% block header %}{% endblock %}
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                {% block content %}{% endblock %}
+                {% include 'home_application/menu.html' %}
+            </div>
+        </div>
+    </div>
+    <!-- content start -->
+        <div class="king-content-wrap">
+           <!--  <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
+            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
+                <div class="panel king-panel1 mb0  ">
+                    <div class="panel-heading king-panel-head1 king-panel-top2">
+                        <h3 class="panel-title">待测试</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="king-pearls king-pearls king-justified-pearls">
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">1</span>
+                                <span class="king-pearl-title ">提交申请</span>
+                            </div>
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">2</span>
+                                <span class="king-pearl-title ">xk待测试</span>
+                            </div>
+                            <div class="king-pearl">
+                                <span class="king-pearl-number ">3</span>
+                                <span class="king-pearl-title ">线上发布</span>
+                            </div>
+                            <div class="king-pearl">
+                                <span class="king-pearl-number ">4</span>
+                                <span class="king-pearl-title ">线上测试</span>
+                            </div>
+                            <div class="king-pearl">
+                                <span class="king-pearl-number ">5</span>
+                                <span class="king-pearl-title ">完成发布</span>
+                            </div>
+                        </div>
+                        <!-- 设置面板Start -->
+                        <!-- 设置面板End -->
+                    </div>
+                </div>
+                <br />
+<!--HTML-->
+
+
+<ul id="myTab2" class="nav nav-tabs king-nav-tabs1 king-tab-info">
+   <li class="active"> <a data-toggle="tab" href="#xk_test" aria-expanded="true">XK待测试</a> </li>
+ <li class=""> <a data-toggle="tab" href="#sc_test" aria-expanded="false">生产待测试</a> </li>
+ </ul>
+<div class="tab-content ">
+    <div class="tab-pane fade active in" id="xk_test">
+    <div class="row">
+    <!-- 内联布局表单-1 Start -->
+    <div class="form-inline" style="float: right">
+                <form id="search_form1" method="get" action="" class="pull-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" id="keyword1" name="keyword1" value="{{ keyword }}" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button id='search_btn1' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                            </div>
+                     </div>
+                 </form>
+    </div>
+    <!-- 内联布局表单-1 End -->
+</div>
+<table id="xk_test_table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">业务线</th>
+            <th class="text-center">应用</th>
+            <th class="text-center">申请人</th>
+            <th class="text-center">申请日期</th>
+            <th class="text-center">状态</th>
+            <th class="text-center">申请版本</th>
+            <th class="text-center">线上版本</th>
+            <th class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for post1 in contacts1.object_list %}
+       <tr class="gradeX">
+          <td class="text-center">
+             <a href="{% url 'home_application.views.apply_info' %}?id={{ post1.id }}">{{ post1.id }}</a>
+          </td>
+          <td class="text-center">
+             {{ post1.business_name }}
+          </td>
+          <td class="text-center">
+              {{ post1.applications_name }}
+          </td>
+          <td class="text-center">
+              {{ post1.applicant }}
+          </td>
+          <td class="text-center">
+              {{ post1.date_added|date:'Y-m-d H:i:s' }}
+          </td>
+          <td class="text-center">
+              <span class="label label-info">{{ post1.status }}</span>
+          </td>
+          <td class="text-center">
+              {{ post1.release_version}}
+          </td>
+          <td class="text-center">
+              {{ post1.latest_version}}
+          </td>
+          <td class="text-center" data-editable='false'>
+               <a value="{% url 'home_application.views.test_pass' %}?id={{ post1.id }}" class="btn btn-xs btn-info test_pass">通过</a>
+               <a value="{% url 'home_application.views.test_back' %}?id={{ post1.id }}" class="btn btn-xs btn-danger test_back">退回</a>
+          </td>
+       </tr>
+            {% endfor %}
+    </tbody>
+</table>
+    <div class="col-sm-6" style="float: right">
+    <div class="dataTables_paginate paging_simple_numbers" id="editable_paginate1">
+        <ul class="pagination" style="margin-top: 0; float: right">
+            {% if contacts1.has_previous %}
+                <li class="paginate_button previous" aria-controls="editable" tabindex="0" id="editable_previous1">
+                    <a class="page" href="?page={{ contacts1.previous_page_number }}#xk_test">Previous</a>
+                </li>
+            {% else %}
+                <li class="paginate_button previous disabled" aria-controls="editable" tabindex="0" id="editable_previous1">
+                     <a class="page" href="#">Previous</a>
+                </li>
+            {% endif %}
+            {% ifequal show_first1 1 %}
+                <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page=1#xk_test"  title="第1页">1...</a></li>
+            {% endifequal %}
+            {% for page1 in page_range1 %}
+                {% ifequal current_page1 page1 %}
+                    <li class="paginate_button active"  aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page1 }}#xk_test"  title="第{{ page1 }}页">{{ page1 }}</a></li>
+                {% else %}
+                    <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page1 }}#xk_test"  title="第{{ page1 }}页">{{ page1 }}</a></li>
+                {% endifequal %}
+            {% endfor %}
+            {% ifequal show_end1 1 %}
+                <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ p1.num_pages }}#xk_test"  title="第{{ page1 }}页">...{{ p1.num_pages }}</a></li>
+            {% endifequal %}
+            {% if contacts1.has_next %}
+                <li class="paginate_button next" aria-controls="editable" tabindex="0" id="editable_next1">
+                    <a class="page" href="?page={{ contacts1.next_page_number }}#xk_test">Next</a>
+                </li>
+            {% else %}
+                <li class="paginate_button next disabled" aria-controls="editable" tabindex="0" id="editable_next1">
+                    <a class="page" href="#">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+    </div>
+ <div class="tab-pane fade" id="sc_test">
+ <div class="row">
+    <!-- 内联布局表单-1 Start -->
+    <div class="form-inline" style="float: right">
+                <form id="search_form2" method="get" action="" class="pull-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" id="keyword2" name="keyword2" value="{{ keyword }}" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button id='search_btn2' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                            </div>
+                     </div>
+                 </form>
+    </div>
+    <!-- 内联布局表单-1 End -->
+</div>
+     <table id="sc_test_table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">业务线</th>
+            <th class="text-center">应用</th>
+            <th class="text-center">申请人</th>
+            <th class="text-center">申请日期</th>
+            <th class="text-center">状态</th>
+            <th class="text-center">申请版本</th>
+            <th class="text-center">线上版本</th>
+            <th class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for post2 in contacts2.object_list %}
+       <tr class="gradeX">
+          <td class="text-center">
+             <a href="{% url 'home_application.views.apply_info' %}?id={{ post2.id }}">{{ post2.id }}</a>
+          </td>
+          <td class="text-center">
+             {{ post2.business_name }}
+          </td>
+          <td class="text-center">
+              {{ post2.applications_name }}
+          </td>
+          <td class="text-center">
+              {{ post2.applicant }}
+          </td>
+          <td class="text-center">
+              {{ post2.date_added|date:'Y-m-d H:i:s' }}
+          </td>
+          <td class="text-center">
+              <span class="label label-primary">{{ post2.status }}</span>
+          </td>
+          <td class="text-center">
+              {{ post2.release_version}}
+          </td>
+          <td class="text-center">
+              {{ post2.latest_version}}
+          </td>
+          <td class="text-center" data-editable='false'>
+               <a value="{% url 'home_application.views.test_pass' %}?id={{ post2.id }}" class="btn btn-xs btn-info test_pass">通过</a>
+               <a value="{% url 'home_application.views.test_back' %}?id={{ post2.id }}" class="btn btn-xs btn-danger test_back">退回</a>
+          </td>
+       </tr>
+            {% endfor %}
+    </tbody>
+</table>
+<div class="col-sm-6" style="float: right">
+    <div class="dataTables_paginate paging_simple_numbers" id="editable_paginate2">
+        <ul class="pagination" style="margin-top: 0; float: right">
+            {% if contacts2.has_previous %}
+                <li class="paginate_button previous" aria-controls="editable" tabindex="0" id="editable_previous2">
+                    <a class="page" href="?page={{ contacts2.previous_page_number }}#sc_test">Previous</a>
+                </li>
+            {% else %}
+                <li class="paginate_button previous disabled" aria-controls="editable" tabindex="0" id="editable_previous2">
+                     <a class="page" href="#">Previous</a>
+                </li>
+            {% endif %}
+            {% ifequal show_first2 1 %}
+                <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page=1#sc_test"  title="第1页">1...</a></li>
+            {% endifequal %}
+            {% for page2 in page_range2 %}
+                {% ifequal current_page2 page2 %}
+                    <li class="paginate_button active"  aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page2 }}#sc_test"  title="第{{ page2 }}页">{{ page2 }}</a></li>
+                {% else %}
+                    <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page2 }}#sc_test"  title="第{{ page2 }}页">{{ page2 }}</a></li>
+                {% endifequal %}
+            {% endfor %}
+            {% ifequal show_end2 1 %}
+                <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ p2.num_pages }}#sc_test"  title="第{{ page2 }}页">...{{ p2.num_pages }}</a></li>
+            {% endifequal %}
+            {% if contacts2.has_next %}
+                <li class="paginate_button next" aria-controls="editable" tabindex="0" id="editable_next2">
+                    <a class="page" href="?page={{ contacts2.next_page_number }}#sc_test">Next</a>
+                </li>
+            {% else %}
+                <li class="paginate_button next disabled" aria-controls="editable" tabindex="0" id="editable_next2">
+                    <a class="page" href="#">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+
+         </div>
+     </div>
+
+</body>
+
+<script>
+    $(document).ready(function(){
+        $('.test_pass').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm('确认通过？')) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.submit();
+                            window.location.href="";
+                            alert("测试通过！");
+                       }
+                )
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.test_back').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm('确认退回？')) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.submit();
+                            window.location.href="";
+                            alert("测试退回！");
+                       }
+                )
+            }
+        });
+    });
+</script>
+<script>
+
+$(document).ready(function() {
+    if(location.hash) {
+        $('a[href=' + location.hash + ']').tab('show');
+    }
+    $(document.body).on("click", "a[data-toggle]", function(event) {
+        location.hash = this.getAttribute("href");
+        // $(this).tab('show');
+    });
+});
+$(window).on('popstate', function() {
+    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+    $('a[href=' + anchor + ']').tab('show');
+});
+</script>
+
+
+
+</html>

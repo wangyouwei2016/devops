@@ -47,13 +47,14 @@
             <!-- content start -->
             <div class="king-content-wrap">
               <!--  <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">退回记录</h3>
                         </div>
 <!--HTML-->
-<div class="row">
+<div class="tab-content ">
+    <div class="row">
     <!-- 内联布局表单-1 Start -->
     <div class="form-inline" style="float: right">
                 <form id="search_form" method="get" action="" class="pull-right mail-search">
@@ -86,7 +87,7 @@
        {% for post in contacts.object_list %}
        <tr class="gradeX">
           <td class="text-center">
-             {{ post.id }}
+             <a href="{% url 'home_application.views.apply_info' %}?id={{ post.id }}">{{ post.id }}</a>
           </td>
           <td class="text-center">
              {{ post.business_name }}
@@ -98,7 +99,7 @@
               {{ post.date_added|date:'Y-m-d H:i:s' }}
           </td>
           <td class="text-center">
-              <span class="label label-primary">{{ post.status }}</span>
+              <span class="label label-danger">{{ post.status }}</span>
           </td>
           <td class="text-center">
               {{ post.release_version }}
@@ -110,7 +111,7 @@
               {{ post.operator}}
           </td>
           <td class="text-center">
-              {{ post.date_added|date:'Y-m-d H:i:s' }}
+              {{ post.date_tested|date:'Y-m-d H:i:s' }}
           </td>
        </tr>
             {% endfor %}
@@ -121,6 +122,7 @@
                         <div class="col-sm-6">
                         </div>
                         {% include 'paginator.html' %}
+                    </div>
                     </div>
                     </div>
                 </div>

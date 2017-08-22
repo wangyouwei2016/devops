@@ -48,7 +48,7 @@
             <!-- content start -->
             <div class="king-content-wrap">
                 <!-- <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1020px;">
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">修改应用信息</h3>
@@ -83,10 +83,19 @@
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">应用名称：</label>
+                <label for="name" class="col-sm-3 control-label">项目编码（英文）：</label>
                 <div class="col-sm-7">
                     {% for app in app_select %}
                     <input type="text" class="form-control" id="name" name="name"  value="{{ app.name }}">
+                    {% endfor %}
+                </div>
+                <span class="text-danger mt5 fl">*</span>
+            </div>
+            <div class="form-group">
+                <label for="alias" class="col-sm-3 control-label">备注名称（中文）：</label>
+                <div class="col-sm-7">
+                    {% for app in app_select %}
+                    <input type="text" class="form-control" id="alias" name="alias"  value="{{ app.alias }}">
                     {% endfor %}
                 </div>
                 <span class="text-danger mt5 fl">*</span>
@@ -101,20 +110,22 @@
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
-                <label for="target_server_ip" class="col-sm-3 control-label">目标服务器：</label>
+                <label for="deploy_info_xk" class="col-sm-3 control-label">XK部署信息：</label>
                 <div class="col-sm-7">
                     {% for app in app_select %}
-                    <input id="target_server_ip" name="target_server_ip" type="text" class="form-control"  value="{{ app.target_server_ip }}">
+                    <textarea id="deploy_info_xk" name="deploy_info_xk" class="form-control" >{{ app.deploy_info_xk }}</textarea>
                     {% endfor %}
                 </div>
+                <span class="text-danger mt5 fl">*</span>
             </div>
-            <div class="form-group">
-                <label for="deploy_path" class="col-sm-3 control-label">部署目录：</label>
+             <div class="form-group">
+                <label for="deploy_info_sc" class="col-sm-3 control-label">生产部署信息：</label>
                 <div class="col-sm-7">
                     {% for app in app_select %}
-                    <input id="deploy_path" name="deploy_path" type="text" class="form-control"  value="{{ app.deploy_path }}">
+                    <textarea id="deploy_info_sc" name="deploy_info_sc" class="form-control">{{ app.deploy_info_sc }}</textarea>
                     {% endfor %}
                 </div>
+                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="config_path" class="col-sm-3 control-label">配置文件路径：</label>
@@ -138,6 +149,7 @@
                     </select>
                     {% endfor %}
                 </div>
+            <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
                 <label for="cluster_num" class="col-sm-3 control-label">集群数量：</label>
@@ -154,6 +166,7 @@
                     </select>
                     {% endfor %}
                 </div>
+            <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group has-feedback">
                 <label class="control-label col-sm-3" for="svn_path">SVN路径：</label>
@@ -162,9 +175,10 @@
                     <textarea class="form-control" rows="3" id="svn_path" name="svn_path">{{ app.svn_path }}</textarea>
                     {% endfor %}
                 </div>
+                <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
-                <label for="master" class="col-sm-3 control-label">产品master：</label>
+                <label for="master" class="col-sm-3 control-label">产品经理(PM)：</label>
                 <div class="col-sm-7">
                     {% for app in app_select %}
                     <input type="text" class="form-control" id="master" name="master"  value="{{ app.master }}">
@@ -173,7 +187,7 @@
                 <span class="text-danger mt5 fl">*</span>
             </div>
             <div class="form-group">
-                <label for="owner" class="col-sm-3 control-label">应用负责人：</label>
+                <label for="owner" class="col-sm-3 control-label">应用负责人(PSM)：</label>
                 <div class="col-sm-7">
                     {% for app in app_select %}
                     <input type="text" class="form-control" id="owner" name="owner" value="{{ app.owner }}">

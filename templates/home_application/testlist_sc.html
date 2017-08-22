@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<!-- <iframe   frameborder=0   border=0   width=1500   height=1000   src="../menu"l mce_src="../menu"></iframe> -->
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>回滚记录</title>
+    <title>生产待测试列表</title>
     <link href="/static/favicon.ico" rel="Shortcut Icon">
     <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
     <!-- Bootstrap css -->
@@ -27,13 +28,17 @@
     <script src="https://magicbox.bkclouds.cc/static_api/analysis.js"></script>
     <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
     <!--[if lt IE 9]><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/respond.min.js"></script><![endif]-->
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/bk/css/bk.css" rel="stylesheet">
+    <link href="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/css/ui-dialog.css" rel="stylesheet">
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/artDialog-6.0.4/dist/dialog-min.js"></script>
 </head>
 
 <body class="bg-white" data-bg-color="bg-white">
   <!--   <div class="king-page-box">
         <div class="king-layout1-main clearfix">
             <iframe   id="headerFrame"  name="headerFrame" frameborder=0   border=0   width=100%   height=75   src="../header" ></iframe> -->
-  <div id="wrapper">
+    <div id="wrapper">
         {% include 'home_application/header.html' %}
         {% block header %}{% endblock %}
         <div id="page-wrapper" class="gray-bg">
@@ -43,16 +48,49 @@
             </div>
         </div>
     </div>
-            <!-- content start -->
-            <div class="king-content-wrap">
-              <!--   <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
-                    <div class="panel king-panel1 mb0  ">
-                        <div class="panel-heading king-panel-head1 king-panel-top2">
-                            <h3 class="panel-title">回滚记录</h3>
+    <!-- content start -->
+        <div class="king-content-wrap">
+           <!--  <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
+            <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
+                <div class="panel king-panel1 mb0  ">
+                    <div class="panel-heading king-panel-head1 king-panel-top2">
+                        <h3 class="panel-title">线上待测试</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="king-pearls king-pearls king-justified-pearls">
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">1</span>
+                                <span class="king-pearl-title ">提交申请</span>
+                            </div>
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">2</span>
+                                <span class="king-pearl-title ">xk待测试</span>
+                            </div>
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">3</span>
+                                <span class="king-pearl-title ">线上发布</span>
+                            </div>
+                            <div class="king-pearl done">
+                                <span class="king-pearl-number ">4</span>
+                                <span class="king-pearl-title ">线上测试</span>
+                            </div>
+                            <div class="king-pearl">
+                                <span class="king-pearl-number ">5</span>
+                                <span class="king-pearl-title ">完成发布</span>
+                            </div>
                         </div>
+                        <!-- 设置面板Start -->
+                        <!-- 设置面板End -->
+                    </div>
+                </div>
+                <br />
 <!--HTML-->
-<div class="tab-content ">
+
+<div class="panel king-panel1 mb0  ">
+                        <div class="panel-heading king-panel-head1 king-panel-top2">
+                            <h3 class="panel-title">生产待测试列表</h3>
+                        </div>
+<div class="tab-content">
     <div class="row">
     <!-- 内联布局表单-1 Start -->
     <div class="form-inline" style="float: right">
@@ -67,19 +105,18 @@
     </div>
     <!-- 内联布局表单-1 End -->
 </div>
-
 <table id="table2_demo1" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th class="text-center">ID</th>
             <th class="text-center">业务线</th>
             <th class="text-center">应用</th>
+            <th class="text-center">申请人</th>
             <th class="text-center">申请日期</th>
             <th class="text-center">状态</th>
-            <th class="text-center">版本</th>
-            <th class="text-center">回滚前版本</th>
-            <th class="text-center">操作人</th>
-            <th class="text-center">回滚时间</th>
+            <th class="text-center">申请版本</th>
+            <th class="text-center">线上版本</th>
+            <th class="text-center">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -95,87 +132,77 @@
               {{ post.applications_name }}
           </td>
           <td class="text-center">
+              {{ post.applicant }}
+          </td>
+          <td class="text-center">
               {{ post.date_added|date:'Y-m-d H:i:s' }}
           </td>
           <td class="text-center">
-              <span class="label label-default">{{ post.status }}</span>
+              <span class="label label-primary">{{ post.status }}</span>
           </td>
           <td class="text-center">
-              {{ post.release_version }}
+              {{ post.release_version}}
           </td>
           <td class="text-center">
               {{ post.latest_version}}
           </td>
-          <td class="text-center">
-              {{ post.operator}}
-          </td>
-          <td class="text-center">
-              {{ post.date_added|date:'Y-m-d H:i:s' }}
+          <td class="text-center" data-editable='false'>
+               <a value="{% url 'home_application.views.test_pass_sc' %}?id={{ post.id }}" class="btn btn-xs btn-info test_pass_sc">通过</a>
+               <a value="{% url 'home_application.views.test_back_sc' %}?id={{ post.id }}" class="btn btn-xs btn-danger test_back_sc">退回</a>
           </td>
        </tr>
-            {% endfor %}
+       {% endfor %}
     </tbody>
-
 </table>
+
+</div>
                     <div class="row">
                         <div class="col-sm-6">
                         </div>
                         {% include 'paginator.html' %}
                     </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-    <script>
-        $(function(){
-             var li = $('.navi li');
-             li.each(function(){
-             $(this).click(function(){
-             if( $(this).hasClass('c-open')){
-                $(this).find('ul').slideUp(350);
-                $(this).removeClass('c-open');
-             }else{
-               $(this).find('ul').slideDown(350);
-               $(this).addClass('c-open');
-               }
-              })
-           });
-        })
-    </script>
-    <script>
-        $(function(){
-                function renderTpl(str, cfg) {
-                    var re = /(#(.+?)#)/g;
-
-                    return str.replace(re, function() {
-                        var val = cfg[arguments[2]]+'';
-                        if(typeof val == 'undefined') {
-                            val = '';
-                        }
-                        return val;
-                    });
-                }
-
-                // 异步请求后台数据
-                $.ajax({
-                    url: 'https://magicbox.bkclouds.cc/static_api/v3/components/table6/data.json',
-                    type: 'GET',
-                    success: function(res){
-                        var _html = ' ';
-                        var list = res.items;
-                        var tpl = $('#tpl_1491037257824').html();
-                        var headerTpl =  $('#header_tpl_1491037257824').html();
-                        for (var i=0,len=list.length; i < len; i++){
-                            var item = list[i];
-                            _html += renderTpl(tpl, item)
-                        }
-                        $('#code_1491037257824 tbody').html(_html);
-                        $('.ranger-box thead').html(renderTpl(headerTpl,res.catalogues));
-                    }
-                });
-            });
-    </script>
+         </div>
+     </div>
+        </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $('.test_pass_sc').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm('确认通过？')) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.submit();
+                            window.location.href="";
+                            alert("生产测试通过！");
+                       }
+                )
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.test_back_sc').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm('确认退回？')) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.submit();
+                            window.location.href="";
+                            alert("生产测试退回！");
+                       }
+                )
+            }
+        });
+    });
+</script>
+
 
 </html>

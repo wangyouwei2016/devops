@@ -46,22 +46,27 @@
             <!-- content start -->
             <div class="king-content-wrap">
                 <!-- <iframe   id="menuFrame"  name="menuFrame" frameborder=0   border=0   width=216   onload="this.height=menuFrame.document.body.scrollHeight"  src="../menu" ></iframe> -->
-                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1025px;">
+                <div class="king-layout1-content" style="margin-left: 216px;margin-top: -1130px;">
                     <div class="panel king-panel1 mb0  ">
                         <div class="panel-heading king-panel-head1 king-panel-top2">
                             <h3 class="panel-title">应用操作</h3>
                         </div>
 
 <!--HTML-->
-<div class="form-inline" style="float: right">
-            <form id="search_form" method="get" action="" class="pull-right mail-search">
-                <div class="input-group">
-                    <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search">
-                        <div class="input-group-btn">
-                            <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
-                        </div>
-                 </div>
-             </form>
+<div class="tab-content ">
+    <div class="row">
+    <!-- 内联布局表单-1 Start -->
+    <div class="form-inline" style="float: right">
+                <form id="search_form" method="get" action="" class="pull-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+                            </div>
+                     </div>
+                 </form>
+    </div>
+    <!-- 内联布局表单-1 End -->
 </div>
 
 <table id="table2_demo1" class="table table-bordered table-hover">
@@ -84,7 +89,7 @@
             <td class="text-center">{{ post.name }}</td>
             <td class="text-center">{{ post.owner }}</td>
             <td class="text-center">{{ post.version_id }}</td>
-            <td class="text-center">{{ post.target_server_ip }}</td>
+            <td class="text-center">{{ post.target_ip_xk }}</td>
             <td>
                 <button class="king-btn-demo king-btn king-round king-warning" title="重启" data-toggle="confirmation" data-placement="top" data-original-title="" >
                     <i class="fa fa-cog btn-icon"></i>重启
@@ -101,6 +106,7 @@
                    {% include 'paginator.html' %}
               </div>
         </div>
+      </div>
     </div>
 </div>
     <script>

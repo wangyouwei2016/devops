@@ -1,0 +1,47 @@
+
+{
+    "code": 0,
+    "result": true,
+    "messge": "success",
+    "data": {
+        "title": "",
+        "series": [{
+            "value": 67,
+            "name": "掌上云医院"
+        }, {
+            "value": 12,
+            "name": "城市云医院"
+        }, {
+            "value": 0,
+            "name": "养老护理"
+        }, {
+            "value": 0,
+            "name": "健管"
+        }, {
+            "value": 0,
+            "name": "远程心电"
+        }, {
+            "value": 16,
+            "name": "云HIS"
+        }, {
+            "value": 16,
+            "name": "IKEEPER"
+        }, {
+            "value": 0,
+            "name": "支撑平台"
+        }, {
+            "value": 0,
+            "name": "熙康网"
+        }, {
+            "value": 5,
+            "name": "ISLEEP"
+        }, {
+            "value": 0,
+            "name": "健康城市"
+        }, {
+            "value": 0,
+            "name": "其他"
+        }
+        ]
+    }
+}

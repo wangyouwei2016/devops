@@ -5,16 +5,19 @@ from django.db import models
 class applications(models.Model):
     business_id = models.CharField(u"业务线ID", max_length=20)
     business_name = models.CharField(u"业务线名称", max_length=40)
-    name = models.CharField(u"应用名称", max_length=100)
-    version_id = models.CharField(u"版本id", max_length=20)
+    name = models.CharField(u"项目编码", max_length=100)
+    alias = models.CharField(u"应用备注名称", max_length=100)
+    version_id = models.CharField(u"版本id", max_length=100)
     version_name = models.CharField(u"版本名称", max_length=40)
     master = models.CharField(u"产品master", max_length=64)
     owner = models.CharField(u"应用owner", max_length=64)
     svn_path = models.CharField(u"svn地址", max_length=240)
     depend_app = models.CharField(u"依赖的应用", max_length=64)
     depend_by = models.CharField(u"谁依赖", max_length=64)
-    target_server_ip = models.CharField(u"目标部署服务器ip", max_length=80)
-    deploy_path = models.CharField(u"应用部署目录", max_length=100)
+    deploy_info_xk = models.CharField(u"目标部署服务器ip", max_length=240)
+    deploy_info_sc = models.CharField(u"应用部署目录", max_length=240)
+    target_ip_xk = models.CharField(u"XK部署服务器ip", max_length=120)
+    target_ip_sc = models.CharField(u"生产部署服务器ip", max_length=120)
     war_name = models.CharField(u"应用war包名称", max_length=64)
     war_path = models.CharField(u"应用war包路径", max_length=64)
     sequence = models.CharField(u"内部版本序列号", max_length=20)
@@ -93,8 +96,9 @@ class deploy_history(models.Model):
     business_name = models.CharField(u"业务线名称", max_length=40)
     applications_id = models.CharField(u"应用ID", max_length=20)
     applications_name = models.CharField(u"应用名称", max_length=20)
-    release_version = models.CharField(u"申请版本号", max_length=20)
-    latest_version = models.CharField(u"线上版本号", max_length=20)
+    release_version = models.CharField(u"应用版本号", max_length=20)
+    deploy_version = models.CharField(u"发布版本号", max_length=100)
+    latest_version = models.CharField(u"线上版本号", max_length=100)
     release_reason = models.CharField(u"发布理由", max_length=40)
     pre_release_time = models.DateTimeField(auto_now=False)
     applicant = models.CharField(u"申请人", max_length=64)
@@ -112,6 +116,8 @@ class deploy_history(models.Model):
     date_added = models.DateTimeField(auto_now=True)
     date_tested = models.DateTimeField(auto_now=False)
     date_reviewed = models.DateTimeField(auto_now=False)
+    jenkins_select = models.CharField(u"jenkins打版", max_length=20) # 200 是 300 否
+    test_opinion = models.CharField(u"测试意见", max_length=100)
 
     class Meta:
         db_table = u'deploy_history'
@@ -119,22 +125,26 @@ class deploy_history(models.Model):
     def __unicode__(self):
         return self.applications_id
 
-class status_info(models.Model):
-    name = models.CharField(u"状态名称", max_length=20)
-    instraction = models.CharField(u"状态说明", max_length=64)
-    discription = models.TextField(u"备注", max_length=128)
+class deploy_status_history(models.Model):
+    task_id = models.CharField(u"申请ID", max_length=20)
+    app_name = models.CharField(u"应用名称", max_length=20)
+    pre_status = models.CharField(u"变更前状态", max_length=20)
+    new_status = models.CharField(u"变更后状态", max_length=20)
+    operator = models.CharField(u"操作人", max_length=20)
+    date_added = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = u'status_info'
+        db_table = u'deploy_status_history'
 
     def __unicode__(self):
-        return self.name
+        return self.task_id
 
-# class load_status(models.Model):
-#     app_name = models.CharField(u"应用名", max_length=20)
-#     ipaddr = models.CharField(u"ip地址", max_length=20)
-#     memoryb = models.CharField(u"内存使用率", max_length=20)
-#     qps = models.CharField(u"并发", max_length=20)
-#     other = models.CharField(u"其他", max_length=40)
+class jenkins_task_record(models.Model):
+    task_name=models.CharField(u"任务名称", max_length=100)
+    task_id=models.IntegerField(u"任务id")
+    task_status=models.CharField(u"任务状态", max_length=20)
+    task_buildnum = models.IntegerField(u"任务构建版本号")
+    date_added = models.DateTimeField(auto_now=True)
 
-
+    def __unicode__(self):
+        return self.task_name
