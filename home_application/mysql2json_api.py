@@ -12,7 +12,7 @@ def TableToJson():
         # 1-7：如何使用python DB API访问数据库流程的
         # 1.创建mysql数据库连接对象connection
         # connection对象支持的方法有cursor(),commit(),rollback(),close()
-        conn = MySQLdb.Connect(host='10.32.166.23', user='root', passwd='neusoft', db='devops', port=3306, charset='utf8')
+        conn = MySQLdb.Connect(host='10.3.54.189', user='root', passwd='bk@321', db='devops', port=3306, charset='utf8')
         # 2.创建mysql数据库游标对象 cursor
         # cursor对象支持的方法有execute(sql语句),fetchone(),fetchmany(size),fetchall(),rowcount,close()
         cur = conn.cursor()
