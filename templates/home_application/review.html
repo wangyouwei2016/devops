@@ -135,9 +135,19 @@
                <td class="text-center"> {{ post.release_version}} </td>
                <td class="text-center"> {{ post.latest_version}} </td>
                <td class="text-center" data-editable='false'>
-                   <a value="{% url 'home_application.views.review_pass' %}?id={{ post.id }}" class="btn btn-xs btn-info review_pass">上线</a>
-                   <a value="{% url 'home_application.views.review_back' %}?id={{ post.id }}" class="btn btn-xs btn-warning review_back">退回</a>
-                   <a value="{% url 'home_application.views.review_rollback' %}?id={{ post.id }}" class="btn btn-xs btn-danger review_rollback">回滚</a>
+                   {% if post.status == "生产测试退回" %}
+                       <button  class="btn btn-xs btn-info review_pass" disabled="disabled">上线</button>
+                       <button  class="btn btn-xs btn-warning review_back" disabled="disabled">退回</button>
+                       <button  value="{% url 'home_application.views.review_rollback' %}?id={{ post.id }}" class="btn btn-xs btn-danger review_rollback">回滚</button>
+                   {% elif post.status == "生产发布中" %}
+                       <button  class="btn btn-xs btn-info review_pass" disabled="disabled">上线</button>
+                       <button  class="btn btn-xs btn-warning review_back" disabled="disabled">退回</button>
+                       <button  class="btn btn-xs btn-danger review_rollback" disabled="disabled">回滚</button>
+                   {% else %}
+                       <button  value="{% url 'home_application.views.review_pass' %}?id={{ post.id }}" class="btn btn-xs btn-info review_pass">上线</button>
+                       <button  value="{% url 'home_application.views.review_back' %}?id={{ post.id }}" class="btn btn-xs btn-warning review_back">退回</button>
+                       <button  class="btn btn-xs btn-danger review_rollback" disabled="disabled">回滚</button>
+                   {% endif %}
                </td>
            </tr>
        {% endfor %}
