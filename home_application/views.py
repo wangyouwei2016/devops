@@ -189,7 +189,10 @@ def index(request):
     # 版本分发失败率：
     fail_counts = deploy_history.objects.filter(date_added__month=this_month).filter(
         Q(status=deploy_statuscode.DEPLOY_FAILED_STATUS) | Q(status=deploy_statuscode.ROLLBACK_STATUS)).count()
-    fail_percent = '%.2f' % (float(fail_counts) / float(all_counts))
+    if fail_counts ==0 or all_counts == 0:
+        fail_percent =0
+    else:
+        fail_percent = '%.2f' % (float(fail_counts) / float(all_counts))
 
     # 按业务线统计：
     business_counts1 = deploy_history.objects.filter(date_added__month=this_month).filter(business_id=1).count()
@@ -297,7 +300,7 @@ def apply(request):
                                            type=app_type, war_name=war_name, date_added=date_added)
                         time.sleep(2)
                         task_id = deploy_history.objects.get(deploy_version=deploy_version).id
-                        deploy_status_history.objects.create(task_id=task_id, app_name=applications_name,
+                        deploy_status_history.objects.create(task_id=312, app_name=applications_name,
                                                              pre_status=deploy_statuscode.DEPLOY_FIRST_STATUS,
                                                              new_status=deploy_statuscode.DEPLOYING_XK_STATUS,
                                                              operator=username)
