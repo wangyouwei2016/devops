@@ -94,12 +94,15 @@ def ssh_xk_deploy(task_id, war_path, appname):
         a = os.system("ssh root@10.10.18.240 'sh /root/hubot_scripts/hubot_deploy_xk.sh %s %s'" % (war_path, appname))
         if not a:
             deploy_history.objects.filter(id=task_id).update(status="XK待测试")
+            print u"XK发布成功！" + war_path
             return True
         else:
             deploy_history.objects.filter(id=task_id).update(status="发布失败")
+            print u"XK发布失败！" + war_path
             return False
     except:
         deploy_history.objects.filter(id=task_id).update(status="发布失败")
+        print u"系统异常，XK发布失败！" + war_path
         return False
 
 def ssh_sc_deploy(task_id, war_path, appname):
