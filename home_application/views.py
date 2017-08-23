@@ -508,7 +508,7 @@ def deploy_info(request):
         # return HttpResponse(smg)
     else:
         os.system("scp root@10.10.18.240:/tmp/deploy_logs/XK_%s.log /var/log/devops/XK_%s.log" % (applications_name, applications_name))
-        f = open(r'/var/logs/devops/XK_%s.log' % applications_name, 'r')
+        f = open(r'/var/log/devops/XK_%s.log' % applications_name, 'r')
         try:
             resp = f.read()
         finally:
