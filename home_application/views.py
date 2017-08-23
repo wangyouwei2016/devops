@@ -288,14 +288,13 @@ def apply(request):
                     operator = applications.objects.get(id=applications_id).operator
                     latest_version = applications.objects.get(id=applications_id).version_id
                     if jenkins_select == '200':
-                        p = deploy_history(business_id=business_id, business_name=business_name,
+                        deploy_history.objects.create(business_id=business_id, business_name=business_name,
                                            applications_id=applications_id, applications_name=applications_name,
                                            release_version=release_version, release_reason=release_reason,
                                            latest_version=latest_version, applicant=username, deploy_version=deploy_version,
                                            operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
                                            status=deploy_statuscode.DEPLOYING_XK_STATUS, email_address=email_address, jenkins_select=jenkins_select,
                                            type=app_type, war_name=war_name, date_added=date_added)
-                        p.save()
                         time.sleep(2)
                         task_id = deploy_history.objects.get(deploy_version=deploy_version).id
                         deploy_status_history.objects.create(task_id=task_id, app_name=applications_name,
