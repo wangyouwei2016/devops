@@ -123,7 +123,7 @@
                <td class="text-center"> {{ post.date_added |date:'Y-m-d H:i:s' }} </td>
                <td class="text-center">
                    {% if post.status == "生产发布中" %}
-                       <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                       <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-warning" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
                     {% endif %}
                    {% if post.status == "线上待发布" %}
                    <span class="label label-warning">{{ post.status }}</span>

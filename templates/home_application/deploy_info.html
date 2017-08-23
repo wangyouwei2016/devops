@@ -160,10 +160,10 @@
                                                             <span class="label label-info">{{ apply.status }}</span>
                                                         {% endif %}
                                                         {% if apply.status == "XK发布中" %}
-                                                            <span class="label label-info">{{ apply.status }}</span>&nbsp;<img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif">
+                                                            <span class="label label-warning">{{ apply.status }}</span>&nbsp;<img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif">
                                                         {% endif %}
                                                         {% if apply.status == "生产发布中" %}
-                                                            <span class="label label-info">{{ apply.status }}</span>&nbsp;<img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif">
+                                                            <span class="label label-warning">{{ apply.status }}</span>&nbsp;<img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif">
                                                         {% endif %}
                                                         {% if apply.status == "XK待测试" %}
                                                             <span class="label label-info" >{{ apply.status }}</span>

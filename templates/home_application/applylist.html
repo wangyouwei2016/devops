@@ -216,10 +216,10 @@
                                      <span class="label label-danger" >{{ post.status }}</span>
                                     {% endif %}
                                     {% if post.status == "XK发布中" %}
-                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-warning" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
                                     {% endif %}
                                     {% if post.status == "生产发布中" %}
-                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-info" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
+                                        <a href="{% url 'home_application.views.deploy_info' %}?id={{ post.id }}"><span class="label label-warning" >{{ post.status }}</span><img alt="loadding" src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/hourglass_24.gif"></a>
                                     {% endif %}
                                     {% if post.status == "XK待测试" %}
                                      <span class="label label-info" >{{ post.status }}</span>
