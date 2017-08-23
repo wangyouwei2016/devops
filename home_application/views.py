@@ -310,14 +310,13 @@ def apply(request):
                         if war_path == "":
                             emg = u'不需要在线打包时，程序包位置不能为空！'
                         else:
-                            p = deploy_history(business_id=business_id, business_name=business_name,
+                            deploy_history.objects.create(business_id=business_id, business_name=business_name,
                                                applications_id=applications_id, applications_name=applications_name,
                                                release_version=release_version, release_reason=release_reason,
                                                latest_version=latest_version, applicant=username, deploy_version=deploy_version,
                                                operator=operator, remote_ip=remote_ip, svn_path=svn_path, war_path=war_path,
                                                status=deploy_statuscode.DEPLOYING_XK_STATUS, email_address=email_address, jenkins_select=jenkins_select,
                                                type=app_type, war_name=war_name, date_added=date_added)
-                            p.save()
                             time.sleep(2)
                             print "################start deploying##################"
                             task_id = deploy_history.objects.get(deploy_version=deploy_version).id
