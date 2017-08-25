@@ -488,6 +488,15 @@ def apply_info(request):
     business_list = business_info.objects.all()
     applications_list = applications.objects.all()
     apply_select = deploy_history.objects.filter(id=apply_id)
+    xk_returned_times = deploy_status_history.objects.filter(task_id=apply_id).filter(
+        new_status=deploy_statuscode.TEST_XK_RETURN_STATUS).count()
+    sc_returned_times = deploy_status_history.objects.filter(task_id=apply_id).filter(
+        new_status=deploy_statuscode.TEST_SC_RETURN_STATUS).count()
+    review_back_times = deploy_status_history.objects.filter(task_id=apply_id).filter(
+        new_status=deploy_statuscode.REVIEW_BACK_STATUS).count()
+    rollback_times = deploy_status_history.objects.filter(task_id=apply_id).filter(
+        new_status=deploy_statuscode.ROLLBACK_STATUS).count()
+
     # return HttpResponseRedirect(reverse('home_application.views.apply_edit')+'?id=%s' % apply_id)
 
     return my_render('home_application/apply_info.html', locals(), request)
